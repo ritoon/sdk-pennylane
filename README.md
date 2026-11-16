@@ -5,10 +5,10 @@ Ce module expose les **186 opérations de la Company API v2** répertoriées sur
 ## Installation
 
 ```sh
-go get github.com/ritoon/sdk-pennylane@v0.1.0
+go get github.com/ritoon/sdk-pennylane@v0.1.1
 ```
 
-Le [guide du client](docs/utilisation.md) montre comment vérifier la connexion et parcourir les journaux. La [documentation du SDK](docs/README.md) recense les méthodes et les références Pennylane.
+Le [guide du client](docs/utilisation.md) montre comment vérifier la connexion et parcourir les journaux. La [référence des endpoints](docs/operations.md) détaille les paramètres Go et HTTP, les corps de requête et les payloads retournés par statut. Exemples de fiches : [lister les journaux](docs/endpoints/getJournals.md) et [créer un compte bancaire](docs/endpoints/postBankAccount.md).
 
 ## Tester la connexion
 
