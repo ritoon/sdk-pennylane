@@ -1,9 +1,10 @@
 # Vérifier et actualiser le SDK
 
-Go 1.24 ou ultérieur. Le contrat consolidé est dans `internal/spec/company.json`. Chaque opération contient le lien vers sa fiche officielle.
+Go 1.24 ou ultérieur. Le contrat consolidé est dans `internal/spec/company.json`. Chaque opération contient le lien vers sa fiche officielle. Depuis la racine du dépôt, le générateur Markdown reconstruit l’index et les fiches dans `docs/endpoints/` à partir du contrat et des méthodes Go compilées.
 
 ```sh
 go generate ./...
+go run ./internal/docgen
 go test ./...
 ```
 
@@ -13,6 +14,7 @@ Pour actualiser le contrat, télécharger l’index officiel et les fiches Markd
 go run ./internal/spec /chemin/llms.txt /chemin/fiches > company.next.json &&
     mv company.next.json internal/spec/company.json
 go generate ./...
+go run ./internal/docgen
 go test ./...
 ```
 

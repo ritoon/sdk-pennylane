@@ -51,3 +51,23 @@ func LireJournaux(ctx context.Context) error {
 Les méthodes `…WithResponse` décodent les réponses documentées. Vérifier le statut HTTP même lorsque `err == nil`. Le corps brut reste accessible dans `Body`, et les en-têtes, dont `Retry-After`, dans `HTTPResponse.Header`. Les méthodes HTTP brutes retournent un `*http.Response` dont l’appelant ferme le corps.
 
 Pour une pièce jointe, initialiser le champ `File` du corps multipart avec `InitFromBytes` ou `InitFromMultipart`, puis appeler la méthode typée. Les méthodes `…WithBodyWithResponse` acceptent aussi un flux `io.Reader` et son type de contenu pour un envoi en streaming.
+
+## Renseigner un corps de requête et lire le résultat
+
+Dans la fiche de [création d’un compte bancaire](endpoints/postBankAccount.md), le champ JSON obligatoire `name` correspond au champ Go `Name`. Cet exemple crée un compte dans la société du client et nécessite le scope `bank_accounts:all`.
+
+```go
+func CreerCompte(ctx context.Context, client *pennylane.Client, nom string) (int64, error) {
+    body := pennylane.PostBankAccountJSONRequestBody{Name: nom}
+    resp, err := client.PostBankAccountWithResponse(ctx, nil, body)
+    if err != nil {
+        return 0, err
+    }
+    if resp.JSON201 == nil {
+        return 0, fmt.Errorf("création du compte : HTTP %d", resp.StatusCode())
+    }
+    return resp.JSON201.Id, nil
+}
+```
+
+Le client ajoute l’authentification et la société configurée. Ici, `nil` laisse les paramètres HTTP à leurs valeurs par défaut. Le résultat de la création se lit dans `JSON201` car le contrat prévoit le statut 201. La fiche indique aussi les statuts d’erreur et leurs champs documentés.

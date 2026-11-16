@@ -1,809 +1,286 @@
 # Référence du client Go
 
-Les signatures indiquent les arguments métier et le type de retour. Toutes ces méthodes acceptent également des éditeurs de requête facultatifs en dernier argument. Le lien de chaque route ouvre sa fiche officielle (champs, statuts et permissions).
+Chaque fiche décrit l’usage, la signature Go, les paramètres HTTP, le corps de requête et les réponses par statut. Les descriptions métier et les permissions reprennent la langue du contrat Pennylane.
+
+Les paramètres de chemin sont des arguments Go. Les paramètres de requête et les en-têtes se renseignent dans `params`. Pour les champs de type `nullable.Nullable[T]`, une valeur absente, une valeur nulle et une valeur renseignée sont distinctes. Dans les tableaux, `$` désigne le payload entier et `[]` un élément de liste. La présence d’un champ s’applique lorsque son objet parent est présent. Pour les variantes, `oneOf` impose un seul schéma, `anyOf` au moins un, et `allOf` tous.
+
+[Exemple Go de lecture paginée](utilisation.md) · [Payloads d’erreur](endpoints/erreurs.md)
 
 ## Bank Establishments
 
-- [`GET /api/external/v2/bank_establishments`](https://pennylane.readme.io/reference/getbankestablishments)
-
-  `GetBankEstablishmentsWithResponse(ctx context.Context, params *GetBankEstablishmentsParams) (*GetBankEstablishmentsResponse, error)`
+- [`GET /api/external/v2/bank_establishments`](endpoints/getBankEstablishments.md) — List bank establishments · `GetBankEstablishmentsWithResponse`
 
 ## Bank accounts
 
-- [`GET /api/external/v2/bank_accounts`](https://pennylane.readme.io/reference/getbankaccounts)
-
-  `GetBankAccountsWithResponse(ctx context.Context, params *GetBankAccountsParams) (*GetBankAccountsResponse, error)`
-
-- [`POST /api/external/v2/bank_accounts`](https://pennylane.readme.io/reference/postbankaccount)
-
-  `PostBankAccountWithResponse(ctx context.Context, params *PostBankAccountParams, body PostBankAccountJSONRequestBody) (*PostBankAccountResponse, error)`
-
-- [`GET /api/external/v2/bank_accounts/{id}`](https://pennylane.readme.io/reference/getbankaccount)
-
-  `GetBankAccountWithResponse(ctx context.Context, id int, params *GetBankAccountParams) (*GetBankAccountResponse, error)`
+- [`GET /api/external/v2/bank_accounts/{id}`](endpoints/getBankAccount.md) — Retrieve a bank account · `GetBankAccountWithResponse`
+- [`GET /api/external/v2/bank_accounts`](endpoints/getBankAccounts.md) — List bank accounts · `GetBankAccountsWithResponse`
+- [`POST /api/external/v2/bank_accounts`](endpoints/postBankAccount.md) — Create a bank account · `PostBankAccountWithResponse`
 
 ## Billing Subscriptions
 
-- [`GET /api/external/v2/billing_subscriptions`](https://pennylane.readme.io/reference/getbillingsubscriptions)
-
-  `GetBillingSubscriptionsWithResponse(ctx context.Context, params *GetBillingSubscriptionsParams) (*GetBillingSubscriptionsResponse, error)`
-
-- [`POST /api/external/v2/billing_subscriptions`](https://pennylane.readme.io/reference/postbillingsubscriptions)
-
-  `PostBillingSubscriptionsWithResponse(ctx context.Context, params *PostBillingSubscriptionsParams, body PostBillingSubscriptionsJSONRequestBody) (*PostBillingSubscriptionsResponse, error)`
-
-- [`GET /api/external/v2/billing_subscriptions/{billing_subscription_id}/invoice_line_sections`](https://pennylane.readme.io/reference/getbillingsubscriptioninvoicelinesections)
-
-  `GetBillingSubscriptionInvoiceLineSectionsWithResponse(ctx context.Context, billingSubscriptionId int, params *GetBillingSubscriptionInvoiceLineSectionsParams) (*GetBillingSubscriptionInvoiceLineSectionsResponse, error)`
-
-- [`GET /api/external/v2/billing_subscriptions/{billing_subscription_id}/invoice_lines`](https://pennylane.readme.io/reference/getbillingsubscriptioninvoicelines)
-
-  `GetBillingSubscriptionInvoiceLinesWithResponse(ctx context.Context, billingSubscriptionId int, params *GetBillingSubscriptionInvoiceLinesParams) (*GetBillingSubscriptionInvoiceLinesResponse, error)`
-
-- [`GET /api/external/v2/billing_subscriptions/{id}`](https://pennylane.readme.io/reference/getbillingsubscription)
-
-  `GetBillingSubscriptionWithResponse(ctx context.Context, id int, params *GetBillingSubscriptionParams) (*GetBillingSubscriptionResponse, error)`
-
-- [`PUT /api/external/v2/billing_subscriptions/{id}`](https://pennylane.readme.io/reference/putbillingsubscriptions)
-
-  `PutBillingSubscriptionsWithResponse(ctx context.Context, id int, params *PutBillingSubscriptionsParams, body PutBillingSubscriptionsJSONRequestBody) (*PutBillingSubscriptionsResponse, error)`
+- [`GET /api/external/v2/billing_subscriptions/{billing_subscription_id}/invoice_line_sections`](endpoints/getBillingSubscriptionInvoiceLineSections.md) — List the invoice line sections of a billing subscription · `GetBillingSubscriptionInvoiceLineSectionsWithResponse`
+- [`GET /api/external/v2/billing_subscriptions/{billing_subscription_id}/invoice_lines`](endpoints/getBillingSubscriptionInvoiceLines.md) — List invoice lines for a billing subscription · `GetBillingSubscriptionInvoiceLinesWithResponse`
+- [`GET /api/external/v2/billing_subscriptions/{id}`](endpoints/getBillingSubscription.md) — Get a billing subscription · `GetBillingSubscriptionWithResponse`
+- [`GET /api/external/v2/billing_subscriptions`](endpoints/getBillingSubscriptions.md) — List billing subscriptions · `GetBillingSubscriptionsWithResponse`
+- [`POST /api/external/v2/billing_subscriptions`](endpoints/postBillingSubscriptions.md) — Create a billing subscription · `PostBillingSubscriptionsWithResponse`
+- [`PUT /api/external/v2/billing_subscriptions/{id}`](endpoints/putBillingSubscriptions.md) — Update a billing subscription · `PutBillingSubscriptionsWithResponse`
 
 ## Billing email templates
 
-- [`GET /api/external/v2/billing_email_templates`](https://pennylane.readme.io/reference/getbillingemailtemplates)
-
-  `GetBillingEmailTemplatesWithResponse(ctx context.Context, params *GetBillingEmailTemplatesParams) (*GetBillingEmailTemplatesResponse, error)`
+- [`GET /api/external/v2/billing_email_templates`](endpoints/getBillingEmailTemplates.md) — List billing email templates · `GetBillingEmailTemplatesWithResponse`
 
 ## Categories
 
-- [`GET /api/external/v2/categories`](https://pennylane.readme.io/reference/getcategories)
-
-  `GetCategoriesWithResponse(ctx context.Context, params *GetCategoriesParams) (*GetCategoriesResponse, error)`
-
-- [`POST /api/external/v2/categories`](https://pennylane.readme.io/reference/postcategories)
-
-  `PostCategoriesWithResponse(ctx context.Context, params *PostCategoriesParams, body PostCategoriesJSONRequestBody) (*PostCategoriesResponse, error)`
-
-- [`GET /api/external/v2/categories/{id}`](https://pennylane.readme.io/reference/getcategory)
-
-  `GetCategoryWithResponse(ctx context.Context, id string, params *GetCategoryParams) (*GetCategoryResponse, error)`
-
-- [`PUT /api/external/v2/categories/{id}`](https://pennylane.readme.io/reference/updatecategory)
-
-  `UpdateCategoryWithResponse(ctx context.Context, id string, params *UpdateCategoryParams, body UpdateCategoryJSONRequestBody) (*UpdateCategoryResponse, error)`
-
-- [`GET /api/external/v2/category_groups`](https://pennylane.readme.io/reference/getcategorygroups)
-
-  `GetCategoryGroupsWithResponse(ctx context.Context, params *GetCategoryGroupsParams) (*GetCategoryGroupsResponse, error)`
+- [`GET /api/external/v2/categories/{id}`](endpoints/getCategory.md) — Retrieve a category · `GetCategoryWithResponse`
+- [`GET /api/external/v2/categories`](endpoints/getCategories.md) — List categories · `GetCategoriesWithResponse`
+- [`GET /api/external/v2/category_groups`](endpoints/getCategoryGroups.md) — List category groups · `GetCategoryGroupsWithResponse`
+- [`POST /api/external/v2/categories`](endpoints/postCategories.md) — Create a category · `PostCategoriesWithResponse`
+- [`PUT /api/external/v2/categories/{id}`](endpoints/updateCategory.md) — Update a category · `UpdateCategoryWithResponse`
 
 ## Category Groups
 
-- [`POST /api/external/v2/category_groups`](https://pennylane.readme.io/reference/postcategorygroups)
-
-  `PostCategoryGroupsWithResponse(ctx context.Context, params *PostCategoryGroupsParams, body PostCategoryGroupsJSONRequestBody) (*PostCategoryGroupsResponse, error)`
-
-- [`GET /api/external/v2/category_groups/{category_group_id}/categories`](https://pennylane.readme.io/reference/getcategorygroupcategories)
-
-  `GetCategoryGroupCategoriesWithResponse(ctx context.Context, categoryGroupId int, params *GetCategoryGroupCategoriesParams) (*GetCategoryGroupCategoriesResponse, error)`
-
-- [`GET /api/external/v2/category_groups/{id}`](https://pennylane.readme.io/reference/getcategorygroup)
-
-  `GetCategoryGroupWithResponse(ctx context.Context, id string, params *GetCategoryGroupParams) (*GetCategoryGroupResponse, error)`
-
-- [`PUT /api/external/v2/category_groups/{id}`](https://pennylane.readme.io/reference/putcategorygroup)
-
-  `PutCategoryGroupWithResponse(ctx context.Context, id string, params *PutCategoryGroupParams, body PutCategoryGroupJSONRequestBody) (*PutCategoryGroupResponse, error)`
+- [`GET /api/external/v2/category_groups/{category_group_id}/categories`](endpoints/getCategoryGroupCategories.md) — List categories of a category group · `GetCategoryGroupCategoriesWithResponse`
+- [`GET /api/external/v2/category_groups/{id}`](endpoints/getCategoryGroup.md) — Retrieve a category group · `GetCategoryGroupWithResponse`
+- [`POST /api/external/v2/category_groups`](endpoints/postCategoryGroups.md) — Create a category group · `PostCategoryGroupsWithResponse`
+- [`PUT /api/external/v2/category_groups/{id}`](endpoints/putCategoryGroup.md) — Update a category group · `PutCategoryGroupWithResponse`
 
 ## Changelogs
 
-- [`GET /api/external/v2/changelogs/customer_invoices`](https://pennylane.readme.io/reference/getcustomerinvoiceschanges)
-
-  `GetCustomerInvoicesChangesWithResponse(ctx context.Context, params *GetCustomerInvoicesChangesParams) (*GetCustomerInvoicesChangesResponse, error)`
-
-- [`GET /api/external/v2/changelogs/customers`](https://pennylane.readme.io/reference/getcustomerchanges)
-
-  `GetCustomerChangesWithResponse(ctx context.Context, params *GetCustomerChangesParams) (*GetCustomerChangesResponse, error)`
-
-- [`GET /api/external/v2/changelogs/ledger_entries`](https://pennylane.readme.io/reference/getledgerentrieschanges)
-
-  `GetLedgerEntriesChangesWithResponse(ctx context.Context, params *GetLedgerEntriesChangesParams) (*GetLedgerEntriesChangesResponse, error)`
-
-- [`GET /api/external/v2/changelogs/ledger_entries_categories`](https://pennylane.readme.io/reference/getledgerentriescategorychanges)
-
-  `GetLedgerEntriesCategoryChangesWithResponse(ctx context.Context, params *GetLedgerEntriesCategoryChangesParams) (*GetLedgerEntriesCategoryChangesResponse, error)`
-
-- [`GET /api/external/v2/changelogs/ledger_entry_lines`](https://pennylane.readme.io/reference/getledgerentrylinechanges)
-
-  `GetLedgerEntryLineChangesWithResponse(ctx context.Context, params *GetLedgerEntryLineChangesParams) (*GetLedgerEntryLineChangesResponse, error)`
-
-- [`GET /api/external/v2/changelogs/ledger_entry_lines_categories`](https://pennylane.readme.io/reference/getledgerentrylinescategorychanges)
-
-  `GetLedgerEntryLinesCategoryChangesWithResponse(ctx context.Context, params *GetLedgerEntryLinesCategoryChangesParams) (*GetLedgerEntryLinesCategoryChangesResponse, error)`
-
-- [`GET /api/external/v2/changelogs/products`](https://pennylane.readme.io/reference/getproductchanges)
-
-  `GetProductChangesWithResponse(ctx context.Context, params *GetProductChangesParams) (*GetProductChangesResponse, error)`
-
-- [`GET /api/external/v2/changelogs/supplier_invoices`](https://pennylane.readme.io/reference/getsupplierinvoiceschanges)
-
-  `GetSupplierInvoicesChangesWithResponse(ctx context.Context, params *GetSupplierInvoicesChangesParams) (*GetSupplierInvoicesChangesResponse, error)`
-
-- [`GET /api/external/v2/changelogs/suppliers`](https://pennylane.readme.io/reference/getsupplierchanges)
-
-  `GetSupplierChangesWithResponse(ctx context.Context, params *GetSupplierChangesParams) (*GetSupplierChangesResponse, error)`
-
-- [`GET /api/external/v2/changelogs/transactions`](https://pennylane.readme.io/reference/gettransactionchanges)
-
-  `GetTransactionChangesWithResponse(ctx context.Context, params *GetTransactionChangesParams) (*GetTransactionChangesResponse, error)`
+- [`GET /api/external/v2/changelogs/customer_invoices`](endpoints/getCustomerInvoicesChanges.md) — Get customer invoices changes events · `GetCustomerInvoicesChangesWithResponse`
+- [`GET /api/external/v2/changelogs/customers`](endpoints/getCustomerChanges.md) — Get customer changes events · `GetCustomerChangesWithResponse`
+- [`GET /api/external/v2/changelogs/ledger_entries_categories`](endpoints/getLedgerEntriesCategoryChanges.md) — Get ledger entry category change events · `GetLedgerEntriesCategoryChangesWithResponse`
+- [`GET /api/external/v2/changelogs/ledger_entries`](endpoints/getLedgerEntriesChanges.md) — Get ledger entry change events · `GetLedgerEntriesChangesWithResponse`
+- [`GET /api/external/v2/changelogs/ledger_entry_lines_categories`](endpoints/getLedgerEntryLinesCategoryChanges.md) — Get ledger entry line category change events · `GetLedgerEntryLinesCategoryChangesWithResponse`
+- [`GET /api/external/v2/changelogs/ledger_entry_lines`](endpoints/getLedgerEntryLineChanges.md) — Get ledger entry line change events · `GetLedgerEntryLineChangesWithResponse`
+- [`GET /api/external/v2/changelogs/products`](endpoints/getProductChanges.md) — Get product change events · `GetProductChangesWithResponse`
+- [`GET /api/external/v2/changelogs/supplier_invoices`](endpoints/getSupplierInvoicesChanges.md) — Get supplier invoices changes events · `GetSupplierInvoicesChangesWithResponse`
+- [`GET /api/external/v2/changelogs/suppliers`](endpoints/getSupplierChanges.md) — Get supplier changes events · `GetSupplierChangesWithResponse`
+- [`GET /api/external/v2/changelogs/transactions`](endpoints/getTransactionChanges.md) — Get transaction change events · `GetTransactionChangesWithResponse`
 
 ## Commercial Documents
 
-- [`GET /api/external/v2/commercial_documents`](https://pennylane.readme.io/reference/listcommercialdocuments)
-
-  `ListCommercialDocumentsWithResponse(ctx context.Context, params *ListCommercialDocumentsParams) (*ListCommercialDocumentsResponse, error)`
-
-- [`POST /api/external/v2/commercial_documents`](https://pennylane.readme.io/reference/postcommercialdocuments)
-
-  `PostCommercialDocumentsWithResponse(ctx context.Context, params *PostCommercialDocumentsParams, body PostCommercialDocumentsJSONRequestBody) (*PostCommercialDocumentsResponse, error)`
-
-- [`GET /api/external/v2/commercial_documents/{commercial_document_id}/appendices`](https://pennylane.readme.io/reference/getcommercialdocumentappendices)
-
-  `GetCommercialDocumentAppendicesWithResponse(ctx context.Context, commercialDocumentId int, params *GetCommercialDocumentAppendicesParams) (*GetCommercialDocumentAppendicesResponse, error)`
-
-- [`POST /api/external/v2/commercial_documents/{commercial_document_id}/appendices`](https://pennylane.readme.io/reference/postcommercialdocumentappendices)
-
-  `PostCommercialDocumentAppendicesWithResponse(ctx context.Context, commercialDocumentId int, params *PostCommercialDocumentAppendicesParams, body PostCommercialDocumentAppendicesMultipartRequestBody) (*PostCommercialDocumentAppendicesResponse, error)`
-
-- [`GET /api/external/v2/commercial_documents/{commercial_document_id}/invoice_line_sections`](https://pennylane.readme.io/reference/getcommercialdocumentinvoicelinesections)
-
-  `GetCommercialDocumentInvoiceLineSectionsWithResponse(ctx context.Context, commercialDocumentId int, params *GetCommercialDocumentInvoiceLineSectionsParams) (*GetCommercialDocumentInvoiceLineSectionsResponse, error)`
-
-- [`GET /api/external/v2/commercial_documents/{commercial_document_id}/invoice_lines`](https://pennylane.readme.io/reference/getcommercialdocumentinvoicelines)
-
-  `GetCommercialDocumentInvoiceLinesWithResponse(ctx context.Context, commercialDocumentId int, params *GetCommercialDocumentInvoiceLinesParams) (*GetCommercialDocumentInvoiceLinesResponse, error)`
-
-- [`GET /api/external/v2/commercial_documents/{id}`](https://pennylane.readme.io/reference/getcommercialdocument)
-
-  `GetCommercialDocumentWithResponse(ctx context.Context, id int, params *GetCommercialDocumentParams) (*GetCommercialDocumentResponse, error)`
-
-- [`PUT /api/external/v2/commercial_documents/{id}`](https://pennylane.readme.io/reference/updatecommercialdocument)
-
-  `UpdateCommercialDocumentWithResponse(ctx context.Context, id int, params *UpdateCommercialDocumentParams, body UpdateCommercialDocumentJSONRequestBody) (*UpdateCommercialDocumentResponse, error)`
-
-- [`POST /api/external/v2/commercial_documents/{id}/send_by_email`](https://pennylane.readme.io/reference/sendbyemailcommercialdocument)
-
-  `SendByEmailCommercialDocumentWithResponse(ctx context.Context, id int, params *SendByEmailCommercialDocumentParams, body SendByEmailCommercialDocumentJSONRequestBody) (*SendByEmailCommercialDocumentResponse, error)`
+- [`GET /api/external/v2/commercial_documents/{commercial_document_id}/appendices`](endpoints/getCommercialDocumentAppendices.md) — List appendices of a commercial document · `GetCommercialDocumentAppendicesWithResponse`
+- [`GET /api/external/v2/commercial_documents/{commercial_document_id}/invoice_line_sections`](endpoints/getCommercialDocumentInvoiceLineSections.md) — List invoice line sections for a commercial document · `GetCommercialDocumentInvoiceLineSectionsWithResponse`
+- [`GET /api/external/v2/commercial_documents/{commercial_document_id}/invoice_lines`](endpoints/getCommercialDocumentInvoiceLines.md) — List invoice lines for a commercial document · `GetCommercialDocumentInvoiceLinesWithResponse`
+- [`GET /api/external/v2/commercial_documents/{id}`](endpoints/getCommercialDocument.md) — Retrieve a commercial document · `GetCommercialDocumentWithResponse`
+- [`GET /api/external/v2/commercial_documents`](endpoints/listCommercialDocuments.md) — List commercial documents · `ListCommercialDocumentsWithResponse`
+- [`POST /api/external/v2/commercial_documents/{commercial_document_id}/appendices`](endpoints/postCommercialDocumentAppendices.md) — Upload an appendix for a commercial document · `PostCommercialDocumentAppendicesWithResponse`
+- [`POST /api/external/v2/commercial_documents/{id}/send_by_email`](endpoints/sendByEmailCommercialDocument.md) — Send a commercial document by email · `SendByEmailCommercialDocumentWithResponse`
+- [`POST /api/external/v2/commercial_documents`](endpoints/postCommercialDocuments.md) — Create a commercial document · `PostCommercialDocumentsWithResponse`
+- [`PUT /api/external/v2/commercial_documents/{id}`](endpoints/updateCommercialDocument.md) — Update a commercial document · `UpdateCommercialDocumentWithResponse`
 
 ## Company
 
-- [`GET /api/external/v2/company/features`](https://pennylane.readme.io/reference/getcompanyfeatures)
-
-  `GetCompanyFeaturesWithResponse(ctx context.Context, params *GetCompanyFeaturesParams) (*GetCompanyFeaturesResponse, error)`
+- [`GET /api/external/v2/company/features`](endpoints/getCompanyFeatures.md) — Company features · `GetCompanyFeaturesWithResponse`
 
 ## Customer Invoice Templates
 
-- [`GET /api/external/v2/customer_invoice_templates`](https://pennylane.readme.io/reference/getcustomerinvoicetemplates)
-
-  `GetCustomerInvoiceTemplatesWithResponse(ctx context.Context, params *GetCustomerInvoiceTemplatesParams) (*GetCustomerInvoiceTemplatesResponse, error)`
+- [`GET /api/external/v2/customer_invoice_templates`](endpoints/getCustomerInvoiceTemplates.md) — List customer invoice templates · `GetCustomerInvoiceTemplatesWithResponse`
 
 ## Customer Invoices
 
-- [`GET /api/external/v2/customer_invoices`](https://pennylane.readme.io/reference/getcustomerinvoices)
-
-  `GetCustomerInvoicesWithResponse(ctx context.Context, params *GetCustomerInvoicesParams) (*GetCustomerInvoicesResponse, error)`
-
-- [`POST /api/external/v2/customer_invoices`](https://pennylane.readme.io/reference/postcustomerinvoices)
-
-  `PostCustomerInvoicesWithResponse(ctx context.Context, params *PostCustomerInvoicesParams, body PostCustomerInvoicesJSONRequestBody) (*PostCustomerInvoicesResponse, error)`
-
-- [`POST /api/external/v2/customer_invoices/create_from_quote`](https://pennylane.readme.io/reference/createcustomerinvoicefromquote)
-
-  `CreateCustomerInvoiceFromQuoteWithResponse(ctx context.Context, params *CreateCustomerInvoiceFromQuoteParams, body CreateCustomerInvoiceFromQuoteJSONRequestBody) (*CreateCustomerInvoiceFromQuoteResponse, error)`
-
-- [`POST /api/external/v2/customer_invoices/e_invoices/imports`](https://pennylane.readme.io/reference/createcustomerinvoiceeinvoiceimport)
-
-  `CreateCustomerInvoiceEInvoiceImportWithResponse(ctx context.Context, params *CreateCustomerInvoiceEInvoiceImportParams, body CreateCustomerInvoiceEInvoiceImportMultipartRequestBody) (*CreateCustomerInvoiceEInvoiceImportResponse, error)`
-
-- [`POST /api/external/v2/customer_invoices/import`](https://pennylane.readme.io/reference/importcustomerinvoices)
-
-  `ImportCustomerInvoicesWithResponse(ctx context.Context, params *ImportCustomerInvoicesParams, body ImportCustomerInvoicesJSONRequestBody) (*ImportCustomerInvoicesResponse, error)`
-
-- [`GET /api/external/v2/customer_invoices/{customer_invoice_id}/appendices`](https://pennylane.readme.io/reference/getcustomerinvoiceappendices)
-
-  `GetCustomerInvoiceAppendicesWithResponse(ctx context.Context, customerInvoiceId int, params *GetCustomerInvoiceAppendicesParams) (*GetCustomerInvoiceAppendicesResponse, error)`
-
-- [`POST /api/external/v2/customer_invoices/{customer_invoice_id}/appendices`](https://pennylane.readme.io/reference/postcustomerinvoiceappendices)
-
-  `PostCustomerInvoiceAppendicesWithResponse(ctx context.Context, customerInvoiceId int, params *PostCustomerInvoiceAppendicesParams, body PostCustomerInvoiceAppendicesMultipartRequestBody) (*PostCustomerInvoiceAppendicesResponse, error)`
-
-- [`GET /api/external/v2/customer_invoices/{customer_invoice_id}/categories`](https://pennylane.readme.io/reference/getcustomerinvoicecategories)
-
-  `GetCustomerInvoiceCategoriesWithResponse(ctx context.Context, customerInvoiceId int, params *GetCustomerInvoiceCategoriesParams) (*GetCustomerInvoiceCategoriesResponse, error)`
-
-- [`PUT /api/external/v2/customer_invoices/{customer_invoice_id}/categories`](https://pennylane.readme.io/reference/putcustomerinvoicecategories)
-
-  `PutCustomerInvoiceCategoriesWithResponse(ctx context.Context, customerInvoiceId int, params *PutCustomerInvoiceCategoriesParams, body PutCustomerInvoiceCategoriesJSONRequestBody) (*PutCustomerInvoiceCategoriesResponse, error)`
-
-- [`GET /api/external/v2/customer_invoices/{customer_invoice_id}/comments`](https://pennylane.readme.io/reference/getcustomerinvoicecomments)
-
-  `GetCustomerInvoiceCommentsWithResponse(ctx context.Context, customerInvoiceId int64, params *GetCustomerInvoiceCommentsParams) (*GetCustomerInvoiceCommentsResponse, error)`
-
-- [`POST /api/external/v2/customer_invoices/{customer_invoice_id}/comments`](https://pennylane.readme.io/reference/postcustomerinvoicecomment)
-
-  `PostCustomerInvoiceCommentWithResponse(ctx context.Context, customerInvoiceId int64, params *PostCustomerInvoiceCommentParams, body PostCustomerInvoiceCommentJSONRequestBody) (*PostCustomerInvoiceCommentResponse, error)`
-
-- [`GET /api/external/v2/customer_invoices/{customer_invoice_id}/custom_header_fields`](https://pennylane.readme.io/reference/getcustomerinvoicecustomheaderfields)
-
-  `GetCustomerInvoiceCustomHeaderFieldsWithResponse(ctx context.Context, customerInvoiceId int, params *GetCustomerInvoiceCustomHeaderFieldsParams) (*GetCustomerInvoiceCustomHeaderFieldsResponse, error)`
-
-- [`GET /api/external/v2/customer_invoices/{customer_invoice_id}/installments`](https://pennylane.readme.io/reference/getcustomerinvoiceinstallments)
-
-  `GetCustomerInvoiceInstallmentsWithResponse(ctx context.Context, customerInvoiceId int, params *GetCustomerInvoiceInstallmentsParams) (*GetCustomerInvoiceInstallmentsResponse, error)`
-
-- [`PUT /api/external/v2/customer_invoices/{customer_invoice_id}/installments/{id}/mark_as_paid`](https://pennylane.readme.io/reference/markaspaidcustomerinvoiceinstallment)
-
-  `MarkAsPaidCustomerInvoiceInstallmentWithResponse(ctx context.Context, customerInvoiceId int64, id int64, params *MarkAsPaidCustomerInvoiceInstallmentParams) (*MarkAsPaidCustomerInvoiceInstallmentResponse, error)`
-
-- [`GET /api/external/v2/customer_invoices/{customer_invoice_id}/invoice_line_sections`](https://pennylane.readme.io/reference/getcustomerinvoiceinvoicelinesections)
-
-  `GetCustomerInvoiceInvoiceLineSectionsWithResponse(ctx context.Context, customerInvoiceId int, params *GetCustomerInvoiceInvoiceLineSectionsParams) (*GetCustomerInvoiceInvoiceLineSectionsResponse, error)`
-
-- [`GET /api/external/v2/customer_invoices/{customer_invoice_id}/invoice_lines`](https://pennylane.readme.io/reference/getcustomerinvoiceinvoicelines)
-
-  `GetCustomerInvoiceInvoiceLinesWithResponse(ctx context.Context, customerInvoiceId int, params *GetCustomerInvoiceInvoiceLinesParams) (*GetCustomerInvoiceInvoiceLinesResponse, error)`
-
-- [`GET /api/external/v2/customer_invoices/{customer_invoice_id}/matched_transactions`](https://pennylane.readme.io/reference/getcustomerinvoicematchedtransactions)
-
-  `GetCustomerInvoiceMatchedTransactionsWithResponse(ctx context.Context, customerInvoiceId int, params *GetCustomerInvoiceMatchedTransactionsParams) (*GetCustomerInvoiceMatchedTransactionsResponse, error)`
-
-- [`GET /api/external/v2/customer_invoices/{customer_invoice_id}/payments`](https://pennylane.readme.io/reference/getcustomerinvoicepayments)
-
-  `GetCustomerInvoicePaymentsWithResponse(ctx context.Context, customerInvoiceId int, params *GetCustomerInvoicePaymentsParams) (*GetCustomerInvoicePaymentsResponse, error)`
-
-- [`DELETE /api/external/v2/customer_invoices/{id}`](https://pennylane.readme.io/reference/deletecustomerinvoices)
-
-  `DeleteCustomerInvoicesWithResponse(ctx context.Context, id int, params *DeleteCustomerInvoicesParams) (*DeleteCustomerInvoicesResponse, error)`
-
-- [`GET /api/external/v2/customer_invoices/{id}`](https://pennylane.readme.io/reference/getcustomerinvoice)
-
-  `GetCustomerInvoiceWithResponse(ctx context.Context, id int, params *GetCustomerInvoiceParams) (*GetCustomerInvoiceResponse, error)`
-
-- [`PUT /api/external/v2/customer_invoices/{id}`](https://pennylane.readme.io/reference/updatecustomerinvoice)
-
-  `UpdateCustomerInvoiceWithResponse(ctx context.Context, id int, params *UpdateCustomerInvoiceParams, body UpdateCustomerInvoiceJSONRequestBody) (*UpdateCustomerInvoiceResponse, error)`
-
-- [`PUT /api/external/v2/customer_invoices/{id}/finalize`](https://pennylane.readme.io/reference/finalizecustomerinvoice)
-
-  `FinalizeCustomerInvoiceWithResponse(ctx context.Context, id int, params *FinalizeCustomerInvoiceParams) (*FinalizeCustomerInvoiceResponse, error)`
-
-- [`POST /api/external/v2/customer_invoices/{id}/link_credit_note`](https://pennylane.readme.io/reference/linkcreditnote)
-
-  `LinkCreditNoteWithResponse(ctx context.Context, id int, params *LinkCreditNoteParams, body LinkCreditNoteJSONRequestBody) (*LinkCreditNoteResponse, error)`
-
-- [`PUT /api/external/v2/customer_invoices/{id}/mark_as_paid`](https://pennylane.readme.io/reference/markaspaidcustomerinvoice)
-
-  `MarkAsPaidCustomerInvoiceWithResponse(ctx context.Context, id int, params *MarkAsPaidCustomerInvoiceParams) (*MarkAsPaidCustomerInvoiceResponse, error)`
-
-- [`POST /api/external/v2/customer_invoices/{id}/send_by_email`](https://pennylane.readme.io/reference/sendbyemailcustomerinvoice)
-
-  `SendByEmailCustomerInvoiceWithResponse(ctx context.Context, id int, params *SendByEmailCustomerInvoiceParams, body SendByEmailCustomerInvoiceJSONRequestBody) (*SendByEmailCustomerInvoiceResponse, error)`
-
-- [`POST /api/external/v2/customer_invoices/{id}/send_to_pa`](https://pennylane.readme.io/reference/sendtopacustomerinvoice)
-
-  `SendToPaCustomerInvoiceWithResponse(ctx context.Context, id int64, params *SendToPaCustomerInvoiceParams) (*SendToPaCustomerInvoiceResponse, error)`
-
-- [`PUT /api/external/v2/customer_invoices/{id}/update_imported`](https://pennylane.readme.io/reference/updateimportedcustomerinvoice)
-
-  `UpdateImportedCustomerInvoiceWithResponse(ctx context.Context, id int, params *UpdateImportedCustomerInvoiceParams, body UpdateImportedCustomerInvoiceJSONRequestBody) (*UpdateImportedCustomerInvoiceResponse, error)`
+- [`DELETE /api/external/v2/customer_invoices/{id}`](endpoints/deleteCustomerInvoices.md) — Delete draft invoice · `DeleteCustomerInvoicesWithResponse`
+- [`GET /api/external/v2/customer_invoices/{customer_invoice_id}/appendices`](endpoints/getCustomerInvoiceAppendices.md) — List appendices of a customer invoice · `GetCustomerInvoiceAppendicesWithResponse`
+- [`GET /api/external/v2/customer_invoices/{customer_invoice_id}/categories`](endpoints/getCustomerInvoiceCategories.md) — List categories of a customer invoice · `GetCustomerInvoiceCategoriesWithResponse`
+- [`GET /api/external/v2/customer_invoices/{customer_invoice_id}/comments`](endpoints/getCustomerInvoiceComments.md) — List comments of a customer invoice · `GetCustomerInvoiceCommentsWithResponse`
+- [`GET /api/external/v2/customer_invoices/{customer_invoice_id}/custom_header_fields`](endpoints/getCustomerInvoiceCustomHeaderFields.md) — List custom header fields for a customer invoice · `GetCustomerInvoiceCustomHeaderFieldsWithResponse`
+- [`GET /api/external/v2/customer_invoices/{customer_invoice_id}/installments`](endpoints/getCustomerInvoiceInstallments.md) — List installments for a customer invoice · `GetCustomerInvoiceInstallmentsWithResponse`
+- [`GET /api/external/v2/customer_invoices/{customer_invoice_id}/invoice_line_sections`](endpoints/getCustomerInvoiceInvoiceLineSections.md) — List invoice line sections for a customer invoice · `GetCustomerInvoiceInvoiceLineSectionsWithResponse`
+- [`GET /api/external/v2/customer_invoices/{customer_invoice_id}/invoice_lines`](endpoints/getCustomerInvoiceInvoiceLines.md) — List invoice lines for a customer invoice · `GetCustomerInvoiceInvoiceLinesWithResponse`
+- [`GET /api/external/v2/customer_invoices/{customer_invoice_id}/matched_transactions`](endpoints/getCustomerInvoiceMatchedTransactions.md) — List matched transactions for a customer invoice · `GetCustomerInvoiceMatchedTransactionsWithResponse`
+- [`GET /api/external/v2/customer_invoices/{customer_invoice_id}/payments`](endpoints/getCustomerInvoicePayments.md) — List payments for a customer invoice · `GetCustomerInvoicePaymentsWithResponse`
+- [`GET /api/external/v2/customer_invoices/{id}`](endpoints/getCustomerInvoice.md) — Retrieve a customer invoice · `GetCustomerInvoiceWithResponse`
+- [`GET /api/external/v2/customer_invoices`](endpoints/getCustomerInvoices.md) — List customer invoices · `GetCustomerInvoicesWithResponse`
+- [`POST /api/external/v2/customer_invoices/create_from_quote`](endpoints/createCustomerInvoiceFromQuote.md) — Create a customer invoice from a quote · `CreateCustomerInvoiceFromQuoteWithResponse`
+- [`POST /api/external/v2/customer_invoices/e_invoices/imports`](endpoints/createCustomerInvoiceEInvoiceImport.md) — Import a customer e-invoice · `CreateCustomerInvoiceEInvoiceImportWithResponse`
+- [`POST /api/external/v2/customer_invoices/import`](endpoints/importCustomerInvoices.md) — Import an invoice with file attached · `ImportCustomerInvoicesWithResponse`
+- [`POST /api/external/v2/customer_invoices/{customer_invoice_id}/appendices`](endpoints/postCustomerInvoiceAppendices.md) — Upload an appendix for a customer invoice · `PostCustomerInvoiceAppendicesWithResponse`
+- [`POST /api/external/v2/customer_invoices/{customer_invoice_id}/comments`](endpoints/postCustomerInvoiceComment.md) — Add a comment to a customer invoice · `PostCustomerInvoiceCommentWithResponse`
+- [`POST /api/external/v2/customer_invoices/{id}/link_credit_note`](endpoints/linkCreditNote.md) — Link a credit note to a customer invoice · `LinkCreditNoteWithResponse`
+- [`POST /api/external/v2/customer_invoices/{id}/send_by_email`](endpoints/sendByEmailCustomerInvoice.md) — Send a customer invoice by email · `SendByEmailCustomerInvoiceWithResponse`
+- [`POST /api/external/v2/customer_invoices/{id}/send_to_pa`](endpoints/sendToPaCustomerInvoice.md) — Send a customer e-invoice to PA · `SendToPaCustomerInvoiceWithResponse`
+- [`POST /api/external/v2/customer_invoices`](endpoints/postCustomerInvoices.md) — Create a customer invoice · `PostCustomerInvoicesWithResponse`
+- [`PUT /api/external/v2/customer_invoices/{customer_invoice_id}/categories`](endpoints/putCustomerInvoiceCategories.md) — Categorize a customer invoice · `PutCustomerInvoiceCategoriesWithResponse`
+- [`PUT /api/external/v2/customer_invoices/{customer_invoice_id}/installments/{id}/mark_as_paid`](endpoints/markAsPaidCustomerInvoiceInstallment.md) — Mark a customer invoice installment as paid · `MarkAsPaidCustomerInvoiceInstallmentWithResponse`
+- [`PUT /api/external/v2/customer_invoices/{id}/finalize`](endpoints/finalizeCustomerInvoice.md) — Turn the draft invoice into a finalized invoice. · `FinalizeCustomerInvoiceWithResponse`
+- [`PUT /api/external/v2/customer_invoices/{id}/mark_as_paid`](endpoints/markAsPaidCustomerInvoice.md) — Mark a customer invoice as paid · `MarkAsPaidCustomerInvoiceWithResponse`
+- [`PUT /api/external/v2/customer_invoices/{id}/update_imported`](endpoints/updateImportedCustomerInvoice.md) — Update an Imported customer invoice · `UpdateImportedCustomerInvoiceWithResponse`
+- [`PUT /api/external/v2/customer_invoices/{id}`](endpoints/updateCustomerInvoice.md) — Update a customer invoice · `UpdateCustomerInvoiceWithResponse`
 
 ## Customers
 
-- [`POST /api/external/v2/company_customers`](https://pennylane.readme.io/reference/postcompanycustomer)
-
-  `PostCompanyCustomerWithResponse(ctx context.Context, params *PostCompanyCustomerParams, body PostCompanyCustomerJSONRequestBody) (*PostCompanyCustomerResponse, error)`
-
-- [`GET /api/external/v2/company_customers/{id}`](https://pennylane.readme.io/reference/getcompanycustomer)
-
-  `GetCompanyCustomerWithResponse(ctx context.Context, id string, params *GetCompanyCustomerParams) (*GetCompanyCustomerResponse, error)`
-
-- [`PUT /api/external/v2/company_customers/{id}`](https://pennylane.readme.io/reference/putcompanycustomer)
-
-  `PutCompanyCustomerWithResponse(ctx context.Context, id string, params *PutCompanyCustomerParams, body PutCompanyCustomerJSONRequestBody) (*PutCompanyCustomerResponse, error)`
-
-- [`GET /api/external/v2/customers`](https://pennylane.readme.io/reference/getcustomers)
-
-  `GetCustomersWithResponse(ctx context.Context, params *GetCustomersParams) (*GetCustomersResponse, error)`
-
-- [`POST /api/external/v2/customers`](https://pennylane.readme.io/reference/postcustomer)
-
-  `PostCustomerWithResponse(ctx context.Context, params *PostCustomerParams, body PostCustomerJSONRequestBody) (*PostCustomerResponse, error)`
-
-- [`GET /api/external/v2/customers/{customer_id}/categories`](https://pennylane.readme.io/reference/getcustomercategories)
-
-  `GetCustomerCategoriesWithResponse(ctx context.Context, customerId int, params *GetCustomerCategoriesParams) (*GetCustomerCategoriesResponse, error)`
-
-- [`PUT /api/external/v2/customers/{customer_id}/categories`](https://pennylane.readme.io/reference/putcustomercategories)
-
-  `PutCustomerCategoriesWithResponse(ctx context.Context, customerId int, params *PutCustomerCategoriesParams, body PutCustomerCategoriesJSONRequestBody) (*PutCustomerCategoriesResponse, error)`
-
-- [`GET /api/external/v2/customers/{customer_id}/contacts`](https://pennylane.readme.io/reference/getcustomercontacts)
-
-  `GetCustomerContactsWithResponse(ctx context.Context, customerId int, params *GetCustomerContactsParams) (*GetCustomerContactsResponse, error)`
-
-- [`POST /api/external/v2/customers/{customer_id}/contacts`](https://pennylane.readme.io/reference/postcustomercontact)
-
-  `PostCustomerContactWithResponse(ctx context.Context, customerId int, params *PostCustomerContactParams, body PostCustomerContactJSONRequestBody) (*PostCustomerContactResponse, error)`
-
-- [`DELETE /api/external/v2/customers/{customer_id}/contacts/{id}`](https://pennylane.readme.io/reference/deletecustomercontact)
-
-  `DeleteCustomerContactWithResponse(ctx context.Context, customerId int, id int64, params *DeleteCustomerContactParams) (*DeleteCustomerContactResponse, error)`
-
-- [`GET /api/external/v2/customers/{customer_id}/contacts/{id}`](https://pennylane.readme.io/reference/getcustomercontact)
-
-  `GetCustomerContactWithResponse(ctx context.Context, customerId int, id int64, params *GetCustomerContactParams) (*GetCustomerContactResponse, error)`
-
-- [`PUT /api/external/v2/customers/{customer_id}/contacts/{id}`](https://pennylane.readme.io/reference/putcustomercontact)
-
-  `PutCustomerContactWithResponse(ctx context.Context, customerId int, id int64, params *PutCustomerContactParams, body PutCustomerContactJSONRequestBody) (*PutCustomerContactResponse, error)`
-
-- [`GET /api/external/v2/customers/{customer_id}/electronic_billing_addresses`](https://pennylane.readme.io/reference/getcustomerelectronicbillingaddresses)
-
-  `GetCustomerElectronicBillingAddressesWithResponse(ctx context.Context, customerId int64, params *GetCustomerElectronicBillingAddressesParams) (*GetCustomerElectronicBillingAddressesResponse, error)`
-
-- [`GET /api/external/v2/customers/{id}`](https://pennylane.readme.io/reference/getcustomer)
-
-  `GetCustomerWithResponse(ctx context.Context, id int, params *GetCustomerParams) (*GetCustomerResponse, error)`
-
-- [`PUT /api/external/v2/customers/{id}`](https://pennylane.readme.io/reference/putcustomer)
-
-  `PutCustomerWithResponse(ctx context.Context, id int, params *PutCustomerParams, body PutCustomerJSONRequestBody) (*PutCustomerResponse, error)`
-
-- [`POST /api/external/v2/individual_customers`](https://pennylane.readme.io/reference/postindividualcustomer)
-
-  `PostIndividualCustomerWithResponse(ctx context.Context, params *PostIndividualCustomerParams, body PostIndividualCustomerJSONRequestBody) (*PostIndividualCustomerResponse, error)`
-
-- [`GET /api/external/v2/individual_customers/{id}`](https://pennylane.readme.io/reference/getindividualcustomer)
-
-  `GetIndividualCustomerWithResponse(ctx context.Context, id string, params *GetIndividualCustomerParams) (*GetIndividualCustomerResponse, error)`
-
-- [`PUT /api/external/v2/individual_customers/{id}`](https://pennylane.readme.io/reference/putindividualcustomer)
-
-  `PutIndividualCustomerWithResponse(ctx context.Context, id string, params *PutIndividualCustomerParams, body PutIndividualCustomerJSONRequestBody) (*PutIndividualCustomerResponse, error)`
+- [`DELETE /api/external/v2/customers/{customer_id}/contacts/{id}`](endpoints/deleteCustomerContact.md) — Delete a contact of a customer · `DeleteCustomerContactWithResponse`
+- [`GET /api/external/v2/company_customers/{id}`](endpoints/getCompanyCustomer.md) — Retrieve a company customer · `GetCompanyCustomerWithResponse`
+- [`GET /api/external/v2/customers/{customer_id}/categories`](endpoints/getCustomerCategories.md) — List categories of a customer · `GetCustomerCategoriesWithResponse`
+- [`GET /api/external/v2/customers/{customer_id}/contacts/{id}`](endpoints/getCustomerContact.md) — Retrieve a contact of a customer · `GetCustomerContactWithResponse`
+- [`GET /api/external/v2/customers/{customer_id}/contacts`](endpoints/getCustomerContacts.md) — List contacts of a customer · `GetCustomerContactsWithResponse`
+- [`GET /api/external/v2/customers/{customer_id}/electronic_billing_addresses`](endpoints/getCustomerElectronicBillingAddresses.md) — List eligible electronic billing addresses for a customer · `GetCustomerElectronicBillingAddressesWithResponse`
+- [`GET /api/external/v2/customers/{id}`](endpoints/getCustomer.md) — Retrieve a customer · `GetCustomerWithResponse`
+- [`GET /api/external/v2/customers`](endpoints/getCustomers.md) — List customers (company and individual) · `GetCustomersWithResponse`
+- [`GET /api/external/v2/individual_customers/{id}`](endpoints/getIndividualCustomer.md) — Retrieve an individual customer · `GetIndividualCustomerWithResponse`
+- [`POST /api/external/v2/company_customers`](endpoints/postCompanyCustomer.md) — Create a company customer · `PostCompanyCustomerWithResponse`
+- [`POST /api/external/v2/customers/{customer_id}/contacts`](endpoints/postCustomerContact.md) — Create a contact of a customer · `PostCustomerContactWithResponse`
+- [`POST /api/external/v2/customers`](endpoints/postCustomer.md) — Create a customer (company or individual) · `PostCustomerWithResponse`
+- [`POST /api/external/v2/individual_customers`](endpoints/postIndividualCustomer.md) — Create an individual customer · `PostIndividualCustomerWithResponse`
+- [`PUT /api/external/v2/company_customers/{id}`](endpoints/putCompanyCustomer.md) — Update a company customer · `PutCompanyCustomerWithResponse`
+- [`PUT /api/external/v2/customers/{customer_id}/categories`](endpoints/putCustomerCategories.md) — Categorize a customer · `PutCustomerCategoriesWithResponse`
+- [`PUT /api/external/v2/customers/{customer_id}/contacts/{id}`](endpoints/putCustomerContact.md) — Update a contact of a customer · `PutCustomerContactWithResponse`
+- [`PUT /api/external/v2/customers/{id}`](endpoints/putCustomer.md) — Update a customer (company or individual) · `PutCustomerWithResponse`
+- [`PUT /api/external/v2/individual_customers/{id}`](endpoints/putIndividualCustomer.md) — Update an individual customer · `PutIndividualCustomerWithResponse`
 
 ## Exports
 
-- [`POST /api/external/v2/exports/analytical_general_ledgers`](https://pennylane.readme.io/reference/exportanalyticalgeneralledger)
-
-  `ExportAnalyticalGeneralLedgerWithResponse(ctx context.Context, params *ExportAnalyticalGeneralLedgerParams, body ExportAnalyticalGeneralLedgerJSONRequestBody) (*ExportAnalyticalGeneralLedgerResponse, error)`
-
-- [`GET /api/external/v2/exports/analytical_general_ledgers/{id}`](https://pennylane.readme.io/reference/getanalyticalgeneralledgerexport)
-
-  `GetAnalyticalGeneralLedgerExportWithResponse(ctx context.Context, id int, params *GetAnalyticalGeneralLedgerExportParams) (*GetAnalyticalGeneralLedgerExportResponse, error)`
-
-- [`POST /api/external/v2/exports/fecs`](https://pennylane.readme.io/reference/exportfec)
-
-  `ExportFecWithResponse(ctx context.Context, params *ExportFecParams, body ExportFecJSONRequestBody) (*ExportFecResponse, error)`
-
-- [`GET /api/external/v2/exports/fecs/{id}`](https://pennylane.readme.io/reference/getfecexport)
-
-  `GetFecExportWithResponse(ctx context.Context, id int, params *GetFecExportParams) (*GetFecExportResponse, error)`
-
-- [`POST /api/external/v2/exports/general_ledgers`](https://pennylane.readme.io/reference/exportgeneralledger)
-
-  `ExportGeneralLedgerWithResponse(ctx context.Context, params *ExportGeneralLedgerParams, body ExportGeneralLedgerJSONRequestBody) (*ExportGeneralLedgerResponse, error)`
-
-- [`GET /api/external/v2/exports/general_ledgers/{id}`](https://pennylane.readme.io/reference/getgeneralledgerexport)
-
-  `GetGeneralLedgerExportWithResponse(ctx context.Context, id int, params *GetGeneralLedgerExportParams) (*GetGeneralLedgerExportResponse, error)`
+- [`GET /api/external/v2/exports/analytical_general_ledgers/{id}`](endpoints/getAnalyticalGeneralLedgerExport.md) — Retrieve an Analytical General Ledger export · `GetAnalyticalGeneralLedgerExportWithResponse`
+- [`GET /api/external/v2/exports/fecs/{id}`](endpoints/getFecExport.md) — Retrieve a FEC export · `GetFecExportWithResponse`
+- [`GET /api/external/v2/exports/general_ledgers/{id}`](endpoints/getGeneralLedgerExport.md) — Retrieve a General Ledger export · `GetGeneralLedgerExportWithResponse`
+- [`POST /api/external/v2/exports/analytical_general_ledgers`](endpoints/exportAnalyticalGeneralLedger.md) — Create an Analytical General Ledger export · `ExportAnalyticalGeneralLedgerWithResponse`
+- [`POST /api/external/v2/exports/fecs`](endpoints/exportFec.md) — Create a FEC export · `ExportFecWithResponse`
+- [`POST /api/external/v2/exports/general_ledgers`](endpoints/exportGeneralLedger.md) — Create a General Ledger export · `ExportGeneralLedgerWithResponse`
 
 ## File Attachments
 
-- [`POST /api/external/v2/file_attachments`](https://pennylane.readme.io/reference/postfileattachments)
-
-  `PostFileAttachmentsWithResponse(ctx context.Context, params *PostFileAttachmentsParams, body PostFileAttachmentsMultipartRequestBody) (*PostFileAttachmentsResponse, error)`
+- [`POST /api/external/v2/file_attachments`](endpoints/postFileAttachments.md) — Upload a file · `PostFileAttachmentsWithResponse`
 
 ## Fiscal years
 
-- [`GET /api/external/v2/fiscal_years`](https://pennylane.readme.io/reference/company-fiscal-years)
-
-  `CompanyFiscalYearsWithResponse(ctx context.Context, params *CompanyFiscalYearsParams) (*CompanyFiscalYearsResponse, error)`
+- [`GET /api/external/v2/fiscal_years`](endpoints/company-fiscal-years.md) — List Company's Fiscal Years · `CompanyFiscalYearsWithResponse`
 
 ## Journals
 
-- [`GET /api/external/v2/journals`](https://pennylane.readme.io/reference/getjournals)
-
-  `GetJournalsWithResponse(ctx context.Context, params *GetJournalsParams) (*GetJournalsResponse, error)`
-
-- [`POST /api/external/v2/journals`](https://pennylane.readme.io/reference/postjournals)
-
-  `PostJournalsWithResponse(ctx context.Context, params *PostJournalsParams, body PostJournalsJSONRequestBody) (*PostJournalsResponse, error)`
-
-- [`GET /api/external/v2/journals/{id}`](https://pennylane.readme.io/reference/getjournal)
-
-  `GetJournalWithResponse(ctx context.Context, id int, params *GetJournalParams) (*GetJournalResponse, error)`
+- [`GET /api/external/v2/journals/{id}`](endpoints/getJournal.md) — Retrieve a journal · `GetJournalWithResponse`
+- [`GET /api/external/v2/journals`](endpoints/getJournals.md) — List journals · `GetJournalsWithResponse`
+- [`POST /api/external/v2/journals`](endpoints/postJournals.md) — Create a journal · `PostJournalsWithResponse`
 
 ## Ledger Accounts
 
-- [`GET /api/external/v2/ledger_accounts`](https://pennylane.readme.io/reference/getledgeraccounts)
-
-  `GetLedgerAccountsWithResponse(ctx context.Context, params *GetLedgerAccountsParams) (*GetLedgerAccountsResponse, error)`
-
-- [`POST /api/external/v2/ledger_accounts`](https://pennylane.readme.io/reference/postledgeraccounts)
-
-  `PostLedgerAccountsWithResponse(ctx context.Context, params *PostLedgerAccountsParams, body PostLedgerAccountsJSONRequestBody) (*PostLedgerAccountsResponse, error)`
-
-- [`GET /api/external/v2/ledger_accounts/{id}`](https://pennylane.readme.io/reference/getledgeraccount)
-
-  `GetLedgerAccountWithResponse(ctx context.Context, id int, params *GetLedgerAccountParams) (*GetLedgerAccountResponse, error)`
-
-- [`PUT /api/external/v2/ledger_accounts/{id}`](https://pennylane.readme.io/reference/updateledgeraccount)
-
-  `UpdateLedgerAccountWithResponse(ctx context.Context, id int, params *UpdateLedgerAccountParams, body UpdateLedgerAccountJSONRequestBody) (*UpdateLedgerAccountResponse, error)`
+- [`GET /api/external/v2/ledger_accounts/{id}`](endpoints/getLedgerAccount.md) — Get a ledger account · `GetLedgerAccountWithResponse`
+- [`GET /api/external/v2/ledger_accounts`](endpoints/getLedgerAccounts.md) — List Ledger Accounts · `GetLedgerAccountsWithResponse`
+- [`POST /api/external/v2/ledger_accounts`](endpoints/postLedgerAccounts.md) — Create a ledger account · `PostLedgerAccountsWithResponse`
+- [`PUT /api/external/v2/ledger_accounts/{id}`](endpoints/updateLedgerAccount.md) — Update a ledger account · `UpdateLedgerAccountWithResponse`
 
 ## Ledger Attachments
 
-- [`POST /api/external/v2/ledger_attachments`](https://pennylane.readme.io/reference/postledgerattachments)
-
-  `PostLedgerAttachmentsWithResponse(ctx context.Context, params *PostLedgerAttachmentsParams, body PostLedgerAttachmentsMultipartRequestBody) (*PostLedgerAttachmentsResponse, error)`
+- [`POST /api/external/v2/ledger_attachments`](endpoints/postLedgerAttachments.md) — Upload a file · `PostLedgerAttachmentsWithResponse`
 
 ## Ledger Entries
 
-- [`GET /api/external/v2/ledger_entries`](https://pennylane.readme.io/reference/getledgerentries)
-
-  `GetLedgerEntriesWithResponse(ctx context.Context, params *GetLedgerEntriesParams) (*GetLedgerEntriesResponse, error)`
-
-- [`POST /api/external/v2/ledger_entries`](https://pennylane.readme.io/reference/postledgerentries)
-
-  `PostLedgerEntriesWithResponse(ctx context.Context, params *PostLedgerEntriesParams, body PostLedgerEntriesJSONRequestBody) (*PostLedgerEntriesResponse, error)`
-
-- [`GET /api/external/v2/ledger_entries/{id}`](https://pennylane.readme.io/reference/getledgerentry)
-
-  `GetLedgerEntryWithResponse(ctx context.Context, id int, params *GetLedgerEntryParams) (*GetLedgerEntryResponse, error)`
-
-- [`PUT /api/external/v2/ledger_entries/{id}`](https://pennylane.readme.io/reference/putledgerentries)
-
-  `PutLedgerEntriesWithResponse(ctx context.Context, id string, params *PutLedgerEntriesParams, body PutLedgerEntriesJSONRequestBody) (*PutLedgerEntriesResponse, error)`
-
-- [`GET /api/external/v2/ledger_entries/{ledger_entry_id}/dms_files`](https://pennylane.readme.io/reference/getledgerentriesdmsfiles)
-
-  `GetLedgerEntriesDmsFilesWithResponse(ctx context.Context, ledgerEntryId float32, params *GetLedgerEntriesDmsFilesParams) (*GetLedgerEntriesDmsFilesResponse, error)`
-
-- [`GET /api/external/v2/ledger_entries/{ledger_entry_id}/ledger_entry_lines`](https://pennylane.readme.io/reference/getledgerentriesledgerentrylines)
-
-  `GetLedgerEntriesLedgerEntryLinesWithResponse(ctx context.Context, ledgerEntryId float32, params *GetLedgerEntriesLedgerEntryLinesParams) (*GetLedgerEntriesLedgerEntryLinesResponse, error)`
+- [`GET /api/external/v2/ledger_entries/{id}`](endpoints/getLedgerEntry.md) — Retrieve a Ledger entry · `GetLedgerEntryWithResponse`
+- [`GET /api/external/v2/ledger_entries/{ledger_entry_id}/dms_files`](endpoints/getLedgerEntriesDmsFiles.md) — List DMS files of a Ledger Entry · `GetLedgerEntriesDmsFilesWithResponse`
+- [`GET /api/external/v2/ledger_entries/{ledger_entry_id}/ledger_entry_lines`](endpoints/getLedgerEntriesLedgerEntryLines.md) — List ledger entry lines of a Ledger Entry · `GetLedgerEntriesLedgerEntryLinesWithResponse`
+- [`GET /api/external/v2/ledger_entries`](endpoints/getLedgerEntries.md) — List Ledger Entries · `GetLedgerEntriesWithResponse`
+- [`POST /api/external/v2/ledger_entries`](endpoints/postLedgerEntries.md) — Create a ledger entry · `PostLedgerEntriesWithResponse`
+- [`PUT /api/external/v2/ledger_entries/{id}`](endpoints/putLedgerEntries.md) — Update a ledger entry · `PutLedgerEntriesWithResponse`
 
 ## Ledger Entry Lines
 
-- [`GET /api/external/v2/ledger_entry_lines`](https://pennylane.readme.io/reference/getledgerentrylines)
-
-  `GetLedgerEntryLinesWithResponse(ctx context.Context, params *GetLedgerEntryLinesParams) (*GetLedgerEntryLinesResponse, error)`
-
-- [`DELETE /api/external/v2/ledger_entry_lines/lettering`](https://pennylane.readme.io/reference/deleteledgerentrylinesunletter)
-
-  `DeleteLedgerEntryLinesUnletterWithResponse(ctx context.Context, params *DeleteLedgerEntryLinesUnletterParams, body DeleteLedgerEntryLinesUnletterJSONRequestBody) (*DeleteLedgerEntryLinesUnletterResponse, error)`
-
-- [`POST /api/external/v2/ledger_entry_lines/lettering`](https://pennylane.readme.io/reference/postledgerentrylinesletter)
-
-  `PostLedgerEntryLinesLetterWithResponse(ctx context.Context, params *PostLedgerEntryLinesLetterParams, body PostLedgerEntryLinesLetterJSONRequestBody) (*PostLedgerEntryLinesLetterResponse, error)`
-
-- [`GET /api/external/v2/ledger_entry_lines/{id}`](https://pennylane.readme.io/reference/getledgerentryline)
-
-  `GetLedgerEntryLineWithResponse(ctx context.Context, id int, params *GetLedgerEntryLineParams) (*GetLedgerEntryLineResponse, error)`
-
-- [`GET /api/external/v2/ledger_entry_lines/{ledger_entry_line_id}/categories`](https://pennylane.readme.io/reference/getledgerentrylinescategories)
-
-  `GetLedgerEntryLinesCategoriesWithResponse(ctx context.Context, ledgerEntryLineId int, params *GetLedgerEntryLinesCategoriesParams) (*GetLedgerEntryLinesCategoriesResponse, error)`
-
-- [`PUT /api/external/v2/ledger_entry_lines/{ledger_entry_line_id}/categories`](https://pennylane.readme.io/reference/putledgerentrylinescategories)
-
-  `PutLedgerEntryLinesCategoriesWithResponse(ctx context.Context, ledgerEntryLineId float32, params *PutLedgerEntryLinesCategoriesParams, body PutLedgerEntryLinesCategoriesJSONRequestBody) (*PutLedgerEntryLinesCategoriesResponse, error)`
-
-- [`GET /api/external/v2/ledger_entry_lines/{ledger_entry_line_id}/lettered_ledger_entry_lines`](https://pennylane.readme.io/reference/getledgerentrylinesletteredledgerentrylines)
-
-  `GetLedgerEntryLinesLetteredLedgerEntryLinesWithResponse(ctx context.Context, ledgerEntryLineId float32, params *GetLedgerEntryLinesLetteredLedgerEntryLinesParams) (*GetLedgerEntryLinesLetteredLedgerEntryLinesResponse, error)`
+- [`DELETE /api/external/v2/ledger_entry_lines/lettering`](endpoints/deleteLedgerEntryLinesUnletter.md) — Unletter ledger entry lines · `DeleteLedgerEntryLinesUnletterWithResponse`
+- [`GET /api/external/v2/ledger_entry_lines/{id}`](endpoints/getLedgerEntryLine.md) — Retrieve a Ledger entry line · `GetLedgerEntryLineWithResponse`
+- [`GET /api/external/v2/ledger_entry_lines/{ledger_entry_line_id}/categories`](endpoints/getLedgerEntryLinesCategories.md) — List categories of a Ledger Entry line · `GetLedgerEntryLinesCategoriesWithResponse`
+- [`GET /api/external/v2/ledger_entry_lines/{ledger_entry_line_id}/lettered_ledger_entry_lines`](endpoints/getLedgerEntryLinesLetteredLedgerEntryLines.md) — List ledger entry lines lettered to a given ledger entry line · `GetLedgerEntryLinesLetteredLedgerEntryLinesWithResponse`
+- [`GET /api/external/v2/ledger_entry_lines`](endpoints/getLedgerEntryLines.md) — List ledger entry lines · `GetLedgerEntryLinesWithResponse`
+- [`POST /api/external/v2/ledger_entry_lines/lettering`](endpoints/postLedgerEntryLinesLetter.md) — Letter ledger entry lines · `PostLedgerEntryLinesLetterWithResponse`
+- [`PUT /api/external/v2/ledger_entry_lines/{ledger_entry_line_id}/categories`](endpoints/putLedgerEntryLinesCategories.md) — Link Analytical Categories to a Ledger Entry line · `PutLedgerEntryLinesCategoriesWithResponse`
 
 ## Mandates
 
-- [`GET /api/external/v2/gocardless_mandates`](https://pennylane.readme.io/reference/getgocardlessmandates)
-
-  `GetGocardlessMandatesWithResponse(ctx context.Context, params *GetGocardlessMandatesParams) (*GetGocardlessMandatesResponse, error)`
-
-- [`POST /api/external/v2/gocardless_mandates/mail_requests`](https://pennylane.readme.io/reference/postgocardlessmandatemailrequests)
-
-  `PostGocardlessMandateMailRequestsWithResponse(ctx context.Context, params *PostGocardlessMandateMailRequestsParams, body PostGocardlessMandateMailRequestsJSONRequestBody) (*PostGocardlessMandateMailRequestsResponse, error)`
-
-- [`POST /api/external/v2/gocardless_mandates/{gocardless_mandate_id}/associations`](https://pennylane.readme.io/reference/postgocardlessmandateassociations)
-
-  `PostGocardlessMandateAssociationsWithResponse(ctx context.Context, gocardlessMandateId int, params *PostGocardlessMandateAssociationsParams, body PostGocardlessMandateAssociationsJSONRequestBody) (*PostGocardlessMandateAssociationsResponse, error)`
-
-- [`POST /api/external/v2/gocardless_mandates/{gocardless_mandate_id}/cancellations`](https://pennylane.readme.io/reference/postgocardlessmandatecancellations)
-
-  `PostGocardlessMandateCancellationsWithResponse(ctx context.Context, gocardlessMandateId int, params *PostGocardlessMandateCancellationsParams) (*PostGocardlessMandateCancellationsResponse, error)`
-
-- [`GET /api/external/v2/gocardless_mandates/{id}`](https://pennylane.readme.io/reference/getgocardlessmandate)
-
-  `GetGocardlessMandateWithResponse(ctx context.Context, id int, params *GetGocardlessMandateParams) (*GetGocardlessMandateResponse, error)`
-
-- [`GET /api/external/v2/pro_account/mandate_migrations`](https://pennylane.readme.io/reference/getproaccountmandatemigrations)
-
-  `GetProAccountMandateMigrationsWithResponse(ctx context.Context, params *GetProAccountMandateMigrationsParams) (*GetProAccountMandateMigrationsResponse, error)`
-
-- [`POST /api/external/v2/pro_account/mandate_migrations`](https://pennylane.readme.io/reference/postproaccountmandatemigrations)
-
-  `PostProAccountMandateMigrationsWithResponse(ctx context.Context, params *PostProAccountMandateMigrationsParams, body PostProAccountMandateMigrationsJSONRequestBody) (*PostProAccountMandateMigrationsResponse, error)`
-
-- [`POST /api/external/v2/pro_account/mandate_requests`](https://pennylane.readme.io/reference/postproaccountmandatemailrequests)
-
-  `PostProAccountMandateMailRequestsWithResponse(ctx context.Context, params *PostProAccountMandateMailRequestsParams, body PostProAccountMandateMailRequestsJSONRequestBody) (*PostProAccountMandateMailRequestsResponse, error)`
-
-- [`GET /api/external/v2/pro_account/mandates`](https://pennylane.readme.io/reference/getproaccountmandates)
-
-  `GetProAccountMandatesWithResponse(ctx context.Context, params *GetProAccountMandatesParams) (*GetProAccountMandatesResponse, error)`
-
-- [`GET /api/external/v2/sepa_mandates`](https://pennylane.readme.io/reference/getsepamandates)
-
-  `GetSepaMandatesWithResponse(ctx context.Context, params *GetSepaMandatesParams) (*GetSepaMandatesResponse, error)`
-
-- [`POST /api/external/v2/sepa_mandates`](https://pennylane.readme.io/reference/postsepamandates)
-
-  `PostSepaMandatesWithResponse(ctx context.Context, params *PostSepaMandatesParams, body PostSepaMandatesJSONRequestBody) (*PostSepaMandatesResponse, error)`
-
-- [`DELETE /api/external/v2/sepa_mandates/{id}`](https://pennylane.readme.io/reference/deletesepamandate)
-
-  `DeleteSepaMandateWithResponse(ctx context.Context, id int, params *DeleteSepaMandateParams) (*DeleteSepaMandateResponse, error)`
-
-- [`GET /api/external/v2/sepa_mandates/{id}`](https://pennylane.readme.io/reference/getsepamandate)
-
-  `GetSepaMandateWithResponse(ctx context.Context, id int, params *GetSepaMandateParams) (*GetSepaMandateResponse, error)`
-
-- [`PUT /api/external/v2/sepa_mandates/{id}`](https://pennylane.readme.io/reference/putsepamandate)
-
-  `PutSepaMandateWithResponse(ctx context.Context, id int, params *PutSepaMandateParams, body PutSepaMandateJSONRequestBody) (*PutSepaMandateResponse, error)`
+- [`DELETE /api/external/v2/sepa_mandates/{id}`](endpoints/deleteSepaMandate.md) — Delete a SEPA mandate · `DeleteSepaMandateWithResponse`
+- [`GET /api/external/v2/gocardless_mandates/{id}`](endpoints/getGocardlessMandate.md) — Get a Gocardless mandate · `GetGocardlessMandateWithResponse`
+- [`GET /api/external/v2/gocardless_mandates`](endpoints/getGocardlessMandates.md) — List gocardless mandates · `GetGocardlessMandatesWithResponse`
+- [`GET /api/external/v2/pro_account/mandate_migrations`](endpoints/getProAccountMandateMigrations.md) — List mandate migration candidates · `GetProAccountMandateMigrationsWithResponse`
+- [`GET /api/external/v2/pro_account/mandates`](endpoints/getProAccountMandates.md) — List Pro Account payment mandates · `GetProAccountMandatesWithResponse`
+- [`GET /api/external/v2/sepa_mandates/{id}`](endpoints/getSepaMandate.md) — Get a SEPA mandate · `GetSepaMandateWithResponse`
+- [`GET /api/external/v2/sepa_mandates`](endpoints/getSepaMandates.md) — List SEPA mandates · `GetSepaMandatesWithResponse`
+- [`POST /api/external/v2/gocardless_mandates/mail_requests`](endpoints/postGocardlessMandateMailRequests.md) — Send a GoCardless mandate email request · `PostGocardlessMandateMailRequestsWithResponse`
+- [`POST /api/external/v2/gocardless_mandates/{gocardless_mandate_id}/associations`](endpoints/postGocardlessMandateAssociations.md) — Associate a GoCardless mandate to a customer · `PostGocardlessMandateAssociationsWithResponse`
+- [`POST /api/external/v2/gocardless_mandates/{gocardless_mandate_id}/cancellations`](endpoints/postGocardlessMandateCancellations.md) — Cancel a Gocardless mandate · `PostGocardlessMandateCancellationsWithResponse`
+- [`POST /api/external/v2/pro_account/mandate_migrations`](endpoints/postProAccountMandateMigrations.md) — Migrate a mandate to Pro Account · `PostProAccountMandateMigrationsWithResponse`
+- [`POST /api/external/v2/pro_account/mandate_requests`](endpoints/postProAccountMandateMailRequests.md) — Send a Pro Account SEPA mandate request · `PostProAccountMandateMailRequestsWithResponse`
+- [`POST /api/external/v2/sepa_mandates`](endpoints/postSepaMandates.md) — Create a SEPA mandate · `PostSepaMandatesWithResponse`
+- [`PUT /api/external/v2/sepa_mandates/{id}`](endpoints/putSepaMandate.md) — Update a SEPA mandate · `PutSepaMandateWithResponse`
 
 ## PA Registrations
 
-- [`GET /api/external/v2/pa_registrations`](https://pennylane.readme.io/reference/getparegistrations)
-
-  `GetPaRegistrationsWithResponse(ctx context.Context, params *GetPaRegistrationsParams) (*GetPaRegistrationsResponse, error)`
+- [`GET /api/external/v2/pa_registrations`](endpoints/getPaRegistrations.md) — List PA Registrations · `GetPaRegistrationsWithResponse`
 
 ## Products
 
-- [`GET /api/external/v2/products`](https://pennylane.readme.io/reference/getproducts)
-
-  `GetProductsWithResponse(ctx context.Context, params *GetProductsParams) (*GetProductsResponse, error)`
-
-- [`POST /api/external/v2/products`](https://pennylane.readme.io/reference/postproducts-1)
-
-  `PostProductsWithResponse(ctx context.Context, params *PostProductsParams, body PostProductsJSONRequestBody) (*PostProductsResponse, error)`
-
-- [`GET /api/external/v2/products/{id}`](https://pennylane.readme.io/reference/getproduct)
-
-  `GetProductWithResponse(ctx context.Context, id int, params *GetProductParams) (*GetProductResponse, error)`
-
-- [`PUT /api/external/v2/products/{id}`](https://pennylane.readme.io/reference/putproduct)
-
-  `PutProductWithResponse(ctx context.Context, id int, params *PutProductParams, body PutProductJSONRequestBody) (*PutProductResponse, error)`
+- [`GET /api/external/v2/products/{id}`](endpoints/getProduct.md) — Retrieve a product · `GetProductWithResponse`
+- [`GET /api/external/v2/products`](endpoints/getProducts.md) — List products · `GetProductsWithResponse`
+- [`POST /api/external/v2/products`](endpoints/postProducts.md) — Create a product · `PostProductsWithResponse`
+- [`PUT /api/external/v2/products/{id}`](endpoints/putProduct.md) — Update a product · `PutProductWithResponse`
 
 ## Purchase Requests
 
-- [`GET /api/external/v2/purchase_requests`](https://pennylane.readme.io/reference/getpurchaserequests)
-
-  `GetPurchaseRequestsWithResponse(ctx context.Context, params *GetPurchaseRequestsParams) (*GetPurchaseRequestsResponse, error)`
-
-- [`POST /api/external/v2/purchase_requests/imports`](https://pennylane.readme.io/reference/createpurchaserequestimport)
-
-  `CreatePurchaseRequestImportWithResponse(ctx context.Context, params *CreatePurchaseRequestImportParams, body CreatePurchaseRequestImportJSONRequestBody) (*CreatePurchaseRequestImportResponse, error)`
-
-- [`GET /api/external/v2/purchase_requests/{id}`](https://pennylane.readme.io/reference/getpurchaserequest)
-
-  `GetPurchaseRequestWithResponse(ctx context.Context, id int, params *GetPurchaseRequestParams) (*GetPurchaseRequestResponse, error)`
+- [`GET /api/external/v2/purchase_requests/{id}`](endpoints/getPurchaseRequest.md) — Retrieve a purchase request · `GetPurchaseRequestWithResponse`
+- [`GET /api/external/v2/purchase_requests`](endpoints/getPurchaseRequests.md) — List purchase requests · `GetPurchaseRequestsWithResponse`
+- [`POST /api/external/v2/purchase_requests/imports`](endpoints/createPurchaseRequestImport.md) — Import a purchase order. · `CreatePurchaseRequestImportWithResponse`
 
 ## Quotes
 
-- [`GET /api/external/v2/changelogs/quotes`](https://pennylane.readme.io/reference/getquotechanges)
-
-  `GetQuoteChangesWithResponse(ctx context.Context, params *GetQuoteChangesParams) (*GetQuoteChangesResponse, error)`
-
-- [`GET /api/external/v2/quotes`](https://pennylane.readme.io/reference/listquotes)
-
-  `ListQuotesWithResponse(ctx context.Context, params *ListQuotesParams) (*ListQuotesResponse, error)`
-
-- [`POST /api/external/v2/quotes`](https://pennylane.readme.io/reference/postquotes)
-
-  `PostQuotesWithResponse(ctx context.Context, params *PostQuotesParams, body PostQuotesJSONRequestBody) (*PostQuotesResponse, error)`
-
-- [`GET /api/external/v2/quotes/{id}`](https://pennylane.readme.io/reference/getquote)
-
-  `GetQuoteWithResponse(ctx context.Context, id int, params *GetQuoteParams) (*GetQuoteResponse, error)`
-
-- [`PUT /api/external/v2/quotes/{id}`](https://pennylane.readme.io/reference/updatequote)
-
-  `UpdateQuoteWithResponse(ctx context.Context, id int, params *UpdateQuoteParams, body UpdateQuoteJSONRequestBody) (*UpdateQuoteResponse, error)`
-
-- [`POST /api/external/v2/quotes/{id}/send_by_email`](https://pennylane.readme.io/reference/sendbyemailquote)
-
-  `SendByEmailQuoteWithResponse(ctx context.Context, id int, params *SendByEmailQuoteParams, body SendByEmailQuoteJSONRequestBody) (*SendByEmailQuoteResponse, error)`
-
-- [`PUT /api/external/v2/quotes/{id}/update_status`](https://pennylane.readme.io/reference/updatestatusquote)
-
-  `UpdateStatusQuoteWithResponse(ctx context.Context, id int, params *UpdateStatusQuoteParams, body UpdateStatusQuoteJSONRequestBody) (*UpdateStatusQuoteResponse, error)`
-
-- [`GET /api/external/v2/quotes/{quote_id}/appendices`](https://pennylane.readme.io/reference/getquoteappendices)
-
-  `GetQuoteAppendicesWithResponse(ctx context.Context, quoteId int, params *GetQuoteAppendicesParams) (*GetQuoteAppendicesResponse, error)`
-
-- [`POST /api/external/v2/quotes/{quote_id}/appendices`](https://pennylane.readme.io/reference/postquoteappendices)
-
-  `PostQuoteAppendicesWithResponse(ctx context.Context, quoteId int, params *PostQuoteAppendicesParams, body PostQuoteAppendicesMultipartRequestBody) (*PostQuoteAppendicesResponse, error)`
-
-- [`GET /api/external/v2/quotes/{quote_id}/invoice_line_sections`](https://pennylane.readme.io/reference/getquoteinvoicelinesections)
-
-  `GetQuoteInvoiceLineSectionsWithResponse(ctx context.Context, quoteId int, params *GetQuoteInvoiceLineSectionsParams) (*GetQuoteInvoiceLineSectionsResponse, error)`
-
-- [`GET /api/external/v2/quotes/{quote_id}/invoice_lines`](https://pennylane.readme.io/reference/getquoteinvoicelines)
-
-  `GetQuoteInvoiceLinesWithResponse(ctx context.Context, quoteId int, params *GetQuoteInvoiceLinesParams) (*GetQuoteInvoiceLinesResponse, error)`
+- [`GET /api/external/v2/changelogs/quotes`](endpoints/getQuoteChanges.md) — Get quotes changes events · `GetQuoteChangesWithResponse`
+- [`GET /api/external/v2/quotes/{id}`](endpoints/getQuote.md) — Retrieve a quote · `GetQuoteWithResponse`
+- [`GET /api/external/v2/quotes/{quote_id}/appendices`](endpoints/getQuoteAppendices.md) — List appendices of a quote · `GetQuoteAppendicesWithResponse`
+- [`GET /api/external/v2/quotes/{quote_id}/invoice_line_sections`](endpoints/getQuoteInvoiceLineSections.md) — List invoice line sections for a quote · `GetQuoteInvoiceLineSectionsWithResponse`
+- [`GET /api/external/v2/quotes/{quote_id}/invoice_lines`](endpoints/getQuoteInvoiceLines.md) — List invoice lines for a quote · `GetQuoteInvoiceLinesWithResponse`
+- [`GET /api/external/v2/quotes`](endpoints/listQuotes.md) — List quotes · `ListQuotesWithResponse`
+- [`POST /api/external/v2/quotes/{id}/send_by_email`](endpoints/sendByEmailQuote.md) — Send a quote by email · `SendByEmailQuoteWithResponse`
+- [`POST /api/external/v2/quotes/{quote_id}/appendices`](endpoints/postQuoteAppendices.md) — Upload an appendix for a quote · `PostQuoteAppendicesWithResponse`
+- [`POST /api/external/v2/quotes`](endpoints/postQuotes.md) — Create a quote · `PostQuotesWithResponse`
+- [`PUT /api/external/v2/quotes/{id}/update_status`](endpoints/updateStatusQuote.md) — Update status of a quote · `UpdateStatusQuoteWithResponse`
+- [`PUT /api/external/v2/quotes/{id}`](endpoints/updateQuote.md) — Update a quote · `UpdateQuoteWithResponse`
 
 ## Supplier Invoices
 
-- [`GET /api/external/v2/supplier_invoices`](https://pennylane.readme.io/reference/getsupplierinvoices)
-
-  `GetSupplierInvoicesWithResponse(ctx context.Context, params *GetSupplierInvoicesParams) (*GetSupplierInvoicesResponse, error)`
-
-- [`POST /api/external/v2/supplier_invoices/e_invoices/imports`](https://pennylane.readme.io/reference/createsupplierinvoiceeinvoiceimport)
-
-  `CreateSupplierInvoiceEInvoiceImportWithResponse(ctx context.Context, params *CreateSupplierInvoiceEInvoiceImportParams, body CreateSupplierInvoiceEInvoiceImportMultipartRequestBody) (*CreateSupplierInvoiceEInvoiceImportResponse, error)`
-
-- [`POST /api/external/v2/supplier_invoices/import`](https://pennylane.readme.io/reference/importsupplierinvoice)
-
-  `ImportSupplierInvoiceWithResponse(ctx context.Context, params *ImportSupplierInvoiceParams, body ImportSupplierInvoiceJSONRequestBody) (*ImportSupplierInvoiceResponse, error)`
-
-- [`GET /api/external/v2/supplier_invoices/{id}`](https://pennylane.readme.io/reference/getsupplierinvoice)
-
-  `GetSupplierInvoiceWithResponse(ctx context.Context, id int, params *GetSupplierInvoiceParams) (*GetSupplierInvoiceResponse, error)`
-
-- [`PUT /api/external/v2/supplier_invoices/{id}`](https://pennylane.readme.io/reference/putsupplierinvoice)
-
-  `PutSupplierInvoiceWithResponse(ctx context.Context, id int, params *PutSupplierInvoiceParams, body PutSupplierInvoiceJSONRequestBody) (*PutSupplierInvoiceResponse, error)`
-
-- [`PUT /api/external/v2/supplier_invoices/{id}/validate_accounting`](https://pennylane.readme.io/reference/validateaccountingsupplierinvoice)
-
-  `ValidateAccountingSupplierInvoiceWithResponse(ctx context.Context, id int, params *ValidateAccountingSupplierInvoiceParams) (*ValidateAccountingSupplierInvoiceResponse, error)`
-
-- [`GET /api/external/v2/supplier_invoices/{supplier_invoice_id}/categories`](https://pennylane.readme.io/reference/getsupplierinvoicecategories)
-
-  `GetSupplierInvoiceCategoriesWithResponse(ctx context.Context, supplierInvoiceId int, params *GetSupplierInvoiceCategoriesParams) (*GetSupplierInvoiceCategoriesResponse, error)`
-
-- [`PUT /api/external/v2/supplier_invoices/{supplier_invoice_id}/categories`](https://pennylane.readme.io/reference/putsupplierinvoicecategories)
-
-  `PutSupplierInvoiceCategoriesWithResponse(ctx context.Context, supplierInvoiceId int, params *PutSupplierInvoiceCategoriesParams, body PutSupplierInvoiceCategoriesJSONRequestBody) (*PutSupplierInvoiceCategoriesResponse, error)`
-
-- [`PUT /api/external/v2/supplier_invoices/{supplier_invoice_id}/e_invoice_status`](https://pennylane.readme.io/reference/putsupplierinvoiceeinvoicestatus)
-
-  `PutSupplierInvoiceEInvoiceStatusWithResponse(ctx context.Context, supplierInvoiceId int, params *PutSupplierInvoiceEInvoiceStatusParams, body PutSupplierInvoiceEInvoiceStatusJSONRequestBody) (*PutSupplierInvoiceEInvoiceStatusResponse, error)`
-
-- [`GET /api/external/v2/supplier_invoices/{supplier_invoice_id}/invoice_lines`](https://pennylane.readme.io/reference/getsupplierinvoicelines)
-
-  `GetSupplierInvoiceLinesWithResponse(ctx context.Context, supplierInvoiceId int, params *GetSupplierInvoiceLinesParams) (*GetSupplierInvoiceLinesResponse, error)`
-
-- [`POST /api/external/v2/supplier_invoices/{supplier_invoice_id}/linked_purchase_requests`](https://pennylane.readme.io/reference/postsupplierinvoicelinkedpurchaserequests)
-
-  `PostSupplierInvoiceLinkedPurchaseRequestsWithResponse(ctx context.Context, supplierInvoiceId int, params *PostSupplierInvoiceLinkedPurchaseRequestsParams, body PostSupplierInvoiceLinkedPurchaseRequestsJSONRequestBody) (*PostSupplierInvoiceLinkedPurchaseRequestsResponse, error)`
-
-- [`GET /api/external/v2/supplier_invoices/{supplier_invoice_id}/matched_transactions`](https://pennylane.readme.io/reference/getsupplierinvoicematchedtransactions)
-
-  `GetSupplierInvoiceMatchedTransactionsWithResponse(ctx context.Context, supplierInvoiceId int, params *GetSupplierInvoiceMatchedTransactionsParams) (*GetSupplierInvoiceMatchedTransactionsResponse, error)`
-
-- [`PUT /api/external/v2/supplier_invoices/{supplier_invoice_id}/payment_status`](https://pennylane.readme.io/reference/updatesupplierinvoicepaymentstatus)
-
-  `UpdateSupplierInvoicePaymentStatusWithResponse(ctx context.Context, supplierInvoiceId int, params *UpdateSupplierInvoicePaymentStatusParams, body UpdateSupplierInvoicePaymentStatusJSONRequestBody) (*UpdateSupplierInvoicePaymentStatusResponse, error)`
-
-- [`GET /api/external/v2/supplier_invoices/{supplier_invoice_id}/payments`](https://pennylane.readme.io/reference/getsupplierinvoicepayments)
-
-  `GetSupplierInvoicePaymentsWithResponse(ctx context.Context, supplierInvoiceId int, params *GetSupplierInvoicePaymentsParams) (*GetSupplierInvoicePaymentsResponse, error)`
+- [`GET /api/external/v2/supplier_invoices/{id}`](endpoints/getSupplierInvoice.md) — Retrieve a supplier invoice · `GetSupplierInvoiceWithResponse`
+- [`GET /api/external/v2/supplier_invoices/{supplier_invoice_id}/categories`](endpoints/getSupplierInvoiceCategories.md) — List categories of a supplier invoice · `GetSupplierInvoiceCategoriesWithResponse`
+- [`GET /api/external/v2/supplier_invoices/{supplier_invoice_id}/invoice_lines`](endpoints/getSupplierInvoiceLines.md) — List invoice lines for a supplier invoice · `GetSupplierInvoiceLinesWithResponse`
+- [`GET /api/external/v2/supplier_invoices/{supplier_invoice_id}/matched_transactions`](endpoints/getSupplierInvoiceMatchedTransactions.md) — List matched transactions for a supplier invoice · `GetSupplierInvoiceMatchedTransactionsWithResponse`
+- [`GET /api/external/v2/supplier_invoices/{supplier_invoice_id}/payments`](endpoints/getSupplierInvoicePayments.md) — List payments for a supplier invoice · `GetSupplierInvoicePaymentsWithResponse`
+- [`GET /api/external/v2/supplier_invoices`](endpoints/getSupplierInvoices.md) — List supplier invoices · `GetSupplierInvoicesWithResponse`
+- [`POST /api/external/v2/supplier_invoices/e_invoices/imports`](endpoints/createSupplierInvoiceEInvoiceImport.md) — Import a supplier e-invoice · `CreateSupplierInvoiceEInvoiceImportWithResponse`
+- [`POST /api/external/v2/supplier_invoices/import`](endpoints/importSupplierInvoice.md) — Import a supplier invoice with a file attached · `ImportSupplierInvoiceWithResponse`
+- [`POST /api/external/v2/supplier_invoices/{supplier_invoice_id}/linked_purchase_requests`](endpoints/postSupplierInvoiceLinkedPurchaseRequests.md) — Link a purchase request to a supplier invoice · `PostSupplierInvoiceLinkedPurchaseRequestsWithResponse`
+- [`PUT /api/external/v2/supplier_invoices/{id}/validate_accounting`](endpoints/ValidateAccountingSupplierInvoice.md) — Validate the accounting of a supplier invoice · `ValidateAccountingSupplierInvoiceWithResponse`
+- [`PUT /api/external/v2/supplier_invoices/{id}`](endpoints/putSupplierInvoice.md) — Update a supplier invoice · `PutSupplierInvoiceWithResponse`
+- [`PUT /api/external/v2/supplier_invoices/{supplier_invoice_id}/categories`](endpoints/putSupplierInvoiceCategories.md) — Categorize a supplier invoice · `PutSupplierInvoiceCategoriesWithResponse`
+- [`PUT /api/external/v2/supplier_invoices/{supplier_invoice_id}/e_invoice_status`](endpoints/putSupplierInvoiceEInvoiceStatus.md) — Update e-invoice status for a supplier invoice · `PutSupplierInvoiceEInvoiceStatusWithResponse`
+- [`PUT /api/external/v2/supplier_invoices/{supplier_invoice_id}/payment_status`](endpoints/updateSupplierInvoicePaymentStatus.md) — Update a supplier invoice payment status · `UpdateSupplierInvoicePaymentStatusWithResponse`
 
 ## Suppliers
 
-- [`GET /api/external/v2/suppliers`](https://pennylane.readme.io/reference/getsuppliers)
-
-  `GetSuppliersWithResponse(ctx context.Context, params *GetSuppliersParams) (*GetSuppliersResponse, error)`
-
-- [`POST /api/external/v2/suppliers`](https://pennylane.readme.io/reference/postsupplier)
-
-  `PostSupplierWithResponse(ctx context.Context, params *PostSupplierParams, body PostSupplierJSONRequestBody) (*PostSupplierResponse, error)`
-
-- [`GET /api/external/v2/suppliers/{id}`](https://pennylane.readme.io/reference/getsupplier)
-
-  `GetSupplierWithResponse(ctx context.Context, id int, params *GetSupplierParams) (*GetSupplierResponse, error)`
-
-- [`PUT /api/external/v2/suppliers/{id}`](https://pennylane.readme.io/reference/putsupplier)
-
-  `PutSupplierWithResponse(ctx context.Context, id int, params *PutSupplierParams, body PutSupplierJSONRequestBody) (*PutSupplierResponse, error)`
-
-- [`GET /api/external/v2/suppliers/{supplier_id}/categories`](https://pennylane.readme.io/reference/getsuppliercategories)
-
-  `GetSupplierCategoriesWithResponse(ctx context.Context, supplierId int, params *GetSupplierCategoriesParams) (*GetSupplierCategoriesResponse, error)`
-
-- [`PUT /api/external/v2/suppliers/{supplier_id}/categories`](https://pennylane.readme.io/reference/putsuppliercategories)
-
-  `PutSupplierCategoriesWithResponse(ctx context.Context, supplierId int, params *PutSupplierCategoriesParams, body PutSupplierCategoriesJSONRequestBody) (*PutSupplierCategoriesResponse, error)`
+- [`GET /api/external/v2/suppliers/{id}`](endpoints/getSupplier.md) — Retrieve a supplier · `GetSupplierWithResponse`
+- [`GET /api/external/v2/suppliers/{supplier_id}/categories`](endpoints/getSupplierCategories.md) — List categories of a supplier · `GetSupplierCategoriesWithResponse`
+- [`GET /api/external/v2/suppliers`](endpoints/getSuppliers.md) — List suppliers · `GetSuppliersWithResponse`
+- [`POST /api/external/v2/suppliers`](endpoints/postSupplier.md) — Create a Supplier · `PostSupplierWithResponse`
+- [`PUT /api/external/v2/suppliers/{id}`](endpoints/putSupplier.md) — Update a supplier · `PutSupplierWithResponse`
+- [`PUT /api/external/v2/suppliers/{supplier_id}/categories`](endpoints/putSupplierCategories.md) — Categorize a supplier · `PutSupplierCategoriesWithResponse`
 
 ## Transactions
 
-- [`POST /api/external/v2/customer_invoices/{customer_invoice_id}/matched_transactions`](https://pennylane.readme.io/reference/postcustomerinvoicematchedtransactions)
-
-  `PostCustomerInvoiceMatchedTransactionsWithResponse(ctx context.Context, customerInvoiceId int, params *PostCustomerInvoiceMatchedTransactionsParams, body PostCustomerInvoiceMatchedTransactionsJSONRequestBody) (*PostCustomerInvoiceMatchedTransactionsResponse, error)`
-
-- [`DELETE /api/external/v2/customer_invoices/{customer_invoice_id}/matched_transactions/{id}`](https://pennylane.readme.io/reference/deletecustomerinvoicematchedtransactions)
-
-  `DeleteCustomerInvoiceMatchedTransactionsWithResponse(ctx context.Context, customerInvoiceId int, id int, params *DeleteCustomerInvoiceMatchedTransactionsParams) (*DeleteCustomerInvoiceMatchedTransactionsResponse, error)`
-
-- [`POST /api/external/v2/supplier_invoices/{supplier_invoice_id}/matched_transactions`](https://pennylane.readme.io/reference/postsupplierinvoicematchedtransactions)
-
-  `PostSupplierInvoiceMatchedTransactionsWithResponse(ctx context.Context, supplierInvoiceId int, params *PostSupplierInvoiceMatchedTransactionsParams, body PostSupplierInvoiceMatchedTransactionsJSONRequestBody) (*PostSupplierInvoiceMatchedTransactionsResponse, error)`
-
-- [`DELETE /api/external/v2/supplier_invoices/{supplier_invoice_id}/matched_transactions/{id}`](https://pennylane.readme.io/reference/deletesupplierinvoicematchedtransactions)
-
-  `DeleteSupplierInvoiceMatchedTransactionsWithResponse(ctx context.Context, supplierInvoiceId int, id int, params *DeleteSupplierInvoiceMatchedTransactionsParams) (*DeleteSupplierInvoiceMatchedTransactionsResponse, error)`
-
-- [`GET /api/external/v2/transactions`](https://pennylane.readme.io/reference/gettransactions)
-
-  `GetTransactionsWithResponse(ctx context.Context, params *GetTransactionsParams) (*GetTransactionsResponse, error)`
-
-- [`POST /api/external/v2/transactions`](https://pennylane.readme.io/reference/createtransaction)
-
-  `CreateTransactionWithResponse(ctx context.Context, params *CreateTransactionParams, body CreateTransactionJSONRequestBody) (*CreateTransactionResponse, error)`
-
-- [`GET /api/external/v2/transactions/{id}`](https://pennylane.readme.io/reference/gettransaction)
-
-  `GetTransactionWithResponse(ctx context.Context, id int, params *GetTransactionParams) (*GetTransactionResponse, error)`
-
-- [`PUT /api/external/v2/transactions/{id}`](https://pennylane.readme.io/reference/updatetransaction)
-
-  `UpdateTransactionWithResponse(ctx context.Context, id int, params *UpdateTransactionParams, body UpdateTransactionJSONRequestBody) (*UpdateTransactionResponse, error)`
-
-- [`GET /api/external/v2/transactions/{transaction_id}/categories`](https://pennylane.readme.io/reference/gettransactioncategories)
-
-  `GetTransactionCategoriesWithResponse(ctx context.Context, transactionId int, params *GetTransactionCategoriesParams) (*GetTransactionCategoriesResponse, error)`
-
-- [`PUT /api/external/v2/transactions/{transaction_id}/categories`](https://pennylane.readme.io/reference/puttransactioncategories)
-
-  `PutTransactionCategoriesWithResponse(ctx context.Context, transactionId int, params *PutTransactionCategoriesParams, body PutTransactionCategoriesJSONRequestBody) (*PutTransactionCategoriesResponse, error)`
-
-- [`GET /api/external/v2/transactions/{transaction_id}/matched_invoices`](https://pennylane.readme.io/reference/gettransactionmatchedinvoices)
-
-  `GetTransactionMatchedInvoicesWithResponse(ctx context.Context, transactionId int, params *GetTransactionMatchedInvoicesParams) (*GetTransactionMatchedInvoicesResponse, error)`
+- [`DELETE /api/external/v2/customer_invoices/{customer_invoice_id}/matched_transactions/{id}`](endpoints/deleteCustomerInvoiceMatchedTransactions.md) — Unmatch a transaction to a customer invoice · `DeleteCustomerInvoiceMatchedTransactionsWithResponse`
+- [`DELETE /api/external/v2/supplier_invoices/{supplier_invoice_id}/matched_transactions/{id}`](endpoints/deleteSupplierInvoiceMatchedTransactions.md) — Unmatch a transaction to a supplier invoice · `DeleteSupplierInvoiceMatchedTransactionsWithResponse`
+- [`GET /api/external/v2/transactions/{id}`](endpoints/getTransaction.md) — Retrieve a transaction · `GetTransactionWithResponse`
+- [`GET /api/external/v2/transactions/{transaction_id}/categories`](endpoints/getTransactionCategories.md) — List categories of a bank transaction · `GetTransactionCategoriesWithResponse`
+- [`GET /api/external/v2/transactions/{transaction_id}/matched_invoices`](endpoints/getTransactionMatchedInvoices.md) — List invoices matched to a bank transaction · `GetTransactionMatchedInvoicesWithResponse`
+- [`GET /api/external/v2/transactions`](endpoints/getTransactions.md) — List transactions · `GetTransactionsWithResponse`
+- [`POST /api/external/v2/customer_invoices/{customer_invoice_id}/matched_transactions`](endpoints/postCustomerInvoiceMatchedTransactions.md) — Match a transaction to a customer invoice · `PostCustomerInvoiceMatchedTransactionsWithResponse`
+- [`POST /api/external/v2/supplier_invoices/{supplier_invoice_id}/matched_transactions`](endpoints/postSupplierInvoiceMatchedTransactions.md) — Match a transaction to a supplier invoice · `PostSupplierInvoiceMatchedTransactionsWithResponse`
+- [`POST /api/external/v2/transactions`](endpoints/createTransaction.md) — Create a transaction · `CreateTransactionWithResponse`
+- [`PUT /api/external/v2/transactions/{id}`](endpoints/updateTransaction.md) — Update a transaction · `UpdateTransactionWithResponse`
+- [`PUT /api/external/v2/transactions/{transaction_id}/categories`](endpoints/putTransactionCategories.md) — Categorize a bank transaction · `PutTransactionCategoriesWithResponse`
 
 ## Trial balance
 
-- [`GET /api/external/v2/trial_balance`](https://pennylane.readme.io/reference/gettrialbalance)
-
-  `GetTrialBalanceWithResponse(ctx context.Context, params *GetTrialBalanceParams) (*GetTrialBalanceResponse, error)`
+- [`GET /api/external/v2/trial_balance`](endpoints/getTrialBalance.md) — Get the trial balance · `GetTrialBalanceWithResponse`
 
 ## Users
 
-- [`GET /api/external/v2/me`](https://pennylane.readme.io/reference/getme)
-
-  `GetMeWithResponse(ctx context.Context, params *GetMeParams) (*GetMeResponse, error)`
+- [`GET /api/external/v2/me`](endpoints/getMe.md) — User Profile · `GetMeWithResponse`
 
 ## Webhooks
 
-- [`GET /api/external/v2/webhook_subscriptions`](https://pennylane.readme.io/reference/getwebhooksubscriptions)
-
-  `GetWebhookSubscriptionsWithResponse(ctx context.Context, params *GetWebhookSubscriptionsParams) (*GetWebhookSubscriptionsResponse, error)`
-
-- [`POST /api/external/v2/webhook_subscriptions`](https://pennylane.readme.io/reference/postwebhooksubscriptions)
-
-  `PostWebhookSubscriptionsWithResponse(ctx context.Context, body PostWebhookSubscriptionsJSONRequestBody) (*PostWebhookSubscriptionsResponse, error)`
-
-- [`DELETE /api/external/v2/webhook_subscriptions/{id}`](https://pennylane.readme.io/reference/deletewebhooksubscription)
-
-  `DeleteWebhookSubscriptionWithResponse(ctx context.Context, id int) (*DeleteWebhookSubscriptionResponse, error)`
-
-- [`GET /api/external/v2/webhook_subscriptions/{id}`](https://pennylane.readme.io/reference/getwebhooksubscription)
-
-  `GetWebhookSubscriptionWithResponse(ctx context.Context, id int) (*GetWebhookSubscriptionResponse, error)`
-
-- [`PUT /api/external/v2/webhook_subscriptions/{id}`](https://pennylane.readme.io/reference/putwebhooksubscription)
-
-  `PutWebhookSubscriptionWithResponse(ctx context.Context, id int, body PutWebhookSubscriptionJSONRequestBody) (*PutWebhookSubscriptionResponse, error)`
+- [`DELETE /api/external/v2/webhook_subscriptions/{id}`](endpoints/deleteWebhookSubscription.md) — Delete a webhook subscription · `DeleteWebhookSubscriptionWithResponse`
+- [`GET /api/external/v2/webhook_subscriptions/{id}`](endpoints/getWebhookSubscription.md) — Get a webhook subscription · `GetWebhookSubscriptionWithResponse`
+- [`GET /api/external/v2/webhook_subscriptions`](endpoints/getWebhookSubscriptions.md) — List webhook subscriptions · `GetWebhookSubscriptionsWithResponse`
+- [`POST /api/external/v2/webhook_subscriptions`](endpoints/postWebhookSubscriptions.md) — Create a webhook subscription · `PostWebhookSubscriptionsWithResponse`
+- [`PUT /api/external/v2/webhook_subscriptions/{id}`](endpoints/putWebhookSubscription.md) — Update a webhook subscription · `PutWebhookSubscriptionWithResponse`
