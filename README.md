@@ -9,3 +9,15 @@ go get github.com/ritoon/sdk-pennylane@v0.1.0
 ```
 
 Le [guide du client](docs/utilisation.md) montre comment vérifier la connexion et parcourir les journaux. La [documentation du SDK](docs/README.md) recense les méthodes et les références Pennylane.
+
+## Tester la connexion
+
+L’[exemple Go](exemple/main.go) appelle `Ping` pour vérifier que Pennylane reconnaît le token et la société. Cet appel est en lecture seule.
+
+Depuis la racine du dépôt, renseignez `PENNYLANE_TOKEN` dans votre environnement. Avec un token Firm, exportez aussi `PENNYLANE_COMPANY_ID` avec l’identifiant numérique de la société ciblée. Lancez ensuite la commande suivante.
+
+```sh
+go run ./exemple
+```
+
+En cas de succès, le programme affiche `Connexion à Pennylane réussie.`. En cas d’échec, il affiche l’erreur et se termine avec un code non nul.
