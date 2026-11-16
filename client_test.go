@@ -3,6 +3,7 @@ package pennylane
 import (
 	"context"
 	"encoding/json"
+	"errors"
 	"io"
 	"net/http"
 	"os"
@@ -139,5 +140,48 @@ func TestContractCoverage(t *testing.T) {
 	}
 	if count != 186 {
 		t.Errorf("expected 186 contract operations, got %d", count)
+	}
+}
+
+func TestNewRejectsInvalidConfig(t *testing.T) {
+	cases := map[string]Config{
+		"blank":            {Token: "   "},
+		"embedded space":   {Token: "first second"},
+		"embedded newline": {Token: "first\nsecond"},
+		"negative company": {Token: "test-token", CompanyID: -1},
+	}
+	for name, cfg := range cases {
+		t.Run(name, func(t *testing.T) {
+			if c, err := New(cfg); err == nil || c != nil {
+				t.Fatal("expected config rejection")
+			}
+		})
+	}
+}
+
+func TestCompanyTokenAndTransportError(t *testing.T) {
+	failure := errors.New("transport unavailable")
+	c, err := New(Config{Token: "  test-token  ", HTTPClient: &http.Client{Transport: transportFunc(func(r *http.Request) (*http.Response, error) {
+		if r.Header.Get("Authorization") != "Bearer test-token" || r.Header.Get("X-Company-Id") != "" {
+			t.Fatal("unexpected company token headers")
+		}
+		return nil, failure
+	})}})
+	if err != nil {
+		t.Fatal(err)
+	}
+	if err := c.Ping(context.Background()); !errors.Is(err, failure) {
+		t.Fatalf("expected transport error, got %v", err)
+	}
+}
+
+func TestInvalidMultipartFilenameStopsBeforeRequest(t *testing.T) {
+	c := mockClient(t, 200, "{}", func(*http.Request) { t.Fatal("unexpected HTTP request") })
+	for _, name := range []string{"", "invoice\r\n.pdf"} {
+		var body PostFileAttachmentsMultipartRequestBody
+		body.File.InitFromBytes([]byte("data"), name)
+		if _, err := c.PostFileAttachmentsWithResponse(context.Background(), nil, body); err == nil {
+			t.Fatal("expected filename error")
+		}
 	}
 }
