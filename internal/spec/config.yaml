@@ -1,0 +1,10 @@
+package: pennylane
+generate:
+  models: true
+  client: true
+output: api.gen.go
+compatibility:
+  always-prefix-enum-values: true
+output-options:
+  client-type-name: APIClient
+  nullable-type: true
