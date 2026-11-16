@@ -1,0 +1,10 @@
+{
+  "customer_type": "company",
+  "name": "Société de démonstration",
+  "billing_address": {
+    "address": "8 rue de la Paix",
+    "postal_code": "75002",
+    "city": "Paris",
+    "country_alpha2": "FR"
+  }
+}
