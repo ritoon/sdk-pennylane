@@ -2,6 +2,10 @@
 
 Lancer les commandes depuis la racine du dépôt avec `PENNYLANE_TOKEN` dans l’environnement. Avec un token Firm, configurer aussi `PENNYLANE_COMPANY_ID`. La commande `go run ./exemple` seule vérifie la connexion. Les commandes de création et d’envoi agissent sur la société configurée.
 
+Pour les données réelles, utiliser des copies nommées `*.local.json` (par exemple `client.local.json` et `mandat.local.json`) ou un dossier `.private/`. Ces chemins et les fichiers `.env` / `.env.*` sont ignorés par Git à tous les niveaux du dépôt. Les modèles `.env.example`, `.env.sample` et `.env.template` restent versionnables et doivent contenir uniquement des valeurs fictives. Le programme lit les variables d’environnement et ne charge pas automatiquement les fichiers `.env`.
+
+Conserver les modèles de `exemple/donnees/` sans données réelles. Les exclusions Git ne protègent pas un fichier déjà suivi ni un ajout forcé avec `git add -f`.
+
 ## Lire la balance comptable
 
 ```sh
