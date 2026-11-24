@@ -54,6 +54,43 @@ Pour une pièce jointe, initialiser le champ `File` du corps multipart avec `Ini
 
 ## Renseigner un corps de requête et lire le résultat
 
+### Corps proposant plusieurs variantes
+
+Les unions `oneOf` / `anyOf` exposent des méthodes `From…` pour choisir une variante, `As…` pour la relire et `Merge…` pour fusionner une variante avec le contenu actuel. Par exemple, pour un client entreprise :
+
+```go
+var body pennylane.PostCustomerJSONRequestBody
+company := pennylane.PostCustomerJSONBody0{
+    CustomerType: "company",
+    Name: "Société de démonstration",
+}
+company.BillingAddress.Address = "8 rue de la Paix"
+company.BillingAddress.PostalCode = "75002"
+company.BillingAddress.City = "Paris"
+company.BillingAddress.CountryAlpha2 = "FR"
+if err := body.FromPostCustomerJSONBody0(company); err != nil {
+    return err
+}
+resp, err := client.PostCustomerWithResponse(ctx, nil, body)
+// Vérifier err, resp.StatusCode() et resp.JSON201 avant de poursuivre.
+```
+
+L’[exemple exécutable de création de client](../exemple/client.go) utilise ce parcours typé. Les méthodes brutes `WithBodyWithResponse` restent disponibles.
+
+Pour une union facultative représentée par un pointeur, `nil` omet le champ. Pour transmettre explicitement `null`, conserver un pointeur vers une union contenant le JSON `null` :
+
+```go
+var saleType pennylane.ImportCustomerInvoicesJSONBody_SaleType
+if err := saleType.UnmarshalJSON([]byte("null")); err != nil {
+    return err
+}
+body.SaleType = &saleType // body : ImportCustomerInvoicesJSONRequestBody
+```
+
+Le décodage d’un JSON complet par `encoding/json` transforme un champ pointeur à `null` en pointeur `nil` : utiliser la construction ci-dessus lorsque la distinction entre « omettre » et « effacer » est nécessaire. Les méthodes d’union transportent les valeurs ; elles ne valident pas les contraintes métier ou l’appartenance aux enums, qui restent contrôlées par l’API.
+
+### Corps simple
+
 Dans la fiche de [création d’un compte bancaire](endpoints/postBankAccount.md), le champ JSON obligatoire `name` correspond au champ Go `Name`. Cet exemple crée un compte dans la société du client et nécessite le scope `bank_accounts:all`.
 
 ```go

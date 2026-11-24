@@ -35,6 +35,7 @@ PostProductsWithResponse(ctx context.Context, params *PostProductsParams, body P
 | `$.custom_fields[].value (anyOf 2)` | array | selon variante |  |
 | `$.custom_fields[].value (anyOf 2)[]` | string | par élément |  |
 | `$.description` | string | facultatif | Product description. Maximum 5,000 characters.<br>example `"This is product 1"` |
+| `$.ean_code` | string ou null | facultatif | Product EAN code, 8 or 13 digits.<br><br>Requires the purchase product catalog in the company plan and the advanced products and services catalog<br>module; check `products_and_services_catalog` on `GET /api/external/v2/company/features`. Otherwise, the request returns 403.<br><br>maxLength `13`<br>pattern `"^(\\d{8}&#124;\\d{13})$"`<br>example `"3017620422003"` |
 | `$.external_reference` | string | facultatif | You can use your own unique value when creating the product. If not provided, Pennylane will pick one for you. Value must be unique<br>example `"0e67fc3c-c632-4feb-ad34-e18ed5fbf66a"` |
 | `$.label` | string | obligatoire | Product label<br>example `"Product 1"` |
 | `$.ledger_account_id` | integer (int64) | facultatif | example `42` |
@@ -55,6 +56,7 @@ PostProductsWithResponse(ctx context.Context, params *PostProductsParams, body P
     }
   ],
   "description": "This is product 1",
+  "ean_code": "3017620422003",
   "external_reference": "0e67fc3c-c632-4feb-ad34-e18ed5fbf66a",
   "label": "Product 1",
   "ledger_account_id": 42,

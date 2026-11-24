@@ -5,6 +5,7 @@ import (
 	"os"
 	"path/filepath"
 	"reflect"
+	"strings"
 	"testing"
 )
 
@@ -30,6 +31,59 @@ func TestNormalize(t *testing.T) {
 			}
 		})
 	}
+}
+
+func TestLiftRequestUnions(t *testing.T) {
+	if containsUnion([]any{"plain", object{"type": "string"}}) {
+		t.Fatal("non-union classified as a union")
+	}
+	for _, body := range []string{
+		`{"oneOf":[{"type":"string"},{"type":"integer"}]}`,
+		`{"type":"object","properties":{"items":{"type":"array","items":{"anyOf":[{"type":"string"},{"type":"array","items":{"type":"string"}}]}}}}`,
+	} {
+		var schema object
+		check(json.Unmarshal([]byte(body), &schema))
+		plain := object{"type": "object", "properties": object{"name": object{"type": "string"}}}
+		media := object{"schema": schema}
+		plainMedia := object{"schema": plain}
+		spec := object{
+			"components": object{"schemas": object{}},
+			"paths": object{
+				"/union": object{"post": object{"operationId": "post-sample", "requestBody": object{"content": object{"application/json": media}}}},
+				"/plain": object{"post": object{"operationId": "postPlain", "requestBody": object{"content": object{"application/json": plainMedia}}}},
+				"/empty": object{"get": object{"operationId": "getEmpty"}},
+			},
+		}
+		liftRequestUnions(spec)
+		defs := spec["components"].(object)["schemas"].(object)
+		if len(defs) != 1 || !reflect.DeepEqual(defs["PostSampleJSONBody"], schema) {
+			t.Fatal("union schema changed while lifting")
+		}
+		if media["schema"].(object)["$ref"] != "#/components/schemas/PostSampleJSONBody" || !reflect.DeepEqual(plainMedia["schema"], plain) {
+			t.Fatal("wrong request reference or modified ordinary request")
+		}
+		liftRequestUnions(spec)
+		if len(defs) != 1 {
+			t.Fatal("lifting must be idempotent")
+		}
+	}
+}
+
+func TestLiftRequestUnionNameCollision(t *testing.T) {
+	defer func() {
+		if r := recover(); r == nil || !strings.Contains(r.(string), "collision") {
+			t.Fatal("expected schema collision")
+		}
+	}()
+	spec := object{
+		"components": object{"schemas": object{"PostSampleJSONBody": object{"type": "string"}}},
+		"paths": object{"/sample": object{"post": object{
+			"operationId": "postSample", "requestBody": object{"content": object{"application/json": object{
+				"schema": object{"oneOf": []any{object{"type": "string"}}},
+			}}},
+		}}},
+	}
+	liftRequestUnions(spec)
 }
 
 func TestMergeReferencePages(t *testing.T) {

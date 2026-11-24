@@ -2,6 +2,10 @@
 
 Go 1.24 ou ultérieur. Le contrat consolidé est dans `internal/spec/company.json`. Chaque opération contient le lien vers sa fiche officielle. Depuis la racine du dépôt, le générateur Markdown reconstruit l’index et les fiches dans `docs/endpoints/` à partir du contrat et des méthodes Go compilées.
 
+Les corps JSON contenant des unions `oneOf` ou `anyOf` sont placés dans `components.schemas` par l’assembleur, sous leur nom Go existant (`…JSONBody`). Avec oapi-codegen v2.5.1, cette représentation produit les méthodes `From…`, `As…`, `Merge…`, `MarshalJSON` et `UnmarshalJSON` nécessaires ; les schémas de requête inline n’obtiennent pas ces méthodes. Les références ne changent pas le contrat HTTP et le générateur Markdown les résout pour conserver les tableaux de champs et les exemples.
+
+`payload_regression_test.go` vérifie le transport des champs concernés, y compris les valeurs nulles documentées. `union_regression_test.go` vérifie les variantes des unions de requête et leurs méthodes publiques. Ces tests utilisent un transport simulé et ne créent aucune donnée dans Pennylane.
+
 ```sh
 go generate ./...
 go run ./internal/docgen

@@ -59,6 +59,13 @@ UpdateCommercialDocumentWithResponse(ctx context.Context, id int, params *Update
 | `$.invoice_lines.create` | array | facultatif |  |
 | `$.invoice_lines.create[]` | oneOf | par élément |  |
 | `$.invoice_lines.create[] (oneOf 1)` | object | selon variante | Provide only the product_id to automatically populate label,<br>raw_currency_unit_price, unit and vat_rate.<br>You can override any of these fields by providing them explicitly.<br><br>title `"Product-based Invoice Line"`<br>additionalProperties `false` |
+| `$.invoice_lines.create[] (oneOf 1).custom_fields` | array | facultatif | **Experimental** — under active development, may change without notice. Do not rely on this field in production integrations. |
+| `$.invoice_lines.create[] (oneOf 1).custom_fields[]` | object | par élément | additionalProperties `false` |
+| `$.invoice_lines.create[] (oneOf 1).custom_fields[].name` | string | obligatoire | The `api_name` of the custom field<br>example `"delivery_terms"` |
+| `$.invoice_lines.create[] (oneOf 1).custom_fields[].value` | anyOf | obligatoire | Format depends on the field type: plain string for `text`; numeric string for `number` (e.g. `"42.5"`); ISO 8601 date for `date` (e.g. `"2025-01-15"`); option label for `single_select`; array of option labels for `multi_select`.<br>example `"Delivered at place"` |
+| `$.invoice_lines.create[] (oneOf 1).custom_fields[].value (anyOf 1)` | string ou null | selon variante |  |
+| `$.invoice_lines.create[] (oneOf 1).custom_fields[].value (anyOf 2)` | array | selon variante |  |
+| `$.invoice_lines.create[] (oneOf 1).custom_fields[].value (anyOf 2)[]` | string | par élément |  |
 | `$.invoice_lines.create[] (oneOf 1).description` | string ou null | facultatif | The description of the invoice line<br>example `"Consulting services for August"` |
 | `$.invoice_lines.create[] (oneOf 1).discount` | object | facultatif | additionalProperties `false` |
 | `$.invoice_lines.create[] (oneOf 1).discount.type` | string | obligatoire | Discount type.<br>- absolute if it is an amount<br>- relative if it is a percentage<br><br>enum `["absolute","relative"]` |
@@ -71,6 +78,13 @@ UpdateCommercialDocumentWithResponse(ctx context.Context, id int, params *Update
 | `$.invoice_lines.create[] (oneOf 1).unit` | string | facultatif | Line item unit (type of unit)<br>example `"piece"` |
 | `$.invoice_lines.create[] (oneOf 1).vat_rate` | string | facultatif | Product VAT rate. A 20% VAT in France is FR_200.<br>enum `["FR_1_05","FR_1_75","FR_09","FR_21","FR_40","FR_50","FR_55","FR_60","FR_65","FR_85","FR_92","FR_100","FR_130","FR_15_385","FR_160","FR_196","FR_200","AD_10","AD_45","AD_95","AT_100","AT_130","AT_190","AT_200","BE_60","BE_120","BE_210","BG_90","BG_200","CH_25","CH_37","CH_77","CH_26","CH_38","CH_81","CY_30","CY_50","CY_80","CY_90","CY_190","CZ_100","CZ_120","CZ_150","CZ_210","DE_70","DE_190","DK_250","EE_90","EE_200","EE_220","EE_240","ES_40","ES_70","ES_100","ES_210","FI_100","FI_135","FI_140","FI_240","FI_255","GB_50","GB_200","GR_60","GR_130","GR_170","GR_240","GR_40","HR_50","HR_130","HR_250","HU_50","HU_180","HU_270","IE_48","IE_90","IE_135","IE_210","IE_230","IT_40","IT_50","IT_100","IT_220","LT_50","LT_90","LT_120","LT_210","LU_30","LU_70","LU_80","LU_120","LU_130","LU_140","LU_160","LU_170","LV_50","LV_120","LV_210","MC_09","MC_21","MC_55","MC_85","MC_100","MC_200","MT_50","MT_70","MT_120","MT_180","MU_150","NL_90","NL_210","PL_50","PL_80","PL_230","PT_60","PT_130","PT_160","PT_180","PT_220","PT_230","RO_50","RO_90","RO_110","RO_190","RO_210","SE_60","SE_120","SE_250","SI_50","SI_95","SI_220","SK_50","SK_100","SK_190","SK_200","SK_230","NO_120","NO_150","NO_250","DE_70_BU0002","DE_190_BU0003","DE_70_BU0008","DE_190_BU0009","DE_intracom_70_BU0012","DE_intracom_190_BU0013","DE_190_electronic_BU0226","exempt","DE_intracom_exempt_BU0011","DE_intracom_exempt_BU0047","DE_intracom_exempt_BU0233","DE_exempt_BU0001","DE_exempt_BU0181","DE_exempt_BU0490","intracom_21","intracom_55","intracom_85","intracom_100","crossborder","ES_intracom_sales_goods","ES_intracom_sales_services","DE_intracom_70_BU0018","DE_intracom_190_BU0019","DE_intracom_190_BU0506","extracom","DE_extracom_BU0173","DE_extracom_BU0191","DE_extracom_190_BU0511","ES_isp_sales","ES_suplido","FR_85_construction","FR_100_construction","FR_200_construction","DE_exempt_construction_BU0046","DE_70_construction_BU0091","DE_190_construction_BU0094","DE_190_construction_BU0526","DE_190_construction_BU0546","ES_isp_purchases_210","ES_isp_purchases_100","mixed"]`<br>example `"FR_200"` |
 | `$.invoice_lines.create[] (oneOf 2)` | object | selon variante | Create an invoice line by providing all required fields explicitly<br>without referencing a product.<br><br>title `"Standard Invoice Line"`<br>additionalProperties `false` |
+| `$.invoice_lines.create[] (oneOf 2).custom_fields` | array | facultatif | **Experimental** — under active development, may change without notice. Do not rely on this field in production integrations. |
+| `$.invoice_lines.create[] (oneOf 2).custom_fields[]` | object | par élément | additionalProperties `false` |
+| `$.invoice_lines.create[] (oneOf 2).custom_fields[].name` | string | obligatoire | The `api_name` of the custom field<br>example `"delivery_terms"` |
+| `$.invoice_lines.create[] (oneOf 2).custom_fields[].value` | anyOf | obligatoire | Format depends on the field type: plain string for `text`; numeric string for `number` (e.g. `"42.5"`); ISO 8601 date for `date` (e.g. `"2025-01-15"`); option label for `single_select`; array of option labels for `multi_select`.<br>example `"Delivered at place"` |
+| `$.invoice_lines.create[] (oneOf 2).custom_fields[].value (anyOf 1)` | string ou null | selon variante |  |
+| `$.invoice_lines.create[] (oneOf 2).custom_fields[].value (anyOf 2)` | array | selon variante |  |
+| `$.invoice_lines.create[] (oneOf 2).custom_fields[].value (anyOf 2)[]` | string | par élément |  |
 | `$.invoice_lines.create[] (oneOf 2).description` | string ou null | facultatif | The description of the invoice line<br>example `"Consulting services for August"` |
 | `$.invoice_lines.create[] (oneOf 2).discount` | object | facultatif | additionalProperties `false` |
 | `$.invoice_lines.create[] (oneOf 2).discount.type` | string | obligatoire | Discount type.<br>- absolute if it is an amount<br>- relative if it is a percentage<br><br>enum `["absolute","relative"]` |
@@ -86,6 +100,13 @@ UpdateCommercialDocumentWithResponse(ctx context.Context, id int, params *Update
 | `$.invoice_lines.delete[].id` | integer (int64) | obligatoire | ID of the invoice line<br>example `42` |
 | `$.invoice_lines.update` | array | facultatif |  |
 | `$.invoice_lines.update[]` | object | par élément | additionalProperties `false` |
+| `$.invoice_lines.update[].custom_fields` | array | facultatif | **Experimental** — under active development, may change without notice. Do not rely on this field in production integrations. |
+| `$.invoice_lines.update[].custom_fields[]` | object | par élément | additionalProperties `false` |
+| `$.invoice_lines.update[].custom_fields[].name` | string | obligatoire | The `api_name` of the custom field<br>example `"delivery_terms"` |
+| `$.invoice_lines.update[].custom_fields[].value` | anyOf | obligatoire | Format depends on the field type: plain string for `text`; numeric string for `number` (e.g. `"42.5"`); ISO 8601 date for `date` (e.g. `"2025-01-15"`); option label for `single_select`; array of option labels for `multi_select`.<br>example `"Delivered at place"` |
+| `$.invoice_lines.update[].custom_fields[].value (anyOf 1)` | string ou null | selon variante |  |
+| `$.invoice_lines.update[].custom_fields[].value (anyOf 2)` | array | selon variante |  |
+| `$.invoice_lines.update[].custom_fields[].value (anyOf 2)[]` | string | par élément |  |
 | `$.invoice_lines.update[].description` | string ou null | facultatif | The description of the invoice line<br>example `"Consulting services for August"` |
 | `$.invoice_lines.update[].discount` | object | facultatif | additionalProperties `false` |
 | `$.invoice_lines.update[].discount.type` | string | obligatoire | Discount type.<br>- absolute if it is an amount<br>- relative if it is a percentage<br><br>enum `["absolute","relative"]` |
@@ -146,6 +167,12 @@ UpdateCommercialDocumentWithResponse(ctx context.Context, id int, params *Update
     ],
     "update": [
       {
+        "custom_fields": [
+          {
+            "name": "delivery_terms",
+            "value": "Delivered at place"
+          }
+        ],
         "description": "Consulting services for August",
         "discount": {
           "value": "100.00"

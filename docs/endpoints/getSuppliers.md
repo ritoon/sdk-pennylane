@@ -41,6 +41,7 @@ Returns a list of suppliers
 | `$.has_more` | boolean | obligatoire | Indicates whether additional results are available beyond this set.<br>Use this flag to determine if another request is needed.<br><br>example `true` |
 | `$.items` | array | obligatoire | The list of items returned |
 | `$.items[]` | object | par élément | additionalProperties `false` |
+| `$.items[].bic` | string ou null | obligatoire | The Bank Identifier Code (BIC) of the supplier's bank. `null` when the supplier has no BIC for its current IBAN.<br>example `"BNPAFRPPXXX"` |
 | `$.items[].created_at` | string (date-time) | obligatoire | example `"2023-08-30T10:08:08.146343Z"` |
 | `$.items[].emails` | array | obligatoire | example `["hello@example.org"]` |
 | `$.items[].emails[]` | string | par élément |  |
@@ -71,6 +72,7 @@ Returns a list of suppliers
   "has_more": true,
   "items": [
     {
+      "bic": "BNPAFRPPXXX",
       "created_at": "2023-08-30T10:08:08.146343Z",
       "emails": [
         "hello@example.org"

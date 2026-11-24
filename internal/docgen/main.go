@@ -128,6 +128,18 @@ func rows(b *strings.Builder, path, required string, s schema) {
 }
 func fields(b *strings.Builder, s schema) { b.WriteString(heading); rows(b, "$", "racine", s) }
 
+func requestSchema(s schema, definitions map[string]schema) schema {
+	if ref, ok := s["$ref"].(string); ok {
+		name, local := strings.CutPrefix(ref, "#/components/schemas/")
+		resolved, found := definitions[name]
+		if !local || !found {
+			panic("unknown request schema: " + ref)
+		}
+		return resolved
+	}
+	return s
+}
+
 // example returns only values explicitly illustrated by the provider.
 func example(s schema) (any, bool) {
 	if v, ok := s["example"]; ok {
@@ -241,10 +253,11 @@ func main() {
 			} else {
 				for _, ct := range keys(op.RequestBody.Content) {
 					m := op.RequestBody.Content[ct]
+					s := requestSchema(m.Schema, doc.Components.Schemas)
 					fmt.Fprintf(&b, "**Corps %s** · `%s`\n\n", presence(op.RequestBody.Required), ct)
-					fields(&b, m.Schema)
+					fields(&b, s)
 					if ct == "application/json" {
-						illustration(&b, m.Schema)
+						illustration(&b, s)
 					}
 					for _, k := range keys(m.Encoding) {
 						fmt.Fprintf(&b, "\nPartie `%s` encodée en `%s`.\n", k, m.Encoding[k].ContentType)
