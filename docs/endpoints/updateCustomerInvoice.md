@@ -62,8 +62,8 @@ UpdateCustomerInvoiceWithResponse(ctx context.Context, id int, params *UpdateCus
 | `$ (anyOf 1).invoice_lines.create[] (oneOf 1)` | object | selon variante | Provide only the product_id to automatically populate label,<br>raw_currency_unit_price, unit, vat_rate, and ledger_account_id.<br>You can override any of these fields by providing them explicitly.<br><br>title `"Product-based Invoice Line"`<br>additionalProperties `false` |
 | `$ (anyOf 1).invoice_lines.create[] (oneOf 1).custom_fields` | array | facultatif | **Experimental** — under active development, may change without notice. Do not rely on this field in production integrations. |
 | `$ (anyOf 1).invoice_lines.create[] (oneOf 1).custom_fields[]` | object | par élément | additionalProperties `false` |
-| `$ (anyOf 1).invoice_lines.create[] (oneOf 1).custom_fields[].name` | string | obligatoire | example `"color"` |
-| `$ (anyOf 1).invoice_lines.create[] (oneOf 1).custom_fields[].value` | anyOf | obligatoire | Format depends on the field type: plain string for `text`; numeric string for `number` (e.g. `"42.5"`); ISO 8601 date for `date` (e.g. `"2025-01-15"`); option label for `single_select`; array of option labels for `multi_select`.<br>example `"red"` |
+| `$ (anyOf 1).invoice_lines.create[] (oneOf 1).custom_fields[].name` | string | obligatoire | The `api_name` of the custom field<br>example `"delivery_terms"` |
+| `$ (anyOf 1).invoice_lines.create[] (oneOf 1).custom_fields[].value` | anyOf | obligatoire | Format depends on the field type: plain string for `text`; numeric string for `number` (e.g. `"42.5"`); ISO 8601 date for `date` (e.g. `"2025-01-15"`); option label for `single_select`; array of option labels for `multi_select`.<br>example `"Delivered at place"` |
 | `$ (anyOf 1).invoice_lines.create[] (oneOf 1).custom_fields[].value (anyOf 1)` | string ou null | selon variante |  |
 | `$ (anyOf 1).invoice_lines.create[] (oneOf 1).custom_fields[].value (anyOf 2)` | array | selon variante |  |
 | `$ (anyOf 1).invoice_lines.create[] (oneOf 1).custom_fields[].value (anyOf 2)[]` | string | par élément |  |
@@ -89,8 +89,8 @@ UpdateCustomerInvoiceWithResponse(ctx context.Context, id int, params *UpdateCus
 | `$ (anyOf 1).invoice_lines.create[] (oneOf 2)` | object | selon variante | Create an invoice line by providing all required fields explicitly<br>without referencing a product.<br><br>title `"Standard Invoice Line"`<br>additionalProperties `false` |
 | `$ (anyOf 1).invoice_lines.create[] (oneOf 2).custom_fields` | array | facultatif | **Experimental** — under active development, may change without notice. Do not rely on this field in production integrations. |
 | `$ (anyOf 1).invoice_lines.create[] (oneOf 2).custom_fields[]` | object | par élément | additionalProperties `false` |
-| `$ (anyOf 1).invoice_lines.create[] (oneOf 2).custom_fields[].name` | string | obligatoire | example `"color"` |
-| `$ (anyOf 1).invoice_lines.create[] (oneOf 2).custom_fields[].value` | anyOf | obligatoire | Format depends on the field type: plain string for `text`; numeric string for `number` (e.g. `"42.5"`); ISO 8601 date for `date` (e.g. `"2025-01-15"`); option label for `single_select`; array of option labels for `multi_select`.<br>example `"red"` |
+| `$ (anyOf 1).invoice_lines.create[] (oneOf 2).custom_fields[].name` | string | obligatoire | The `api_name` of the custom field<br>example `"delivery_terms"` |
+| `$ (anyOf 1).invoice_lines.create[] (oneOf 2).custom_fields[].value` | anyOf | obligatoire | Format depends on the field type: plain string for `text`; numeric string for `number` (e.g. `"42.5"`); ISO 8601 date for `date` (e.g. `"2025-01-15"`); option label for `single_select`; array of option labels for `multi_select`.<br>example `"Delivered at place"` |
 | `$ (anyOf 1).invoice_lines.create[] (oneOf 2).custom_fields[].value (anyOf 1)` | string ou null | selon variante |  |
 | `$ (anyOf 1).invoice_lines.create[] (oneOf 2).custom_fields[].value (anyOf 2)` | array | selon variante |  |
 | `$ (anyOf 1).invoice_lines.create[] (oneOf 2).custom_fields[].value (anyOf 2)[]` | string | par élément |  |
@@ -119,8 +119,8 @@ UpdateCustomerInvoiceWithResponse(ctx context.Context, id int, params *UpdateCus
 | `$ (anyOf 1).invoice_lines.update[]` | object | par élément | additionalProperties `false` |
 | `$ (anyOf 1).invoice_lines.update[].custom_fields` | array | facultatif | **Experimental** — under active development, may change without notice. Do not rely on this field in production integrations. |
 | `$ (anyOf 1).invoice_lines.update[].custom_fields[]` | object | par élément | additionalProperties `false` |
-| `$ (anyOf 1).invoice_lines.update[].custom_fields[].name` | string | obligatoire | example `"color"` |
-| `$ (anyOf 1).invoice_lines.update[].custom_fields[].value` | anyOf | obligatoire | Format depends on the field type: plain string for `text`; numeric string for `number` (e.g. `"42.5"`); ISO 8601 date for `date` (e.g. `"2025-01-15"`); option label for `single_select`; array of option labels for `multi_select`.<br>example `"red"` |
+| `$ (anyOf 1).invoice_lines.update[].custom_fields[].name` | string | obligatoire | The `api_name` of the custom field<br>example `"delivery_terms"` |
+| `$ (anyOf 1).invoice_lines.update[].custom_fields[].value` | anyOf | obligatoire | Format depends on the field type: plain string for `text`; numeric string for `number` (e.g. `"42.5"`); ISO 8601 date for `date` (e.g. `"2025-01-15"`); option label for `single_select`; array of option labels for `multi_select`.<br>example `"Delivered at place"` |
 | `$ (anyOf 1).invoice_lines.update[].custom_fields[].value (anyOf 1)` | string ou null | selon variante |  |
 | `$ (anyOf 1).invoice_lines.update[].custom_fields[].value (anyOf 2)` | array | selon variante |  |
 | `$ (anyOf 1).invoice_lines.update[].custom_fields[].value (anyOf 2)[]` | string | par élément |  |

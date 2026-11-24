@@ -225,7 +225,7 @@ The updated supplier invoice
 | `$.public_file_url` | string ou null | obligatoire | Public URL of the invoice file. The URL will expire after 30 minutes.<br>example `"https://app.pennylane.com/public/invoice/pdf?encrypted_id=bzjoVJe...3D%3D"` |
 | `$.reconciled` | boolean | obligatoire | Whether the invoice has been reconciled or not<br>example `false` |
 | `$.remaining_amount_with_tax` | string ou null | obligatoire | The remaining amount with VAT to pay for the invoice to be considered paid<br>example `"20.0"` |
-| `$.remaining_amount_without_tax` | string ou null | obligatoire | The remaining amount without VAT to pay for the invoice to be considered paid<br>example `"16.0"` |
+| `$.remaining_amount_without_tax` | string ou null | obligatoire | The remaining amount without VAT and without the Spanish IRPF income tax withholding, if any, to pay for the invoice to be considered paid<br>example `"16.0"` |
 | `$.supplier` | object ou null | obligatoire | additionalProperties `false` |
 | `$.supplier.id` | integer (int64) | obligatoire | example `456` |
 | `$.supplier.url` | string | obligatoire | URL to get the supplier.<br>example `"https://app.pennylane.com/api/external/v2/suppliers/42"` |

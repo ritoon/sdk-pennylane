@@ -46,10 +46,10 @@ Returns the list of invoice lines for a customer invoice
 | `$.items[].currency_amount` | string | obligatoire | The total amount of the invoice lines in the document's currency including taxes and deducting discounts.<br>If the currency is euro, amount and currency_amount are identical.<br><br>example `"50.4"` |
 | `$.items[].currency_amount_before_tax` | string | obligatoire | Total amount before tax in currency<br>example `"30"` |
 | `$.items[].currency_tax` | string | obligatoire | Total tax amount in currency<br>example `"10"` |
-| `$.items[].custom_fields` | array | obligatoire |  |
+| `$.items[].custom_fields` | array | obligatoire | **Experimental** — under active development, may change without notice. Do not rely on this field in production integrations. |
 | `$.items[].custom_fields[]` | object | par élément | additionalProperties `false` |
-| `$.items[].custom_fields[].name` | string | obligatoire | example `"color"` |
-| `$.items[].custom_fields[].value` | anyOf | obligatoire | Select fields use the option label. Multi-select fields use an array of option labels.<br>example `"red"` |
+| `$.items[].custom_fields[].name` | string | obligatoire | The `api_name` of the custom field<br>example `"delivery_terms"` |
+| `$.items[].custom_fields[].value` | anyOf | obligatoire | Format depends on the field type: plain string for `text`; numeric string for `number` (e.g. `"42.5"`); ISO 8601 date for `date` (e.g. `"2025-01-15"`); option label for `single_select`; array of option labels for `multi_select`.<br>example `"Delivered at place"` |
 | `$.items[].custom_fields[].value (anyOf 1)` | string ou null | selon variante |  |
 | `$.items[].custom_fields[].value (anyOf 2)` | array | selon variante |  |
 | `$.items[].custom_fields[].value (anyOf 2)[]` | string | par élément |  |
@@ -97,8 +97,8 @@ Returns the list of invoice lines for a customer invoice
       "currency_tax": "10",
       "custom_fields": [
         {
-          "name": "color",
-          "value": "red"
+          "name": "delivery_terms",
+          "value": "Delivered at place"
         }
       ],
       "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor",

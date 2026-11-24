@@ -69,7 +69,7 @@ PostBillingSubscriptionsWithResponse(ctx context.Context, params *PostBillingSub
 | `$.mode (anyOf 2)` | object | selon variante | title `"Other"`<br>additionalProperties `false` |
 | `$.mode (anyOf 2).type` | string | obligatoire | - `awaiting_validation`: generated invoices will be in draft<br>- `finalized`: generated invoices will be finalized<br><br>enum `["awaiting_validation","finalized"]` |
 | `$.payment_conditions` | string | obligatoire | enum `["upon_receipt","7_days","15_days","30_days","30_days_end_of_month","45_days","45_days_end_of_month","60_days"]` |
-| `$.payment_method` | string | obligatoire | Payment method<br>offline means the subscription is not linked to a payment method<br>gocardless_direct-debit means at each new occurrence the client will be automatically debited thanks to GoCardless. To do so, you need a GoCardless account properly configured.<br><br>enum `["offline","gocardless_direct_debit","pro_account_sepa_core"]` |
+| `$.payment_method` | string | obligatoire | Payment method<br>offline means the subscription is not linked to a payment method<br>gocardless_direct-debit means at each new occurrence the client will be automatically debited thanks to GoCardless. To do so, you need a GoCardless account properly configured.<br>pro_account_sepa_core means the customer must have an email, unless it already has an enabled SEPA Core mandate or a pending SEPA Core mandate request.<br><br>enum `["offline","gocardless_direct_debit","pro_account_sepa_core"]` |
 | `$.recurring_rule` | allOf | obligatoire |  |
 | `$.recurring_rule (allOf 1)` | object | selon variante | additionalProperties `true` |
 | `$.recurring_rule (allOf 1).interval` | integer | facultatif | minimum `1` |
@@ -160,7 +160,7 @@ Renders the created billing subscription
 | `$.customer_invoice_data.discount` | object | obligatoire | additionalProperties `false` |
 | `$.customer_invoice_data.discount.type` | string | obligatoire | Discount type.<br>- absolute if it is an amount<br>- relative if it is a percentage<br><br>enum `["absolute","relative"]` |
 | `$.customer_invoice_data.discount.value` | string ou null | obligatoire | Discount value on the total amount before tax<br>example `"25"` |
-| `$.customer_invoice_data.exchange_rate` | string | obligatoire | Invoice exchange rate (used to convert the invoice to euros. If the invoice currency is euro it will be 1.0)<br>example `"1.0"` |
+| `$.customer_invoice_data.exchange_rate` | string | obligatoire | Invoice exchange rate (used to convert the invoice to euros. If the invoice currency is euro it will be 1.0)<br>example `"100.00"` |
 | `$.customer_invoice_data.invoice_line_sections` | object | obligatoire | additionalProperties `false` |
 | `$.customer_invoice_data.invoice_line_sections.url` | string | obligatoire | URL to get the invoice line sections of the invoice.<br>example `"https://app.pennylane.com/api/external/v2/billing_subscriptions/42/invoice_line_sections"` |
 | `$.customer_invoice_data.invoice_lines` | object | obligatoire | additionalProperties `false` |
@@ -185,7 +185,7 @@ Renders the created billing subscription
 | `$.payment_conditions` | oneOf | obligatoire |  |
 | `$.payment_conditions (oneOf 1)` | string | selon variante | enum `["upon_receipt","7_days","15_days","30_days","30_days_end_of_month","45_days","45_days_end_of_month","60_days"]` |
 | `$.payment_conditions (oneOf 2)` | string ou null | selon variante | enum `[null]` |
-| `$.payment_method` | string | obligatoire | Payment method<br>offline means the subscription is not linked to a payment method<br>gocardless_direct-debit means at each new occurrence the client will be automatically debited thanks to GoCardless. To do so, you need a GoCardless account properly configured.<br><br>enum `["offline","gocardless_direct_debit","pro_account_sepa_core"]` |
+| `$.payment_method` | string | obligatoire | Payment method<br>offline means the subscription is not linked to a payment method<br>gocardless_direct-debit means at each new occurrence the client will be automatically debited thanks to GoCardless. To do so, you need a GoCardless account properly configured.<br>pro_account_sepa_core means the customer must have an email, unless it already has an enabled SEPA Core mandate or a pending SEPA Core mandate request.<br><br>enum `["offline","gocardless_direct_debit","pro_account_sepa_core"]` |
 | `$.prev_occurrence` | string (date) ou null | obligatoire | The date of the previous subscription renewal<br>example `"2023-01-01"` |
 | `$.recurring_rule` | object | obligatoire | additionalProperties `false` |
 | `$.recurring_rule.count` | integer ou null | obligatoire | Number of occurrences of the recurring rule<br>example `12` |
@@ -222,7 +222,7 @@ Renders the created billing subscription
     "discount": {
       "value": "25"
     },
-    "exchange_rate": "1.0",
+    "exchange_rate": "100.00",
     "invoice_line_sections": {
       "url": "https://app.pennylane.com/api/external/v2/billing_subscriptions/42/invoice_line_sections"
     },
