@@ -24,3 +24,30 @@ func TestNestedFieldsAndExamples(t *testing.T) {
 		t.Fatalf("unexpected example %s (%v)", got, err)
 	}
 }
+
+func TestRequestSchemaReferences(t *testing.T) {
+	var body schema
+	if err := json.Unmarshal([]byte(`{"type":"object","properties":{"name":{"type":"string","example":"Audit"}}}`), &body); err != nil {
+		t.Fatal(err)
+	}
+	defs := map[string]schema{"PostCustomerJSONBody": body}
+	for _, input := range []schema{body, {"$ref": "#/components/schemas/PostCustomerJSONBody"}} {
+		resolved := requestSchema(input, defs)
+		var b strings.Builder
+		fields(&b, resolved)
+		illustration(&b, resolved)
+		if !strings.Contains(b.String(), "`$.name`") || !strings.Contains(b.String(), `"name": "Audit"`) {
+			t.Fatal("referenced request fields or example missing")
+		}
+	}
+	for _, ref := range []string{"#/components/schemas/Unknown", "https://example.org/schema"} {
+		t.Run(ref, func(t *testing.T) {
+			defer func() {
+				if recover() == nil {
+					t.Fatal("unknown reference accepted")
+				}
+			}()
+			requestSchema(schema{"$ref": ref}, defs)
+		})
+	}
+}

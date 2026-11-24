@@ -1,7 +1,6 @@
 package main
 
 import (
-	"bytes"
 	"context"
 	"encoding/json"
 	"fmt"
@@ -31,12 +30,11 @@ func creerClient(ctx context.Context, c *pennylane.Client, in io.Reader, out io.
 	if body.CustomerType != "company" || body.Name == "" || address.Address == "" || address.City == "" || address.PostalCode == "" || address.CountryAlpha2 == "" {
 		return fmt.Errorf("renseigner customer_type=company, name et billing_address complète")
 	}
-	// Le corps de cette route est une union. Encoder la variante entreprise conserve ses champs.
-	data, err := json.Marshal(body)
-	if err != nil {
+	var request pennylane.PostCustomerJSONRequestBody
+	if err := request.FromPostCustomerJSONBody0(body); err != nil {
 		return err
 	}
-	r, err := c.PostCustomerWithBodyWithResponse(ctx, nil, "application/json", bytes.NewReader(data))
+	r, err := c.PostCustomerWithResponse(ctx, nil, request)
 	if err != nil {
 		return err
 	}

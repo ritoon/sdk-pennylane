@@ -93,10 +93,58 @@ func main() {
 		}
 	}
 	normalize(spec)
+	liftRequestUnions(spec)
 	encoder := json.NewEncoder(os.Stdout)
 	encoder.SetEscapeHTML(false)
 	encoder.SetIndent("", "  ")
 	check(encoder.Encode(spec))
+}
+
+// oapi-codegen v2.5.1 emits JSON union helpers for component schemas, but
+// not for inline request schemas. Lift only bodies containing a union and
+// retain their existing Go type names so regeneration preserves the API.
+func liftRequestUnions(spec object) {
+	schemas := spec["components"].(object)["schemas"].(object)
+	for _, rawMethods := range spec["paths"].(object) {
+		for _, rawOperation := range rawMethods.(object) {
+			op := rawOperation.(object)
+			body, _ := op["requestBody"].(object)
+			content, _ := body["content"].(object)
+			media, _ := content["application/json"].(object)
+			schema, _ := media["schema"].(object)
+			if !containsUnion(schema) {
+				continue
+			}
+			parts := strings.Split(op["operationId"].(string), "-")
+			for i, part := range parts {
+				parts[i] = strings.ToUpper(part[:1]) + part[1:]
+			}
+			name := strings.Join(parts, "") + "JSONBody"
+			if _, exists := schemas[name]; exists {
+				panic("request schema name collision: " + name)
+			}
+			schemas[name] = schema
+			media["schema"] = object{"$ref": "#/components/schemas/" + name}
+		}
+	}
+}
+
+func containsUnion(value any) bool {
+	switch node := value.(type) {
+	case []any:
+		for _, child := range node {
+			if containsUnion(child) {
+				return true
+			}
+		}
+	case map[string]any:
+		for key, child := range node {
+			if key == "oneOf" || key == "anyOf" || containsUnion(child) {
+				return true
+			}
+		}
+	}
+	return false
 }
 func check(err error) {
 	if err != nil {

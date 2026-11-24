@@ -31,7 +31,7 @@ PostFileAttachmentsWithResponse(ctx context.Context, params *PostFileAttachments
 |---|---|---|---|
 | `$` | object | racine | additionalProperties `false` |
 | `$.file` | string (binary) | obligatoire | The file you want to upload.<br>Allowed content types:<br>  - image/png<br>  - image/jpeg<br>  - image/tiff<br>  - image/bmp<br>  - image/gif<br>  - application/pdf |
-| `$.filename` | string | facultatif | Name of the file. If not provided, the default value will be the uploaded file name.<br>maxLength `255`<br>example `"Invoice42.pdf"` |
+| `$.filename` | string | facultatif | Name of the file. If not provided, the default value will be the uploaded file name.<br>maxLength `255`<br>pattern `"^[^\\x00]*$"`<br>example `"Invoice42.pdf"` |
 
 ## Sortie
 

@@ -160,7 +160,7 @@ Renders the created billing subscription
 | `$.customer_invoice_data.discount` | object | obligatoire | additionalProperties `false` |
 | `$.customer_invoice_data.discount.type` | string | obligatoire | Discount type.<br>- absolute if it is an amount<br>- relative if it is a percentage<br><br>enum `["absolute","relative"]` |
 | `$.customer_invoice_data.discount.value` | string ou null | obligatoire | Discount value on the total amount before tax<br>example `"25"` |
-| `$.customer_invoice_data.exchange_rate` | string | obligatoire | Invoice exchange rate (used to convert the invoice to euros. If the invoice currency is euro it will be 1.0)<br>example `"100.00"` |
+| `$.customer_invoice_data.exchange_rate` | string | obligatoire | Invoice exchange rate (used to convert the invoice to euros. If the invoice currency is euro it will be 1.0)<br>pattern `"^-?\\d+(\\.\\d+)?$"`<br>example `"100.00"` |
 | `$.customer_invoice_data.invoice_line_sections` | object | obligatoire | additionalProperties `false` |
 | `$.customer_invoice_data.invoice_line_sections.url` | string | obligatoire | URL to get the invoice line sections of the invoice.<br>example `"https://app.pennylane.com/api/external/v2/billing_subscriptions/42/invoice_line_sections"` |
 | `$.customer_invoice_data.invoice_lines` | object | obligatoire | additionalProperties `false` |

@@ -35,6 +35,7 @@ Returns a supplier
 | Champ | Type | Présence | Description, contraintes et exemple |
 |---|---|---|---|
 | `$` | object | racine | additionalProperties `false` |
+| `$.bic` | string ou null | obligatoire | The Bank Identifier Code (BIC) of the supplier's bank. `null` when the supplier has no BIC for its current IBAN.<br>example `"BNPAFRPPXXX"` |
 | `$.created_at` | string (date-time) | obligatoire | example `"2023-08-30T10:08:08.146343Z"` |
 | `$.emails` | array | obligatoire | example `["hello@example.org"]` |
 | `$.emails[]` | string | par élément |  |
@@ -61,6 +62,7 @@ Returns a supplier
 
 ```json
 {
+  "bic": "BNPAFRPPXXX",
   "created_at": "2023-08-30T10:08:08.146343Z",
   "emails": [
     "hello@example.org"

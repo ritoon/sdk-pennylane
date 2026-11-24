@@ -52,6 +52,10 @@ Returns the list of invoice lines for a supplier invoice
 | `$.items[].imputation_dates.end_date` | string (date) | obligatoire | End date of the imputation period (ISO 8601)<br>example `"2021-06-30"` |
 | `$.items[].imputation_dates.start_date` | string (date) | obligatoire | Start date of the imputation period (ISO 8601)<br>example `"2020-06-30"` |
 | `$.items[].label` | string | obligatoire | Invoice line label<br>example `"Demo label"` |
+| `$.items[].ledger_account` | object | obligatoire | Ledger account of the invoice line.<br>additionalProperties `false` |
+| `$.items[].ledger_account.id` | integer (int64) | obligatoire | example `1255` |
+| `$.items[].ledger_account.number` | string | obligatoire | Ledger account number<br>example `"706000"` |
+| `$.items[].ledger_account.url` | string | obligatoire | URL to get the ledger account.<br>example `"https://app.pennylane.com/api/external/v2/ledger_accounts/1255"` |
 | `$.items[].performance_period` | object ou null | obligatoire | Date range during which the service or delivery was performed (ISO 8601). Used for German VAT accounting (Leistungsdatum).<br>additionalProperties `false` |
 | `$.items[].performance_period.date_type` | oneOf | obligatoire |  |
 | `$.items[].performance_period.date_type (oneOf 1)` | string | selon variante | Whether the performance period represents a single date or a range, and whether it is a delivery or service.<br>- delivery_date: single delivery date (end_date only)<br>- service_date: single service date (end_date only)<br>- delivery_period: delivery date range (start_date and end_date)<br>- service_period: service date range (start_date and end_date)<br><br>enum `["delivery_date","service_date","delivery_period","service_period"]` |
@@ -82,6 +86,11 @@ Returns the list of invoice lines for a supplier invoice
         "start_date": "2020-06-30"
       },
       "label": "Demo label",
+      "ledger_account": {
+        "id": 1255,
+        "number": "706000",
+        "url": "https://app.pennylane.com/api/external/v2/ledger_accounts/1255"
+      },
       "performance_period": {
         "end_date": "2023-07-31",
         "start_date": "2023-07-01"
