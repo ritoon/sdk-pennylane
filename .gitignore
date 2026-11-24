@@ -1,3 +1,8 @@
+/coverage.out
+/coverage.html
+/coverage-summary.txt
+__pycache__/
+
 # Configuration locale pouvant contenir des jetons API.
 .env
 .env.*
