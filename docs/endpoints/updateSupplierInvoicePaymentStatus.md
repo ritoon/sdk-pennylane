@@ -5,6 +5,20 @@
 This endpoint allows you to update the payment status of a supplier
 invoice.
 
+> ⚠️ **Changing a paid invoice to `to_be_paid` removes its reconciliation.**
+>
+> When the invoice is fully paid and reconciled, in an open fiscal year and outside any frozen period, setting `payment_status` to `to_be_paid`:
+> - unmatches all the bank transactions matched to the invoice;
+> - cancels its SEPA XML transfers that were not found on the bank account yet.
+>
+> If the invoice is part of a grouped payment (one transaction matched to several invoices),
+> this breaks the reconciliation of every invoice in the group, not only of this invoice.
+> If the invoice was paid in a SEPA XML batch with other invoices,
+> the transfers of every invoice in the batch that were not found on the bank account yet are canceled too.
+> Check the matched transactions with
+> [List matched transactions for a supplier invoice](https://pennylane.readme.io/reference/getsupplierinvoicematchedtransactions)
+> before you change the status.
+
 
 > ℹ️
 > This endpoint requires the following scope: `supplier_invoices:all`

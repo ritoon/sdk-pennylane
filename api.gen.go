@@ -17353,6 +17353,7 @@ type GetBillingSubscriptionStatus200 struct {
 	// PaymentMethod Payment method
 	// offline means the subscription is not linked to a payment method
 	// gocardless_direct-debit means at each new occurrence the client will be automatically debited thanks to GoCardless. To do so, you need a GoCardless account properly configured.
+	// pro_account_sepa_core means the customer must have an email, unless it already has an enabled SEPA Core mandate or a pending SEPA Core mandate request.
 	PaymentMethod GetBillingSubscriptionStatus200PaymentMethod `json:"payment_method"`
 
 	// PrevOccurrence The date of the previous subscription renewal
@@ -17410,6 +17411,7 @@ type GetBillingSubscriptionStatus200_PaymentConditions struct {
 // GetBillingSubscriptionStatus200PaymentMethod Payment method
 // offline means the subscription is not linked to a payment method
 // gocardless_direct-debit means at each new occurrence the client will be automatically debited thanks to GoCardless. To do so, you need a GoCardless account properly configured.
+// pro_account_sepa_core means the customer must have an email, unless it already has an enabled SEPA Core mandate or a pending SEPA Core mandate request.
 type GetBillingSubscriptionStatus200PaymentMethod string
 
 // GetBillingSubscriptionStatus200RecurringRuleRuleType defines model for GetBillingSubscriptionStatus200.RecurringRule.RuleType.
@@ -17513,6 +17515,7 @@ type GetBillingSubscriptionsStatus200 struct {
 		// PaymentMethod Payment method
 		// offline means the subscription is not linked to a payment method
 		// gocardless_direct-debit means at each new occurrence the client will be automatically debited thanks to GoCardless. To do so, you need a GoCardless account properly configured.
+		// pro_account_sepa_core means the customer must have an email, unless it already has an enabled SEPA Core mandate or a pending SEPA Core mandate request.
 		PaymentMethod GetBillingSubscriptionsStatus200ItemsPaymentMethod `json:"payment_method"`
 
 		// PrevOccurrence The date of the previous subscription renewal
@@ -17576,6 +17579,7 @@ type GetBillingSubscriptionsStatus200_Items_PaymentConditions struct {
 // GetBillingSubscriptionsStatus200ItemsPaymentMethod Payment method
 // offline means the subscription is not linked to a payment method
 // gocardless_direct-debit means at each new occurrence the client will be automatically debited thanks to GoCardless. To do so, you need a GoCardless account properly configured.
+// pro_account_sepa_core means the customer must have an email, unless it already has an enabled SEPA Core mandate or a pending SEPA Core mandate request.
 type GetBillingSubscriptionsStatus200ItemsPaymentMethod string
 
 // GetBillingSubscriptionsStatus200ItemsRecurringRuleRuleType defines model for GetBillingSubscriptionsStatus200.Items.RecurringRule.RuleType.
@@ -18197,11 +18201,14 @@ type GetCustomerInvoiceInvoiceLinesStatus200 struct {
 		CurrencyAmountBeforeTax string `json:"currency_amount_before_tax"`
 
 		// CurrencyTax Total tax amount in currency
-		CurrencyTax  string `json:"currency_tax"`
+		CurrencyTax string `json:"currency_tax"`
+
+		// CustomFields **Experimental** — under active development, may change without notice. Do not rely on this field in production integrations.
 		CustomFields []struct {
+			// Name The `api_name` of the custom field
 			Name string `json:"name"`
 
-			// Value Select fields use the option label. Multi-select fields use an array of option labels.
+			// Value Format depends on the field type: plain string for `text`; numeric string for `number` (e.g. `"42.5"`); ISO 8601 date for `date` (e.g. `"2025-01-15"`); option label for `single_select`; array of option labels for `multi_select`.
 			Value GetCustomerInvoiceInvoiceLinesStatus200_Items_CustomFields_Value `json:"value"`
 		} `json:"custom_fields"`
 
@@ -18283,7 +18290,7 @@ type GetCustomerInvoiceInvoiceLinesStatus200ItemsCustomFieldsValue0 = string
 // GetCustomerInvoiceInvoiceLinesStatus200ItemsCustomFieldsValue1 defines model for .
 type GetCustomerInvoiceInvoiceLinesStatus200ItemsCustomFieldsValue1 = []string
 
-// GetCustomerInvoiceInvoiceLinesStatus200_Items_CustomFields_Value Select fields use the option label. Multi-select fields use an array of option labels.
+// GetCustomerInvoiceInvoiceLinesStatus200_Items_CustomFields_Value Format depends on the field type: plain string for `text`; numeric string for `number` (e.g. `"42.5"`); ISO 8601 date for `date` (e.g. `"2025-01-15"`); option label for `single_select`; array of option labels for `multi_select`.
 type GetCustomerInvoiceInvoiceLinesStatus200_Items_CustomFields_Value struct {
 	union json.RawMessage
 }
@@ -18790,6 +18797,7 @@ type GetCustomerInvoicesStatus200 struct {
 
 				// CustomFields **Experimental** — under active development, may change without notice. Do not rely on this field in production integrations.
 				CustomFields []struct {
+					// Name The `api_name` of the custom field
 					Name string `json:"name"`
 
 					// Value Format depends on the field type: plain string for `text`; numeric string for `number` (e.g. `"42.5"`); ISO 8601 date for `date` (e.g. `"2025-01-15"`); option label for `single_select`; array of option labels for `multi_select`.
@@ -21117,11 +21125,14 @@ type GetQuoteInvoiceLinesStatus200 struct {
 		CurrencyAmountBeforeTax string `json:"currency_amount_before_tax"`
 
 		// CurrencyTax Total tax amount in currency
-		CurrencyTax  string `json:"currency_tax"`
+		CurrencyTax string `json:"currency_tax"`
+
+		// CustomFields **Experimental** — under active development, may change without notice. Do not rely on this field in production integrations.
 		CustomFields []struct {
+			// Name The `api_name` of the custom field
 			Name string `json:"name"`
 
-			// Value Select fields use the option label. Multi-select fields use an array of option labels.
+			// Value Format depends on the field type: plain string for `text`; numeric string for `number` (e.g. `"42.5"`); ISO 8601 date for `date` (e.g. `"2025-01-15"`); option label for `single_select`; array of option labels for `multi_select`.
 			Value GetQuoteInvoiceLinesStatus200_Items_CustomFields_Value `json:"value"`
 		} `json:"custom_fields"`
 
@@ -21182,7 +21193,7 @@ type GetQuoteInvoiceLinesStatus200ItemsCustomFieldsValue0 = string
 // GetQuoteInvoiceLinesStatus200ItemsCustomFieldsValue1 defines model for .
 type GetQuoteInvoiceLinesStatus200ItemsCustomFieldsValue1 = []string
 
-// GetQuoteInvoiceLinesStatus200_Items_CustomFields_Value Select fields use the option label. Multi-select fields use an array of option labels.
+// GetQuoteInvoiceLinesStatus200_Items_CustomFields_Value Format depends on the field type: plain string for `text`; numeric string for `number` (e.g. `"42.5"`); ISO 8601 date for `date` (e.g. `"2025-01-15"`); option label for `single_select`; array of option labels for `multi_select`.
 type GetQuoteInvoiceLinesStatus200_Items_CustomFields_Value struct {
 	union json.RawMessage
 }
@@ -21688,7 +21699,7 @@ type GetSupplierInvoiceStatus200 struct {
 	// RemainingAmountWithTax The remaining amount with VAT to pay for the invoice to be considered paid
 	RemainingAmountWithTax nullable.Nullable[string] `json:"remaining_amount_with_tax"`
 
-	// RemainingAmountWithoutTax The remaining amount without VAT to pay for the invoice to be considered paid
+	// RemainingAmountWithoutTax The remaining amount without VAT and without the Spanish IRPF income tax withholding, if any, to pay for the invoice to be considered paid
 	RemainingAmountWithoutTax nullable.Nullable[string] `json:"remaining_amount_without_tax"`
 	Supplier                  nullable.Nullable[struct {
 		Id int64 `json:"id"`
@@ -21914,7 +21925,7 @@ type GetSupplierInvoicesStatus200 struct {
 		// RemainingAmountWithTax The remaining amount with VAT to pay for the invoice to be considered paid
 		RemainingAmountWithTax nullable.Nullable[string] `json:"remaining_amount_with_tax"`
 
-		// RemainingAmountWithoutTax The remaining amount without VAT to pay for the invoice to be considered paid
+		// RemainingAmountWithoutTax The remaining amount without VAT and without the Spanish IRPF income tax withholding, if any, to pay for the invoice to be considered paid
 		RemainingAmountWithoutTax nullable.Nullable[string] `json:"remaining_amount_without_tax"`
 		Supplier                  nullable.Nullable[struct {
 			Id int64 `json:"id"`
@@ -23204,7 +23215,7 @@ type PutSupplierInvoiceEInvoiceStatusStatus200 struct {
 	// RemainingAmountWithTax The remaining amount with VAT to pay for the invoice to be considered paid
 	RemainingAmountWithTax nullable.Nullable[string] `json:"remaining_amount_with_tax"`
 
-	// RemainingAmountWithoutTax The remaining amount without VAT to pay for the invoice to be considered paid
+	// RemainingAmountWithoutTax The remaining amount without VAT and without the Spanish IRPF income tax withholding, if any, to pay for the invoice to be considered paid
 	RemainingAmountWithoutTax nullable.Nullable[string] `json:"remaining_amount_without_tax"`
 	Supplier                  nullable.Nullable[struct {
 		Id int64 `json:"id"`
@@ -23619,6 +23630,7 @@ type PostBillingSubscriptionsJSONBody struct {
 	// PaymentMethod Payment method
 	// offline means the subscription is not linked to a payment method
 	// gocardless_direct-debit means at each new occurrence the client will be automatically debited thanks to GoCardless. To do so, you need a GoCardless account properly configured.
+	// pro_account_sepa_core means the customer must have an email, unless it already has an enabled SEPA Core mandate or a pending SEPA Core mandate request.
 	PaymentMethod PostBillingSubscriptionsJSONBodyPaymentMethod `json:"payment_method"`
 	RecurringRule struct {
 		Interval *int `json:"interval,omitempty"`
@@ -23895,6 +23907,7 @@ type PutBillingSubscriptionsJSONBody struct {
 	// PaymentMethod Payment method
 	// offline means the subscription is not linked to a payment method
 	// gocardless_direct-debit means at each new occurrence the client will be automatically debited thanks to GoCardless. To do so, you need a GoCardless account properly configured.
+	// pro_account_sepa_core means the customer must have an email, unless it already has an enabled SEPA Core mandate or a pending SEPA Core mandate request.
 	PaymentMethod *PutBillingSubscriptionsJSONBodyPaymentMethod `json:"payment_method,omitempty"`
 	RecurringRule *struct {
 		Interval *int `json:"interval,omitempty"`
@@ -25150,6 +25163,7 @@ type PostCustomerInvoicesJSONBody0InstallmentsPaymentMethods string
 type PostCustomerInvoicesJSONBody0InvoiceLines0 struct {
 	// CustomFields **Experimental** — under active development, may change without notice. Do not rely on this field in production integrations.
 	CustomFields *[]struct {
+		// Name The `api_name` of the custom field
 		Name string `json:"name"`
 
 		// Value Format depends on the field type: plain string for `text`; numeric string for `number` (e.g. `"42.5"`); ISO 8601 date for `date` (e.g. `"2025-01-15"`); option label for `single_select`; array of option labels for `multi_select`.
@@ -25252,6 +25266,7 @@ type PostCustomerInvoicesJSONBody0InvoiceLines0VatRate string
 type PostCustomerInvoicesJSONBody0InvoiceLines1 struct {
 	// CustomFields **Experimental** — under active development, may change without notice. Do not rely on this field in production integrations.
 	CustomFields *[]struct {
+		// Name The `api_name` of the custom field
 		Name string `json:"name"`
 
 		// Value Format depends on the field type: plain string for `text`; numeric string for `number` (e.g. `"42.5"`); ISO 8601 date for `date` (e.g. `"2025-01-15"`); option label for `single_select`; array of option labels for `multi_select`.
@@ -26449,6 +26464,7 @@ type UpdateCustomerInvoiceJSONBody0 struct {
 		Update *[]struct {
 			// CustomFields **Experimental** — under active development, may change without notice. Do not rely on this field in production integrations.
 			CustomFields *[]struct {
+				// Name The `api_name` of the custom field
 				Name string `json:"name"`
 
 				// Value Format depends on the field type: plain string for `text`; numeric string for `number` (e.g. `"42.5"`); ISO 8601 date for `date` (e.g. `"2025-01-15"`); option label for `single_select`; array of option labels for `multi_select`.
@@ -26549,6 +26565,7 @@ type UpdateCustomerInvoiceJSONBody0InstallmentsUpdatePaymentMethods string
 type UpdateCustomerInvoiceJSONBody0InvoiceLinesCreate0 struct {
 	// CustomFields **Experimental** — under active development, may change without notice. Do not rely on this field in production integrations.
 	CustomFields *[]struct {
+		// Name The `api_name` of the custom field
 		Name string `json:"name"`
 
 		// Value Format depends on the field type: plain string for `text`; numeric string for `number` (e.g. `"42.5"`); ISO 8601 date for `date` (e.g. `"2025-01-15"`); option label for `single_select`; array of option labels for `multi_select`.
@@ -26651,6 +26668,7 @@ type UpdateCustomerInvoiceJSONBody0InvoiceLinesCreate0VatRate string
 type UpdateCustomerInvoiceJSONBody0InvoiceLinesCreate1 struct {
 	// CustomFields **Experimental** — under active development, may change without notice. Do not rely on this field in production integrations.
 	CustomFields *[]struct {
+		// Name The `api_name` of the custom field
 		Name string `json:"name"`
 
 		// Value Format depends on the field type: plain string for `text`; numeric string for `number` (e.g. `"42.5"`); ISO 8601 date for `date` (e.g. `"2025-01-15"`); option label for `single_select`; array of option labels for `multi_select`.
@@ -28908,6 +28926,7 @@ type PostQuotesJSONBodyDiscountType string
 type PostQuotesJSONBodyInvoiceLines0 struct {
 	// CustomFields **Experimental** — under active development, may change without notice. Do not rely on this field in production integrations.
 	CustomFields *[]struct {
+		// Name The `api_name` of the custom field
 		Name string `json:"name"`
 
 		// Value Format depends on the field type: plain string for `text`; numeric string for `number` (e.g. `"42.5"`); ISO 8601 date for `date` (e.g. `"2025-01-15"`); option label for `single_select`; array of option labels for `multi_select`.
@@ -28972,6 +28991,7 @@ type PostQuotesJSONBodyInvoiceLines0VatRate string
 type PostQuotesJSONBodyInvoiceLines1 struct {
 	// CustomFields **Experimental** — under active development, may change without notice. Do not rely on this field in production integrations.
 	CustomFields *[]struct {
+		// Name The `api_name` of the custom field
 		Name string `json:"name"`
 
 		// Value Format depends on the field type: plain string for `text`; numeric string for `number` (e.g. `"42.5"`); ISO 8601 date for `date` (e.g. `"2025-01-15"`); option label for `single_select`; array of option labels for `multi_select`.
@@ -29079,6 +29099,7 @@ type UpdateQuoteJSONBody struct {
 		Update *[]struct {
 			// CustomFields **Experimental** — under active development, may change without notice. Do not rely on this field in production integrations.
 			CustomFields *[]struct {
+				// Name The `api_name` of the custom field
 				Name string `json:"name"`
 
 				// Value Format depends on the field type: plain string for `text`; numeric string for `number` (e.g. `"42.5"`); ISO 8601 date for `date` (e.g. `"2025-01-15"`); option label for `single_select`; array of option labels for `multi_select`.
@@ -29158,6 +29179,7 @@ type UpdateQuoteJSONBodyDiscountType string
 type UpdateQuoteJSONBodyInvoiceLinesCreate0 struct {
 	// CustomFields **Experimental** — under active development, may change without notice. Do not rely on this field in production integrations.
 	CustomFields *[]struct {
+		// Name The `api_name` of the custom field
 		Name string `json:"name"`
 
 		// Value Format depends on the field type: plain string for `text`; numeric string for `number` (e.g. `"42.5"`); ISO 8601 date for `date` (e.g. `"2025-01-15"`); option label for `single_select`; array of option labels for `multi_select`.
@@ -29222,6 +29244,7 @@ type UpdateQuoteJSONBodyInvoiceLinesCreate0VatRate string
 type UpdateQuoteJSONBodyInvoiceLinesCreate1 struct {
 	// CustomFields **Experimental** — under active development, may change without notice. Do not rely on this field in production integrations.
 	CustomFields *[]struct {
+		// Name The `api_name` of the custom field
 		Name string `json:"name"`
 
 		// Value Format depends on the field type: plain string for `text`; numeric string for `number` (e.g. `"42.5"`); ISO 8601 date for `date` (e.g. `"2025-01-15"`); option label for `single_select`; array of option labels for `multi_select`.

@@ -4,6 +4,11 @@
 
 This endpoint allows you to import an invoice. Amounts are stored exactly as provided — Pennylane does not recalculate or round them.
 
+> ⚠️ Sending to the PA
+> Unless `convert_to_e_invoice` is `true`, invoices imported through this endpoint can't be sent to the PA: `/customer_invoices/{id}/send_to_pa` returns 422.
+> - If your PDF already embeds a Factur-X, use the customer e-invoice import endpoint (`/customer_invoices/e_invoices/imports`) instead.
+> - If your PDF is a plain PDF, set `convert_to_e_invoice` to `true` to have Pennylane convert it into a Factur-X e-invoice.
+
 ℹ️ **Amount consistency:** The amounts you send must be internally coherent:
 - `currency_amount_before_tax + currency_tax` must equal `currency_amount`.
 - The sum of invoice line `currency_tax` values must match the invoice-level `currency_tax`.

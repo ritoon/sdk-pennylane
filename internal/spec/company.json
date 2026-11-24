@@ -1659,7 +1659,7 @@
               },
               "exchange_rate": {
                 "description": "Invoice exchange rate (used to convert the invoice to euros. If the invoice currency is euro it will be 1.0)",
-                "example": "1.0",
+                "example": "100.00",
                 "type": "string"
               },
               "invoice_line_sections": {
@@ -1841,7 +1841,7 @@
             ]
           },
           "payment_method": {
-            "description": "Payment method\noffline means the subscription is not linked to a payment method\ngocardless_direct-debit means at each new occurrence the client will be automatically debited thanks to GoCardless. To do so, you need a GoCardless account properly configured.\n",
+            "description": "Payment method\noffline means the subscription is not linked to a payment method\ngocardless_direct-debit means at each new occurrence the client will be automatically debited thanks to GoCardless. To do so, you need a GoCardless account properly configured.\npro_account_sepa_core means the customer must have an email, unless it already has an enabled SEPA Core mandate or a pending SEPA Core mandate request.\n",
             "enum": [
               "offline",
               "gocardless_direct_debit",
@@ -2259,7 +2259,7 @@
                     },
                     "exchange_rate": {
                       "description": "Invoice exchange rate (used to convert the invoice to euros. If the invoice currency is euro it will be 1.0)",
-                      "example": "1.0",
+                      "example": "100.00",
                       "type": "string"
                     },
                     "invoice_line_sections": {
@@ -2441,7 +2441,7 @@
                   ]
                 },
                 "payment_method": {
-                  "description": "Payment method\noffline means the subscription is not linked to a payment method\ngocardless_direct-debit means at each new occurrence the client will be automatically debited thanks to GoCardless. To do so, you need a GoCardless account properly configured.\n",
+                  "description": "Payment method\noffline means the subscription is not linked to a payment method\ngocardless_direct-debit means at each new occurrence the client will be automatically debited thanks to GoCardless. To do so, you need a GoCardless account properly configured.\npro_account_sepa_core means the customer must have an email, unless it already has an enabled SEPA Core mandate or a pending SEPA Core mandate request.\n",
                   "enum": [
                     "offline",
                     "gocardless_direct_debit",
@@ -4625,8 +4625,9 @@
                     "additionalProperties": false,
                     "properties": {
                       "name": {
-                        "example": "color",
-                        "type": "string"
+                        "example": "delivery_terms",
+                        "type": "string",
+                        "description": "The `api_name` of the custom field"
                       },
                       "value": {
                         "anyOf": [
@@ -4641,8 +4642,8 @@
                             "type": "array"
                           }
                         ],
-                        "description": "Select fields use the option label. Multi-select fields use an array of option labels.",
-                        "example": "red"
+                        "description": "Format depends on the field type: plain string for `text`; numeric string for `number` (e.g. `\"42.5\"`); ISO 8601 date for `date` (e.g. `\"2025-01-15\"`); option label for `single_select`; array of option labels for `multi_select`.",
+                        "example": "Delivered at place"
                       }
                     },
                     "required": [
@@ -4651,7 +4652,8 @@
                     ],
                     "type": "object"
                   },
-                  "type": "array"
+                  "type": "array",
+                  "description": "**Experimental** — under active development, may change without notice. Do not rely on this field in production integrations."
                 },
                 "description": {
                   "description": "Invoice line description",
@@ -7681,8 +7683,9 @@
                                   "additionalProperties": false,
                                   "properties": {
                                     "name": {
-                                      "example": "color",
-                                      "type": "string"
+                                      "example": "delivery_terms",
+                                      "type": "string",
+                                      "description": "The `api_name` of the custom field"
                                     },
                                     "value": {
                                       "anyOf": [
@@ -7698,7 +7701,7 @@
                                         }
                                       ],
                                       "description": "Format depends on the field type: plain string for `text`; numeric string for `number` (e.g. `\"42.5\"`); ISO 8601 date for `date` (e.g. `\"2025-01-15\"`); option label for `single_select`; array of option labels for `multi_select`.",
-                                      "example": "red"
+                                      "example": "Delivered at place"
                                     }
                                   },
                                   "required": [
@@ -14508,8 +14511,9 @@
                     "additionalProperties": false,
                     "properties": {
                       "name": {
-                        "example": "color",
-                        "type": "string"
+                        "example": "delivery_terms",
+                        "type": "string",
+                        "description": "The `api_name` of the custom field"
                       },
                       "value": {
                         "anyOf": [
@@ -14524,8 +14528,8 @@
                             "type": "array"
                           }
                         ],
-                        "description": "Select fields use the option label. Multi-select fields use an array of option labels.",
-                        "example": "red"
+                        "description": "Format depends on the field type: plain string for `text`; numeric string for `number` (e.g. `\"42.5\"`); ISO 8601 date for `date` (e.g. `\"2025-01-15\"`); option label for `single_select`; array of option labels for `multi_select`.",
+                        "example": "Delivered at place"
                       }
                     },
                     "required": [
@@ -14534,7 +14538,8 @@
                     ],
                     "type": "object"
                   },
-                  "type": "array"
+                  "type": "array",
+                  "description": "**Experimental** — under active development, may change without notice. Do not rely on this field in production integrations."
                 },
                 "description": {
                   "description": "Invoice line description",
@@ -16840,7 +16845,7 @@
             "type": "string"
           },
           "remaining_amount_without_tax": {
-            "description": "The remaining amount without VAT to pay for the invoice to be considered paid",
+            "description": "The remaining amount without VAT and without the Spanish IRPF income tax withholding, if any, to pay for the invoice to be considered paid",
             "example": "16.0",
             "nullable": true,
             "type": "string"
@@ -17547,7 +17552,7 @@
                   "type": "string"
                 },
                 "remaining_amount_without_tax": {
-                  "description": "The remaining amount without VAT to pay for the invoice to be considered paid",
+                  "description": "The remaining amount without VAT and without the Spanish IRPF income tax withholding, if any, to pay for the invoice to be considered paid",
                   "example": "16.0",
                   "nullable": true,
                   "type": "string"
@@ -21929,7 +21934,7 @@
             "type": "string"
           },
           "remaining_amount_without_tax": {
-            "description": "The remaining amount without VAT to pay for the invoice to be considered paid",
+            "description": "The remaining amount without VAT and without the Spanish IRPF income tax withholding, if any, to pay for the invoice to be considered paid",
             "example": "16.0",
             "nullable": true,
             "type": "string"
@@ -24130,7 +24135,7 @@
                     "type": "string"
                   },
                   "payment_method": {
-                    "description": "Payment method\noffline means the subscription is not linked to a payment method\ngocardless_direct-debit means at each new occurrence the client will be automatically debited thanks to GoCardless. To do so, you need a GoCardless account properly configured.\n",
+                    "description": "Payment method\noffline means the subscription is not linked to a payment method\ngocardless_direct-debit means at each new occurrence the client will be automatically debited thanks to GoCardless. To do so, you need a GoCardless account properly configured.\npro_account_sepa_core means the customer must have an email, unless it already has an enabled SEPA Core mandate or a pending SEPA Core mandate request.\n",
                     "enum": [
                       "offline",
                       "gocardless_direct_debit",
@@ -25724,7 +25729,7 @@
                     "type": "string"
                   },
                   "payment_method": {
-                    "description": "Payment method\noffline means the subscription is not linked to a payment method\ngocardless_direct-debit means at each new occurrence the client will be automatically debited thanks to GoCardless. To do so, you need a GoCardless account properly configured.\n",
+                    "description": "Payment method\noffline means the subscription is not linked to a payment method\ngocardless_direct-debit means at each new occurrence the client will be automatically debited thanks to GoCardless. To do so, you need a GoCardless account properly configured.\npro_account_sepa_core means the customer must have an email, unless it already has an enabled SEPA Core mandate or a pending SEPA Core mandate request.\n",
                     "enum": [
                       "offline",
                       "gocardless_direct_debit",
@@ -32893,8 +32898,9 @@
                                     "additionalProperties": false,
                                     "properties": {
                                       "name": {
-                                        "example": "color",
-                                        "type": "string"
+                                        "example": "delivery_terms",
+                                        "type": "string",
+                                        "description": "The `api_name` of the custom field"
                                       },
                                       "value": {
                                         "anyOf": [
@@ -32910,7 +32916,7 @@
                                           }
                                         ],
                                         "description": "Format depends on the field type: plain string for `text`; numeric string for `number` (e.g. `\"42.5\"`); ISO 8601 date for `date` (e.g. `\"2025-01-15\"`); option label for `single_select`; array of option labels for `multi_select`.",
-                                        "example": "red"
+                                        "example": "Delivered at place"
                                       }
                                     },
                                     "required": [
@@ -33244,8 +33250,9 @@
                                     "additionalProperties": false,
                                     "properties": {
                                       "name": {
-                                        "example": "color",
-                                        "type": "string"
+                                        "example": "delivery_terms",
+                                        "type": "string",
+                                        "description": "The `api_name` of the custom field"
                                       },
                                       "value": {
                                         "anyOf": [
@@ -33261,7 +33268,7 @@
                                           }
                                         ],
                                         "description": "Format depends on the field type: plain string for `text`; numeric string for `number` (e.g. `\"42.5\"`); ISO 8601 date for `date` (e.g. `\"2025-01-15\"`); option label for `single_select`; array of option labels for `multi_select`.",
-                                        "example": "red"
+                                        "example": "Delivered at place"
                                       }
                                     },
                                     "required": [
@@ -35493,7 +35500,7 @@
     },
     "/api/external/v2/customer_invoices/import": {
       "post": {
-        "description": "This endpoint allows you to import an invoice. Amounts are stored exactly as provided — Pennylane does not recalculate or round them.\n\nℹ️ **Amount consistency:** The amounts you send must be internally coherent:\n- `currency_amount_before_tax + currency_tax` must equal `currency_amount`.\n- The sum of invoice line `currency_tax` values must match the invoice-level `currency_tax`.\n- The sum of invoice line `currency_amount` values must match the invoice-level `currency_amount`.\n\nSmall rounding differences are tolerated. When `convert_to_e_invoice` is `true`, stricter requirements apply — see that field's description.\n\n\n> ℹ️\n> This endpoint requires the following scope: `customer_invoices:all`",
+        "description": "This endpoint allows you to import an invoice. Amounts are stored exactly as provided — Pennylane does not recalculate or round them.\n\n> ⚠️ Sending to the PA\n> Unless `convert_to_e_invoice` is `true`, invoices imported through this endpoint can't be sent to the PA: `/customer_invoices/{id}/send_to_pa` returns 422.\n> - If your PDF already embeds a Factur-X, use the customer e-invoice import endpoint (`/customer_invoices/e_invoices/imports`) instead.\n> - If your PDF is a plain PDF, set `convert_to_e_invoice` to `true` to have Pennylane convert it into a Factur-X e-invoice.\n\nℹ️ **Amount consistency:** The amounts you send must be internally coherent:\n- `currency_amount_before_tax + currency_tax` must equal `currency_amount`.\n- The sum of invoice line `currency_tax` values must match the invoice-level `currency_tax`.\n- The sum of invoice line `currency_amount` values must match the invoice-level `currency_amount`.\n\nSmall rounding differences are tolerated. When `convert_to_e_invoice` is `true`, stricter requirements apply — see that field's description.\n\n\n> ℹ️\n> This endpoint requires the following scope: `customer_invoices:all`",
         "externalDocs": {
           "url": "https://pennylane.readme.io/reference/importcustomerinvoices"
         },
@@ -38781,8 +38788,9 @@
                                         "additionalProperties": false,
                                         "properties": {
                                           "name": {
-                                            "example": "color",
-                                            "type": "string"
+                                            "example": "delivery_terms",
+                                            "type": "string",
+                                            "description": "The `api_name` of the custom field"
                                           },
                                           "value": {
                                             "anyOf": [
@@ -38798,7 +38806,7 @@
                                               }
                                             ],
                                             "description": "Format depends on the field type: plain string for `text`; numeric string for `number` (e.g. `\"42.5\"`); ISO 8601 date for `date` (e.g. `\"2025-01-15\"`); option label for `single_select`; array of option labels for `multi_select`.",
-                                            "example": "red"
+                                            "example": "Delivered at place"
                                           }
                                         },
                                         "required": [
@@ -39132,8 +39140,9 @@
                                         "additionalProperties": false,
                                         "properties": {
                                           "name": {
-                                            "example": "color",
-                                            "type": "string"
+                                            "example": "delivery_terms",
+                                            "type": "string",
+                                            "description": "The `api_name` of the custom field"
                                           },
                                           "value": {
                                             "anyOf": [
@@ -39149,7 +39158,7 @@
                                               }
                                             ],
                                             "description": "Format depends on the field type: plain string for `text`; numeric string for `number` (e.g. `\"42.5\"`); ISO 8601 date for `date` (e.g. `\"2025-01-15\"`); option label for `single_select`; array of option labels for `multi_select`.",
-                                            "example": "red"
+                                            "example": "Delivered at place"
                                           }
                                         },
                                         "required": [
@@ -39503,8 +39512,9 @@
                                     "additionalProperties": false,
                                     "properties": {
                                       "name": {
-                                        "example": "color",
-                                        "type": "string"
+                                        "example": "delivery_terms",
+                                        "type": "string",
+                                        "description": "The `api_name` of the custom field"
                                       },
                                       "value": {
                                         "anyOf": [
@@ -39520,7 +39530,7 @@
                                           }
                                         ],
                                         "description": "Format depends on the field type: plain string for `text`; numeric string for `number` (e.g. `\"42.5\"`); ISO 8601 date for `date` (e.g. `\"2025-01-15\"`); option label for `single_select`; array of option labels for `multi_select`.",
-                                        "example": "red"
+                                        "example": "Delivered at place"
                                       }
                                     },
                                     "required": [
@@ -40741,7 +40751,7 @@
     },
     "/api/external/v2/customer_invoices/{id}/send_to_pa": {
       "post": {
-        "description": "Send a customer e-invoice to the Partner Dematerialization Platform (PA).\n\nAfter an e-invoice import, the file may still be processing. If you call this\nendpoint before processing is finished, the API returns 409. Retry after a few\nseconds. A 204 response means the invoice is being sent to the PA.\n\n\n> ℹ️\n> This endpoint requires the following scope: `customer_invoices:all`",
+        "description": "Send a customer e-invoice to the Partner Dematerialization Platform (PA).\n\nAfter an e-invoice import, the file may still be processing. If you call this endpoint before processing is finished, the API returns 409. Retry after a few seconds. A 204 response means the invoice is being sent to the PA.\n\nInvoices imported with `/customer_invoices/import` without `convert_to_e_invoice: true` can't be sent to the PA: the API returns 422. Import Factur-X files with `/customer_invoices/e_invoices/imports` instead.\n\nWith `convert_to_e_invoice: true`, the conversion runs in the background: until it's finished, the API returns 422. Retry a bit later. If you still get 422 after a few minutes, the conversion isn't the cause: the invoice isn't eligible for the PA.\n\n\n> ℹ️\n> This endpoint requires the following scope: `customer_invoices:all`",
         "externalDocs": {
           "url": "https://pennylane.readme.io/reference/sendtopacustomerinvoice"
         },
@@ -52720,8 +52730,9 @@
                                 "additionalProperties": false,
                                 "properties": {
                                   "name": {
-                                    "example": "color",
-                                    "type": "string"
+                                    "example": "delivery_terms",
+                                    "type": "string",
+                                    "description": "The `api_name` of the custom field"
                                   },
                                   "value": {
                                     "anyOf": [
@@ -52737,7 +52748,7 @@
                                       }
                                     ],
                                     "description": "Format depends on the field type: plain string for `text`; numeric string for `number` (e.g. `\"42.5\"`); ISO 8601 date for `date` (e.g. `\"2025-01-15\"`); option label for `single_select`; array of option labels for `multi_select`.",
-                                    "example": "red"
+                                    "example": "Delivered at place"
                                   }
                                 },
                                 "required": [
@@ -53019,8 +53030,9 @@
                                 "additionalProperties": false,
                                 "properties": {
                                   "name": {
-                                    "example": "color",
-                                    "type": "string"
+                                    "example": "delivery_terms",
+                                    "type": "string",
+                                    "description": "The `api_name` of the custom field"
                                   },
                                   "value": {
                                     "anyOf": [
@@ -53036,7 +53048,7 @@
                                       }
                                     ],
                                     "description": "Format depends on the field type: plain string for `text`; numeric string for `number` (e.g. `\"42.5\"`); ISO 8601 date for `date` (e.g. `\"2025-01-15\"`); option label for `single_select`; array of option labels for `multi_select`.",
-                                    "example": "red"
+                                    "example": "Delivered at place"
                                   }
                                 },
                                 "required": [
@@ -53639,8 +53651,9 @@
                                     "additionalProperties": false,
                                     "properties": {
                                       "name": {
-                                        "example": "color",
-                                        "type": "string"
+                                        "example": "delivery_terms",
+                                        "type": "string",
+                                        "description": "The `api_name` of the custom field"
                                       },
                                       "value": {
                                         "anyOf": [
@@ -53656,7 +53669,7 @@
                                           }
                                         ],
                                         "description": "Format depends on the field type: plain string for `text`; numeric string for `number` (e.g. `\"42.5\"`); ISO 8601 date for `date` (e.g. `\"2025-01-15\"`); option label for `single_select`; array of option labels for `multi_select`.",
-                                        "example": "red"
+                                        "example": "Delivered at place"
                                       }
                                     },
                                     "required": [
@@ -53938,8 +53951,9 @@
                                     "additionalProperties": false,
                                     "properties": {
                                       "name": {
-                                        "example": "color",
-                                        "type": "string"
+                                        "example": "delivery_terms",
+                                        "type": "string",
+                                        "description": "The `api_name` of the custom field"
                                       },
                                       "value": {
                                         "anyOf": [
@@ -53955,7 +53969,7 @@
                                           }
                                         ],
                                         "description": "Format depends on the field type: plain string for `text`; numeric string for `number` (e.g. `\"42.5\"`); ISO 8601 date for `date` (e.g. `\"2025-01-15\"`); option label for `single_select`; array of option labels for `multi_select`.",
-                                        "example": "red"
+                                        "example": "Delivered at place"
                                       }
                                     },
                                     "required": [
@@ -54256,8 +54270,9 @@
                                 "additionalProperties": false,
                                 "properties": {
                                   "name": {
-                                    "example": "color",
-                                    "type": "string"
+                                    "example": "delivery_terms",
+                                    "type": "string",
+                                    "description": "The `api_name` of the custom field"
                                   },
                                   "value": {
                                     "anyOf": [
@@ -54273,7 +54288,7 @@
                                       }
                                     ],
                                     "description": "Format depends on the field type: plain string for `text`; numeric string for `number` (e.g. `\"42.5\"`); ISO 8601 date for `date` (e.g. `\"2025-01-15\"`); option label for `single_select`; array of option labels for `multi_select`.",
-                                    "example": "red"
+                                    "example": "Delivered at place"
                                   }
                                 },
                                 "required": [
@@ -59692,7 +59707,7 @@
     },
     "/api/external/v2/supplier_invoices/{supplier_invoice_id}/payment_status": {
       "put": {
-        "description": "This endpoint allows you to update the payment status of a supplier\ninvoice.\n\n\n> ℹ️\n> This endpoint requires the following scope: `supplier_invoices:all`",
+        "description": "This endpoint allows you to update the payment status of a supplier\ninvoice.\n\n> ⚠️ **Changing a paid invoice to `to_be_paid` removes its reconciliation.**\n>\n> When the invoice is fully paid and reconciled, in an open fiscal year and outside any frozen period, setting `payment_status` to `to_be_paid`:\n> - unmatches all the bank transactions matched to the invoice;\n> - cancels its SEPA XML transfers that were not found on the bank account yet.\n>\n> If the invoice is part of a grouped payment (one transaction matched to several invoices),\n> this breaks the reconciliation of every invoice in the group, not only of this invoice.\n> If the invoice was paid in a SEPA XML batch with other invoices,\n> the transfers of every invoice in the batch that were not found on the bank account yet are canceled too.\n> Check the matched transactions with\n> [List matched transactions for a supplier invoice](https://pennylane.readme.io/reference/getsupplierinvoicematchedtransactions)\n> before you change the status.\n\n\n> ℹ️\n> This endpoint requires the following scope: `supplier_invoices:all`",
         "externalDocs": {
           "url": "https://pennylane.readme.io/reference/updatesupplierinvoicepaymentstatus"
         },

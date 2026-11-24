@@ -4,9 +4,11 @@
 
 Send a customer e-invoice to the Partner Dematerialization Platform (PA).
 
-After an e-invoice import, the file may still be processing. If you call this
-endpoint before processing is finished, the API returns 409. Retry after a few
-seconds. A 204 response means the invoice is being sent to the PA.
+After an e-invoice import, the file may still be processing. If you call this endpoint before processing is finished, the API returns 409. Retry after a few seconds. A 204 response means the invoice is being sent to the PA.
+
+Invoices imported with `/customer_invoices/import` without `convert_to_e_invoice: true` can't be sent to the PA: the API returns 422. Import Factur-X files with `/customer_invoices/e_invoices/imports` instead.
+
+With `convert_to_e_invoice: true`, the conversion runs in the background: until it's finished, the API returns 422. Retry a bit later. If you still get 422 after a few minutes, the conversion isn't the cause: the invoice isn't eligible for the PA.
 
 
 > ℹ️
