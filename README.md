@@ -25,3 +25,46 @@ En cas de succès, le programme affiche `Connexion à Pennylane réussie.`. En c
 ## Exemples métier
 
 Le [guide des exemples exécutables](exemple/README.md) montre comment lire la balance comptable, envoyer une facture par e-mail, créer un client entreprise et enregistrer un mandat SEPA signé pour ce client.
+
+## Tests et intégration continue
+
+Les tests utilisent des transports HTTP simulés : aucun token ni accès à Pennylane
+n’est nécessaire. Depuis la racine du dépôt :
+
+```sh
+go test -race -shuffle=on -count=1 -timeout=5m -covermode=atomic -coverpkg=./... -coverprofile=coverage.out ./...
+python3 scripts/check-coverage.py coverage.out
+go tool cover -html=coverage.out -o coverage.html
+```
+
+La [CI GitHub Actions](.github/workflows/ci.yml) s’exécute sur les PR et les pushes
+sur `main`, avec Go 1.24 et la version stable. Elle contrôle le formatage, les
+dépendances, `go vet`, la compilation, les tests avec détection des accès
+concurrents et la reproductibilité du SDK et de la documentation générés. Les
+rapports de couverture sont disponibles dans les artefacts pendant 14 jours.
+
+Les seuils portent sur les instructions exécutées et sont définis dans
+[`scripts/check-coverage.py`](scripts/check-coverage.py) :
+
+| Périmètre | Minimum |
+|---|---:|
+| Projet complet | 57 % |
+| Client généré | 57 % |
+| SDK écrit à la main | 94 % |
+| Exemples | 85 % |
+| Générateur de documentation | 93 % |
+| Préparation de la spécification | 91 % |
+
+Le calcul fusionne les blocs dupliqués par `-coverpkg=./...` pour inclure les
+appels au SDK depuis les tests des exemples sans les compter plusieurs fois.
+Un seuil non atteint fait échouer la CI. Pour bloquer aussi la fusion d’une PR,
+les checks `Go 1.24.x` et `Go stable` doivent être requis dans les règles de
+protection de `main`.
+
+Les tests de contrat exécutent les 186 méthodes typées et vérifient les routes,
+verbes HTTP, en-têtes de société, paramètres obligatoires, types de corps,
+uploads et décodage des statuts documentés. Leurs payloads minimaux sont
+synthétiques : ils ne valident pas les règles métier du service distant.
+Des scénarios ciblés couvrent notamment les erreurs de transport, le JSON
+malformé, la fermeture des réponses, les champs multipart optionnels, les
+entrées invalides et les curseurs de pagination manquants ou répétés.
