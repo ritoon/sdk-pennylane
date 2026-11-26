@@ -12,12 +12,15 @@ Ne jamais déplacer ou écraser un tag publié.
 Cette procédure est exécutée par la personne ou l’agent qui fusionne la PR ;
 aucun workflow de publication automatique n’est actuellement configuré.
 
-## Exploration locale du code
+## Exploration du dépôt
 
-- Privilégier `rg --files` pour repérer les fichiers et `rg -n` pour rechercher
-  un symbole ou un motif. Si `rg` est indisponible, utiliser `find` ou `grep`.
-- Commencer par les chemins et types de fichiers pertinents. Limiter le contexte
-  affiché aux lignes utiles, puis élargir la recherche si nécessaire.
-- Pour un comportement du SDK, commencer par le code maintenu à la main et les
-  tests. Si le code généré est pertinent, rechercher le symbole exact dans
-  `api.gen.go` et lire uniquement l’extrait concerné.
+- Utiliser en priorité `rg --files` pour repérer les fichiers et `rg -n` pour
+  rechercher du texte ou des symboles. Commencer par les fichiers, packages ou
+  noms précis qui concernent la tâche, puis élargir si nécessaire.
+- Exclure `api.gen.go` des recherches générales avec `-g '!api.gen.go'`.
+  Pour vérifier un comportement du client généré, chercher le symbole exact dans
+  ce fichier et lire uniquement le passage utile.
+- Limiter les sorties aux correspondances et extraits nécessaires. Utiliser
+  un index de code si la recherche textuelle ne suffit pas, par exemple pour
+  résoudre des références entre packages ou dépôts. Si `rg` est indisponible,
+  utiliser `git grep` ou l’outil local équivalent.
