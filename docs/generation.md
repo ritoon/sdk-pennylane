@@ -39,3 +39,29 @@ rg -o 'https://pennylane\.readme\.io/(docs|reference|page|changelog)/[A-Za-z0-9_
 ```
 
 Les deux entrées de la commande d’assemblage sont alors `docs/pennylane/index.md` et `docs/pennylane/reference/`.
+
+## Découpage reproductible par domaine
+
+`go generate ./...` lance `internal/sdkgen`. Ce programme exécute la version
+épinglée d’oapi-codegen dans un dossier temporaire, puis analyse les déclarations
+Go avec `go/parser`. Il conserve leur source et leurs commentaires, répartit
+les déclarations selon les opérations du contrat et ne retient que les imports
+utilisés dans chaque fichier. Il ne réécrit ni les signatures ni les corps.
+
+La table `domains` associe les ressources HTTP aux domaines. Une nouvelle
+ressource inconnue fait échouer la génération : ajouter son association avant
+de régénérer. Les noms sont associés au préfixe d’opération le plus long ; les
+méthodes de modèles suivent leur type receveur. Les déclarations communes et
+les interfaces complètes restent dans `api_common.gen.go`.
+
+Les fichiers `api_*.gen.go` sont réservés au générateur. Après génération
+réussie en mémoire, il remplace les sorties et supprime les anciens fichiers
+de cette famille ainsi que l’ancien `api.gen.go`. Le contrat JSON reste unique.
+L’[index du code généré](code-genere.md) décrit les domaines ; le mettre à jour
+si la table des domaines change.
+
+Le test `TestGenerationPreservesDeclarations` compare toutes les déclarations
+(y compris les corps des méthodes) avec la sortie monolithique d’oapi-codegen,
+vérifie les fichiers versionnés, le nettoyage des sorties obsolètes et la
+stabilité d’une seconde génération. La CI contrôle aussi la documentation et
+les nouveaux fichiers générés non versionnés.

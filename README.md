@@ -10,6 +10,8 @@ go get github.com/ritoon/sdk-pennylane@v1.0.1
 
 Le [guide du client](docs/utilisation.md) montre comment vérifier la connexion et parcourir les journaux. La [référence des endpoints](docs/operations.md) détaille les paramètres Go et HTTP, les corps de requête et les payloads retournés par statut. Exemples de fiches : [lister les journaux](docs/endpoints/getJournals.md) et [créer un compte bancaire](docs/endpoints/postBankAccount.md).
 
+Le [petit index du code généré](docs/code-genere.md) permet de retrouver les fichiers Go par domaine.
+
 ## Tester la connexion
 
 L’[exemple Go](exemple/main.go) appelle `Ping` pour vérifier que Pennylane reconnaît le token et la société. Cet appel est en lecture seule.
@@ -57,6 +59,7 @@ Les seuils portent sur les instructions exécutées et sont définis dans
 | Exemples | 85 % |
 | Générateur de documentation | 93 % |
 | Préparation de la spécification | 91 % |
+| Découpage du client généré | 80 % |
 
 Le calcul fusionne les blocs dupliqués par `-coverpkg=./...` pour inclure les
 appels au SDK depuis les tests des exemples sans les compter plusieurs fois.

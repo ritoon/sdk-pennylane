@@ -192,7 +192,14 @@ func main() {
 	if err := json.Unmarshal(read("internal/spec/company.json"), &doc); err != nil {
 		panic(err)
 	}
-	src := string(read("api.gen.go")) + "\n" + string(read("multipart.go"))
+	files, err := filepath.Glob("api_*.gen.go")
+	if err != nil {
+		panic(err)
+	}
+	src := string(read("multipart.go"))
+	for _, file := range files {
+		src += "\n" + string(read(file))
+	}
 	sigs := map[string]string{}
 	for _, m := range regexp.MustCompile(`(?m)^func \(c \*Client(?:WithResponses)?\) ((\w+WithResponse)\(.*?\) \(\*\w+, error\)) \{`).FindAllStringSubmatch(src, -1) {
 		sigs[m[2]] = m[1]

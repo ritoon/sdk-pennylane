@@ -6,7 +6,7 @@ from pathlib import Path
 MODULE = "github.com/ritoon/sdk-pennylane/"
 # Keep the generated client separate so it cannot hide gaps in handwritten code.
 LIMITS = {"total": 57, "generated": 57, "sdk": 94, "examples": 85,
-          "docgen": 93, "spec": 91}
+          "docgen": 93, "spec": 91, "sdkgen": 80}
 
 
 def coverage(profile):
@@ -28,12 +28,14 @@ def coverage(profile):
         if not filename.startswith(MODULE):
             raise ValueError("unexpected module: " + filename)
         filename = filename[len(MODULE):]
-        if filename == "api.gen.go":
+        if filename == "api.gen.go" or ("/" not in filename and filename.startswith("api_") and filename.endswith(".gen.go")):
             group = "generated"
         elif filename.startswith("exemple/"):
             group = "examples"
         elif filename.startswith("internal/docgen/"):
             group = "docgen"
+        elif filename.startswith("internal/sdkgen/"):
+            group = "sdkgen"
         elif filename.startswith("internal/spec/"):
             group = "spec"
         elif "/" not in filename:
