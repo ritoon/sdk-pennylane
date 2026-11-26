@@ -1,16 +1,56 @@
 package pennylane
 
 import (
+	"bytes"
 	"context"
 	"encoding/json"
 	"errors"
+	"fmt"
 	"io"
+	"log/slog"
 	"net/http"
 	"os"
 	"reflect"
 	"strings"
 	"testing"
 )
+
+func TestConfigRedactsToken(t *testing.T) {
+	const token = "test-private-token"
+	var cfg Config
+	if err := json.Unmarshal([]byte(`{"Token":"test-private-token","CompanyID":42}`), &cfg); err != nil {
+		t.Fatal(err)
+	}
+	if cfg.Token != token {
+		t.Fatal("JSON input did not populate the token")
+	}
+	for _, format := range []string{"%v", "%+v", "%#v", "%s", "%q"} {
+		for _, value := range []any{cfg, &cfg, struct{ Config Config }{cfg}} {
+			output := fmt.Sprintf(format, value)
+			if strings.Contains(output, token) || !strings.Contains(output, "[REDACTED]") {
+				t.Errorf("token was not redacted with %s", format)
+			}
+		}
+	}
+	data, err := json.Marshal(cfg)
+	if err != nil {
+		t.Fatal(err)
+	}
+	var fields map[string]json.RawMessage
+	if err := json.Unmarshal(data, &fields); err != nil {
+		t.Fatal(err)
+	}
+	if _, present := fields["Token"]; present || string(fields["CompanyID"]) != "42" {
+		t.Fatal("JSON should omit the token and preserve the company ID")
+	}
+	var logs bytes.Buffer
+	for _, handler := range []slog.Handler{slog.NewTextHandler(&logs, nil), slog.NewJSONHandler(&logs, nil)} {
+		slog.New(handler).Info("Pennylane", "config", cfg)
+	}
+	if strings.Contains(logs.String(), token) {
+		t.Fatal("structured logs contain the token")
+	}
+}
 
 type transportFunc func(*http.Request) (*http.Response, error)
 

@@ -2,6 +2,8 @@
 
 Le constructeur accepte un token Company, un token Firm ou un access token OAuth déjà obtenu. Avec un token Firm, renseigner également `Config.CompanyID` pour les opérations ciblant une société. Les applications OAuth gèrent l’obtention et la rotation du token. Le client utilise un délai de 60 secondes par défaut. Le champ facultatif `HTTPClient` permet de fournir son propre transport ou délai.
 
+Le formatage de `Config` avec `fmt` masque le token et son encodage JSON l’omet. Pour journaliser les appels HTTP, privilégier la méthode, le chemin et le statut. Si un transport personnalisé journalise les en-têtes, retirer `Authorization` d’une copie des en-têtes avant de l’écrire dans les logs.
+
 ```go
 package connecteur
 
