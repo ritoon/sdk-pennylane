@@ -13,7 +13,15 @@ func TestGenerateDocumentation(t *testing.T) {
 		t.Fatal(err)
 	}
 	dir := t.TempDir()
-	for _, name := range []string{"internal/spec/company.json", "api.gen.go", "multipart.go"} {
+	files, err := filepath.Glob(filepath.Join(root, "api_*.gen.go"))
+	if err != nil {
+		t.Fatal(err)
+	}
+	names := []string{"internal/spec/company.json", "multipart.go"}
+	for _, file := range files {
+		names = append(names, filepath.Base(file))
+	}
+	for _, name := range names {
 		data, err := os.ReadFile(filepath.Join(root, name))
 		if err != nil {
 			t.Fatal(err)

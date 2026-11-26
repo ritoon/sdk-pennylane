@@ -10,7 +10,7 @@ import (
 	"time"
 )
 
-//go:generate go tool oapi-codegen -config internal/spec/config.yaml internal/spec/company.json
+//go:generate go run ./internal/sdkgen
 
 // Config contient un token Company, Firm ou un access token OAuth déjà obtenu.
 type Config struct {

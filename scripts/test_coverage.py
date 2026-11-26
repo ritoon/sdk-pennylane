@@ -16,6 +16,13 @@ class CoverageTests(unittest.TestCase):
         self.assertEqual(totals["sdk"], [3, 2])
         self.assertEqual(totals["total"], [3, 2])
 
+    def test_split_generated_files_keep_their_coverage_group(self):
+        prefix = checker.MODULE
+        totals = checker.coverage(f"mode: atomic\n{prefix}api_customers.gen.go:1.1,2.2 2 1\n{prefix}api_common.gen.go:1.1,2.2 3 0\n{prefix}internal/sdkgen/main.go:1.1,2.2 1 1\n")
+        self.assertEqual(totals["generated"], [5, 2])
+        self.assertEqual(totals["sdkgen"], [1, 1])
+        self.assertEqual(totals["sdk"], [0, 0])
+
     def test_thresholds_and_missing_groups_fail_closed(self):
         totals = {group: [100, 100] for group in checker.LIMITS}
         with contextlib.redirect_stdout(io.StringIO()):

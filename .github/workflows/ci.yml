@@ -67,4 +67,4 @@ jobs:
           go generate ./...
           go run ./internal/docgen
           git diff --exit-code
-          test -z "$(git ls-files --others --exclude-standard -- api.gen.go docs)"
+          test -z "$(git ls-files --others --exclude-standard -- '*.gen.go' docs)"
