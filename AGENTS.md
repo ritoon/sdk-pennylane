@@ -11,3 +11,16 @@ Ne jamais déplacer ou écraser un tag publié.
 
 Cette procédure est exécutée par la personne ou l’agent qui fusionne la PR ;
 aucun workflow de publication automatique n’est actuellement configuré.
+
+## Exploration du dépôt
+
+- Utiliser en priorité `rg --files` pour repérer les fichiers et `rg -n` pour
+  rechercher du texte ou des symboles. Commencer par les fichiers, packages ou
+  noms précis qui concernent la tâche, puis élargir si nécessaire.
+- Exclure `api.gen.go` des recherches générales avec `-g '!api.gen.go'`.
+  Pour vérifier un comportement du client généré, chercher le symbole exact dans
+  ce fichier et lire uniquement le passage utile.
+- Limiter les sorties aux correspondances et extraits nécessaires. Utiliser
+  un index de code si la recherche textuelle ne suffit pas, par exemple pour
+  résoudre des références entre packages ou dépôts. Si `rg` est indisponible,
+  utiliser `git grep` ou l’outil local équivalent.
