@@ -21,6 +21,12 @@ aucun workflow de publication automatique n’est actuellement configuré.
   Pour vérifier un comportement du client généré, chercher le symbole exact dans
   ce fichier et lire uniquement le passage utile.
 - Limiter les sorties aux correspondances et extraits nécessaires. Si `rg` est indisponible,
+- Exclure les fichiers générés des recherches générales avec `-g '!*.gen.go'`.
+  Pour vérifier un comportement du client généré, consulter `docs/code-genere.md`,
+  chercher le symbole exact dans le fichier du domaine et lire uniquement le passage utile.
+- Limiter les sorties aux correspondances et extraits nécessaires. Utiliser
+  un index de code si la recherche textuelle ne suffit pas, par exemple pour
+  résoudre des références entre packages ou dépôts. Si `rg` est indisponible,
   utiliser `git grep` ou l’outil local équivalent.
 
 ## Utiliser et maintenir CodeGraph
